@@ -1,4 +1,4 @@
 caffeina
 ========
 
-A project for those in need
+*A project for those in need*
