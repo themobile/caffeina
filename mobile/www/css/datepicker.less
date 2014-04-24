@@ -1,0 +1,193 @@
+@import "variables";
+@import "mixins";
+
+[date-picker-wrapper]{
+  position: relative !important;
+  display:block;
+}
+
+[date-time-append] [date-picker]{
+  position: relative;
+  margin-right: -1000px;
+  margin-bottom: -1000px;
+}
+
+[date-range] [date-picker] {
+  .after.before{
+    .buttonBackground(@btnInfoBackground, spin(@btnInfoBackgroundHighlight, 20));
+  }
+}
+
+calendar-event {
+  border: 1px solid rgba(216, 134, 29, 0.7);
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: absolute;
+  margin-top: 1px;
+}
+
+
+[date-picker] {
+  .user-select(none);
+  .border-radius(4px);
+
+  /* GENERAL */
+
+  padding: 4px;
+
+  table {
+    margin: 0;
+    width:100%;
+  }
+
+  td, th {
+    padding: 4px 5px;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    .border-radius(4px);
+    border: none;
+
+  }
+
+  .switch{
+    width: 145px;
+  }
+
+  span {
+      display: block;
+			width: 23%;
+			height: 26px;
+			line-height: 25px;
+			float: left;
+			margin: 1%;
+			cursor: pointer;
+			.border-radius(4px);
+			&:hover {
+				background: @grayLighter;
+			}
+			&.disabled, &.disabled:hover {
+				background:none;
+				color: @grayLight;
+				cursor: default;
+			}
+
+  }
+
+  .active , .now{
+//    .buttonBackground(@btnPrimaryBackground, spin(@btnPrimaryBackground, 20));
+//    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+  }
+
+  .now {
+//    .buttonBackground(@btnDangerBackground, spin(@btnDangerBackground, 20));
+  }
+
+  .disabled {
+    background: none;
+    color: #999999 !important;
+    cursor: default;
+  }
+
+  /* SPECIFIC */
+
+  [ng-switch-when="year"], [ng-switch-when="month"], [ng-switch-when="minutes"]{
+    span {
+      height: 54px;
+      line-height: 54px;
+    }
+  }
+  [ng-switch-when="date"]{
+    td {
+      padding: 0;
+      position:relative;
+    }
+    span{
+      width: 100%;
+      height: 26px;
+      line-height: 26px;
+    }
+  }
+
+  th:hover, [ng-switch-when="date"] td span:hover{
+    background: @grayLighter;
+	  cursor: pointer;
+  }
+}
+
+
+//.eventCalendar tbody tr:nth-child(odd) {
+//  background-color: rgba(0,0,0,0.1);
+//}
+//.eventCalendar th {
+//  background-color: rgba(0,0,0,0.2);
+//}
+//
+//.eventCalendar td:nth-child(even) {
+//  background-color: rgba(0,0,0,0.1);
+//}
+//
+//.eventCalendar thead th {
+//  background-color: transparent;
+//  border:0;
+//}
+//
+//.eventCalendar thead tr:last-child th {
+//  border: 1px solid black;
+//}
+//
+//.eventCalendar table {
+//  border-collapse: collapse;
+//  width: 100%;
+//}
+//
+//.eventCalendar td, [date-picker] th{
+//  border: 1px solid black;
+//  padding: 5px;
+//  text-align: center;
+//}
+//.eventCalendar [ng-switch-when=date] td {
+//  width: calc(100% / 7 );
+//  vertical-align: top;
+//}
+//
+//.eventCalendar td span {
+//  float: right;
+//  font-size: 12px;
+//  display: block;
+//  padding: 0;
+//  width: 33%;
+//  margin: 0;
+//}
+//.eventCalendar .now {
+//  color:navy;
+//  font-weight:bold;
+//}
+//calendar.eventCalendar [ng-switch-when=date] td {
+//  position: relative;
+//  padding: 0;
+//  padding-top:25px;
+//}
+//
+//calendar.eventCalendar [ng-switch-when=date] td span {
+//  position: absolute;
+//  top: 5px;
+//  right: 5px;
+//  text-align: right;
+//  padding:0;
+//  width: auto;
+//  background: transparent !important;
+//}
+//
+//calendar.eventCalendar [ng-switch-when=date] td span.now {
+//  color: black;
+//}
+
+.eventCalendar .event {
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.5s ease-in-out;
+  position: absolute;
+}

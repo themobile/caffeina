@@ -1,0 +1,9 @@
+ion-view(title='Home')
+    ion-content(padding='true', ng-controller='home')
+        //div(date-picker="curDate", min-view="date")
+        //p Current date: {{curDate}}
+
+        h5 Calendar with custom events
+        //calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents")
+        date-picker(view='date',max-view="year",min-view="date", event-service="CalendarEvents")
+        button.button(ng-click="addCalendarEvent()") Add a calendar event
