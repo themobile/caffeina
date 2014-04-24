@@ -1,0 +1,7 @@
+.modal
+    ion-content.padding(has-header="false",scroll="true",has-tabs="false")
+        h1 Uuuups!
+        p <strong>Your email address isn't found!</strong><br/>Create a new account with these credentials?
+        .button-bar-inline
+            button.button.button-full(ng-click='closeModal()') Wrong email!
+            button.button.button-full.button-assertive(ng-click='createAccount()') Create new account!

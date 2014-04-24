@@ -1,0 +1,71 @@
+html, body, .container{ height: 100%; margin: 0; padding: 0; }
+body{
+	min-width: 320px;
+	overflow: hidden;
+	background:#262522;
+}
+body{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 200;
+	letter-spacing: 2px;
+	line-height: 14px;
+	color: #fff;
+}
+
+
+.log {
+	position: absolute;
+	width: 600px;
+	height: 450px;
+	top: 50%;
+	left: 50%;
+	margin: -225px 0 0 -300px;
+
+		
+	}
+	
+.info {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 1em;
+}
+	
+		
+		
+/*---- Media Queries to make design responsive ----*/
+    
+@media only screen and (max-width: 640px) and (min-width: 320px){
+	body, .container {
+		overflow-x:hidden;}
+.log {
+	position: absolute;
+	width: 300px;
+	height: 225px;
+	top: 50%;
+	left: 50%;
+	margin: -112px 0 0 -150px;	
+	}
+		.info {
+	font-size: 0.8em;
+}
+}
+
+@media only screen and (max-width: 319px) and (min-width: 110px){
+		body, .container {
+		overflow-x:hidden;}
+	.log {
+	position: absolute;
+	width: 240px;
+	height: 180px;
+	top: 50%;
+	left: 50%;
+	margin: -90px 0 0 -120px;	
+	}
+			.info {
+	font-size: 0.8em;
+}
+
+}
