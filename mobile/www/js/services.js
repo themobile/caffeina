@@ -44,12 +44,30 @@ angular.module('caffeina.services', [])
 
             },
 
-            getUser:function() {
+            getUser: function () {
                 return user.user;
 
+            },
+
+            signUp: function (userEmail) {
+                var newUsr = userEmail.replace(/\./g, ',');
+                var caffData = $firebase(new Firebase('https://caffeina.firebaseio.com/' + 'users/' + newUsr));
+                caffData.email = userEmail;
+                caffData.$save();
             }
 
 
         }
 
     }])
+
+
+//    .factory('userService', ['$firebase', '$firebaseSimpleLogin', 'fireUrl', function ($firebase, $firebaseSimpleLogin, fireUrl) {
+//        var root = new Firebase(fireUrl+'/');
+//        return {
+//            leadAdd: function (newLead) {
+//
+//            }
+//        }
+//    }])
+;

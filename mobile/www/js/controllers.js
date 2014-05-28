@@ -24,9 +24,9 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
     .controller('about', ['$scope', 'dataService', 'userService', '$firebase', function ($scope, dataService, userService, $firebase) {
 
-        var userEmail=userService.getUser().username;
+        var userEmail = userService.getUser().username;
 
-        var ref = new Firebase('https://caffeina.firebaseio.com/calendars/'+userEmail.replace(/\./g,''));
+        var ref = new Firebase('https://caffeina.firebaseio.com/calendars/' + userEmail.replace(/\./g, ''));
 
         $scope.messages = $firebase(ref);
         $scope.mesaj = '';
@@ -37,32 +37,31 @@ angular.module('caffeina.controllers', ['ngCookies'])
             $scope.mesaj = "";
         };
 
-        $scope.translateX=1;
+        $scope.translateX = 1;
 
 
     }])
 
 
-
-    .controller('sortable', ['$scope','$ionicPopup', function ($scope,$ionicPopup) {
+    .controller('sortable', ['$scope', '$ionicPopup', function ($scope, $ionicPopup) {
 //        $scope.data = {
 //            showDelete: false,
 //            showReorder:false
 //        };
 
-        $scope.edit = function(item) {
+        $scope.edit = function (item) {
             alert('Edit Item: ' + item.id);
         };
-        $scope.share = function(item) {
+        $scope.share = function (item) {
             alert('Share Item: ' + item.id);
         };
 
-        $scope.moveItem = function(item, fromIndex, toIndex) {
+        $scope.moveItem = function (item, fromIndex, toIndex) {
             $scope.items.splice(fromIndex, 1);
             $scope.items.splice(toIndex, 0, item);
         };
 
-        $scope.onItemDelete = function(item) {
+        $scope.onItemDelete = function (item) {
             $scope.items.splice($scope.items.indexOf(item), 1);
         };
 
@@ -117,9 +116,9 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
     }])
 
-    .controller('home', ['$scope', 'CalendarEvents', function ($scope, CalendarEvents) {
-        $scope.ll=2;
-        $scope.events=[];
+    .controller('home', ['$scope', 'CalendarEvents','userService', '$firebase', function ($scope, CalendarEvents, userService, $firebase) {
+        $scope.ll = 2;
+        $scope.events = [];
         var events = [
             {
                 start: new Date(),
@@ -162,14 +161,21 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
         $scope.$on('calendar:events', function (model, view) {
             console.log('setdate');
-        })
+        });
 
-        $scope.putEvents=function(){
-            $scope.events=events;
+        $scope.putEvents = function () {
+            $scope.events = events;
             CalendarEvents.setEvents($scope.events);
 
-        }
+        };
 
+        $scope.signUp = function () {
+            var user = userService.getUser();
+            userService.signUp(user.email);
+            //                var newUsr = userEmail.replace('.', ',');
+
+
+        }
 
     }])
 
@@ -199,14 +205,14 @@ angular.module('caffeina.controllers', ['ngCookies'])
             $scope.firstTimeLogin = false;
 //            $cookieStore.put('caffeinaUser', user);
 //            $cookieStore.put('caffeinaLoginAuto', $scope.isAuto);
-        })
+        });
 
 
         $scope.$on('$firebaseSimpleLogin:logout', function (event) {
             $scope.auth = {};
             $scope.loginType = '';
 
-        })
+        });
 
 
         //ionic modal
@@ -228,7 +234,7 @@ angular.module('caffeina.controllers', ['ngCookies'])
         });
 
 
-    }])
+    }]);
 
 
 //    .controller('DemoCtrl', function ($scope, $famous) {

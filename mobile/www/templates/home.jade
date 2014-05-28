@@ -7,6 +7,7 @@ ion-view(title='')
         //date-picker(date-picker="start",min-view="date", event-service="CalendarEvents")
         button.button(ng-click="addCalendarEvent()") Add a calendar event
         button.button(ng-click="putEvents()") put events
+        button.button(ng-click="signUp()") signup user
 
         //next events after current date , limited to 3
         ul.dada(ng-repeat="event in events | next3futureEvents | limitTo: 3")
