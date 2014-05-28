@@ -1,0 +1,18 @@
+//
+      This template loads for the 'tab.adopt' state (app.js)
+ion-view(title='')
+    ion-content.padding.loginBackground(has-header="true",scroll="true",has-tabs="false")
+        .logo-login
+    .forma-login(ng-controller='loginController')
+        .card.ng-animate(ng-if="firstTimeLogin || !auth.user")
+            .item.item-text-wrap.text-center.fade-in-not-out
+                .subtitle
+                    | bro, this is our way of <strong>logging in</strong>.
+                    | we’ll have your data, but we won’t abuse it.
+                    | give in some info and we’ll give in some knowledge.
+
+        .button-bar
+            button.button.button-clear(ng-show='auth.user') Welcome {{auth.user.name}}
+            button.button-login.button-login-facebook(ng-show='!auth.user.id',ng-click='login("facebook")') facebook
+            button.button-login.button-login-google(ng-show='!auth.user.id',ng-click='login("google")') google
+

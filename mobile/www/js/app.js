@@ -3,70 +3,80 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+// 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.controllers','firebase','ngCookies','datePicker','calevents', 'filters'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-})
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+    .config(function ($stateProvider, $urlRouterProvider) {
 
-    .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'AppCtrl'
+        // Ionic uses AngularUI Router which uses the concept of states
+        // Learn more here: https://github.com/angular-ui/ui-router
+        // Set up the various states which the app can be in.
+        // Each state's controller can be found in controllers.js
+        $stateProvider
+
+            // setup an abstract state for the tabs directive
+//    .state('tab', {
+//      url: "/tab",
+//      abstract: true,
+//      templateUrl: "templates/tabs.html"
+//    })
+
+
+            .state('login', {
+                url: '/login',
+                templateUrl: 'templates/login.html'
+            })
+
+            .state('chat', {
+                url: '/chat',
+                templateUrl: 'templates/chat.html'
+            })
+
+            .state('sortable', {
+                url: '/sortable',
+                templateUrl: 'templates/sortable.html'
+            })
+
+            .state('home', {
+                url: '/home',
+                templateUrl: 'templates/home.html'
+            });
+
+        // if none of the above states are matched, use this as the fallback
+        $urlRouterProvider.otherwise('login');
+
     })
 
-    .state('app.search', {
-      url: "/search",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/search.html"
-        }
-      }
-    })
+    .run(function ($rootScope, $cookieStore, $location,userService) {
 
-    .state('app.browse', {
-      url: "/browse",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/browse.html"
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: "/playlists",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
+        var loginType = $cookieStore.get('caffeinaLoginType');
+        var loginAuto = $cookieStore.get('caffeinaLoginAuto');
+        var auth={};
 
-    .state('app.single', {
-      url: "/playlists/:playlistId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/playlist.html",
-          controller: 'PlaylistCtrl'
-        }
-      }
+        $location.path('/login');
+
+
+//      TODO loginauto
+//      if (!loginType) {
+//            $location.path('/login');
+//        } else {
+//
+//            if (loginAuto) {
+//               auth = userService.login(loginType, true);
+//
+//                // TODO redirect to home
+//                $location.path('/chat');
+//            } else {
+//                $location.path('/login');
+//            }
+//        }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
-});
 
+// bootstrap the application
+var body = document.getElementsByTagName('body')[0];
+angular.element(document).ready(function () {
+    angular.bootstrap(body, ['caffeina']);
+
+})
