@@ -175,7 +175,7 @@ angular.module('caffeina.controllers', ['ngCookies'])
         $scope.addLead=function() {
 
             var lead={
-                "date":"2014-10-02",
+                "date":"2014-01-01",
                 "title":"Lead de incarcat prin servicii",
                 "contact":{"name":"Florian Cechi","phone":"7829387232","email":"asdada@gmail.com"}
             }
