@@ -13,8 +13,13 @@ angular.module('caffeina.services', [])
 
             },
 
-            getAllMonth: function () {
-
+            getAllMonth: function (year, month) {
+                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/');
+                var startDate = moment(year.toString() + '-' + month.toString() + '-01').format('YYYY-MM-DD');
+                var endDate = moment(startDate).add('month', 1).add('day', -1).format('YYYY-MM-DD');
+//                var leadsMonth=leadsRef.startAt(moment().valueOf(startDate)).endAt(moment().valueOf(endDate));
+                var leadsMonth = leadsRef.startAt(startDate).endAt(endDate);
+                return leadsMonth;
             },
 
             add: function (lead) {
@@ -22,12 +27,14 @@ angular.module('caffeina.services', [])
                 leadsRef.push(lead).setPriority(lead.date);
             },
 
-            update: function () {
-
+            update: function (lead, leadId) {
+                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/' + leadId);
+                leadsRef.update(lead);
+                leadsRef.setPriority(lead.date);
             },
 
-            remove: function () {
-
+            remove: function (leadId) {
+                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/' + leadId).remove();
             }
 
 
