@@ -116,54 +116,24 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
     }])
 
-    .controller('home', ['$scope', 'CalendarEvents', '$firebase','firebaseRef','leads', function ($scope,CalendarEvents, $firebase,firebaseRef,leads) {
+    .controller('home', ['$scope', 'CalendarEvents', '$firebase','firebaseRef','firebaseRefUser','leads', function ($scope,CalendarEvents, $firebase,firebaseRef,firebaseRefUser,leads) {
         $scope.events = [];
-//        var events = [
-//            {
-//                start: new Date(),
-//                title: 'caffeina0'
-//            },
-//            {
-//                start: '2014/04/28',
-//                title: 'caffeina2'
-//            },
-//            {
-//                start: '2014/06/28',
-//                title: 'caffeinaAfter'
-//            },
-//            {
-//                start: '2014/08/15',
-//                title: 'caffeina3'
-//            },
-//            {
-//                start: new Date('2014/09/10'),
-//                title: 'caffeina4'
-//            },
-//            {
-//                start: new Date('2014/09/02'),
-//                title: 'caffeina5'
-//            }
-//        ];
 
-
-        var tst=firebaseRef('/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads/');
-//        var limi=tst.startAt(moment().valueOf("2014-05-01"));
-
-
-        $firebase(tst).$bind($scope,"eventuri").then(function(){
-            $scope.events= _.values($scope.eventuri);
+        var leadsRef=firebaseRefUser('/leads/');
+        $firebase(leadsRef).$bind($scope,"eventsObject").then(function(){
+            $scope.events= _.values($scope.eventsObject);
             CalendarEvents.setEvents($scope.events);
         });
 
-        $scope.addCalendarEvent = function () {
-            var date = new Date();
-            date.setDate($scope.events.length);
-            $scope.events.push({
-                start: date,
-                title: 'Event #' + $scope.events.length
-            });
-            CalendarEvents.setEvents($scope.events);
-        };
+//        $scope.addCalendarEvent = function () {
+//            var date = new Date();
+//            date.setDate($scope.events.length);
+//            $scope.events.push({
+//                start: date,
+//                title: 'Event #' + $scope.events.length
+//            });
+//            CalendarEvents.setEvents($scope.events);
+//        };
 
 
         $scope.$on('calendar:events', function (model, view) {
@@ -172,43 +142,43 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
 
 //---------------teste ------------
-        $scope.addLead=function() {
-
-            var lead={
-                "date":"2014-01-01",
-                "title":"Lead de incarcat prin servicii",
-                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"asdada@gmail.com"}
-            }
-            leads.add(lead);
-        }
-
-
-        $scope.updateLead=function() {
-
-            var lead={
-                "date":"2015-05-01",
-                "title":"Lead de modificat prin servicii",
-                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"122323423@gmail.com"}
-            }
-            leads.update(lead,'-JO7GKm4-BIRsHI4ev9is');
-        }
-
-
-        $scope.removeLead=function() {
-
-            leads.remove('-JO7GKm4-BIRsHI4ev9is');
-        }
-
-
-        $scope.getLeadsMonth=function(){
-
-            var month=1;
-            var l=leads.getAllMonth(2014,1);
-
-
-            console.log(JSON.stringify(l));
-
-        }
+//        $scope.addLead=function() {
+//
+//            var lead={
+//                "date":"2014-01-01",
+//                "title":"Lead de incarcat prin servicii",
+//                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"asdada@gmail.com"}
+//            }
+//            leads.add(lead);
+//        }
+//
+//
+//        $scope.updateLead=function() {
+//
+//            var lead={
+//                "date":"2015-05-01",
+//                "title":"Lead de modificat prin servicii",
+//                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"122323423@gmail.com"}
+//            }
+//            leads.update(lead,'-JO7GKm4-BIRsHI4ev9is');
+//        }
+//
+//
+//        $scope.removeLead=function() {
+//
+//            leads.remove('-JO7GKm4-BIRsHI4ev9is');
+//        }
+//
+//
+//        $scope.getLeadsMonth=function(){
+//
+//            var month=1;
+//            var l=leads.getAllMonth(2014,1);
+//
+//
+//            console.log(JSON.stringify(l));
+//
+//        }
 
 //---------------teste ------------
 
@@ -240,6 +210,8 @@ angular.module('caffeina.controllers', ['ngCookies'])
             $cookieStore.put('caffeinaLoginType', user.provider);
             $scope.loginType = user.provider;
             $scope.firstTimeLogin = false;
+            $location.path('/home');
+
 //            $cookieStore.put('caffeinaUser', user);
 //            $cookieStore.put('caffeinaLoginAuto', $scope.isAuto);
         });
@@ -248,6 +220,7 @@ angular.module('caffeina.controllers', ['ngCookies'])
         $scope.$on('$firebaseSimpleLogin:logout', function (event) {
             $scope.auth = {};
             $scope.loginType = '';
+            $location.path('/login');
 
         });
 

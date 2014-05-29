@@ -21,7 +21,7 @@ Module.provider('CalendarEvents', function() {
                     calendarEvents = {};
                     for (var i = 0; i < events.length; i++) {
                         //
-                        var date = new Date(events[i].start).toDateString();
+                        var date = new Date(events[i].date).toDateString();
                         if (!(date in calendarEvents)) {
                             calendarEvents[date] = [];
                         }

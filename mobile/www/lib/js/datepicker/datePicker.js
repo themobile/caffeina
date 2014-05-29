@@ -230,6 +230,7 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                 function update() {
                     var view = scope.view;
                     var date = scope.date;
+                    var suplWeek=[];
                     switch (view) {
                         case 'year':
                             scope.years = getVisibleYears(date);
@@ -240,6 +241,7 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                         case 'date':
                             scope.weekdays = scope.weekdays || getDaysOfWeek();
                             scope.weeks = getVisibleWeeks(date);
+
                             break;
                         case 'hours':
                             scope.hours = getVisibleHours(date);

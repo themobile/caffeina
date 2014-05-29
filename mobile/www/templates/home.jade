@@ -1,21 +1,10 @@
 ion-view(title='')
     ion-content(padding='true', ng-controller='home')
-        //div(date-picker="curDate", min-view="date")
-        //p Current date: {{curDate}}
 
         calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents")
-        //date-picker(date-picker="start",min-view="date", event-service="CalendarEvents")
-        button.button(ng-click="addLead()") Add lead
-        button.button(ng-click="updateLead()") Update lead
-        button.button(ng-click="removeLead()") Remove lead
-        button.button(ng-click="getLeadsMonth()") Get lead/month
+
+        div.button-bar
+            a.button.button-clear(ng-click="addLead()") add
+            a.button.button-clear(ng-click="updateLead()") search
 
 
-
-        ul(ng-repeat="lead in leaduri | orderByPriority")
-            li {{lead.start}}
-
-
-        //next events after current date , limited to 3
-        ul.dada(ng-repeat="event in events | next3futureEvents | limitTo: 3")
-            li {{event.title}}
