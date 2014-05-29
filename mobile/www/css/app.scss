@@ -1,7 +1,7 @@
 $font-size-base: 14px;
-$dark: #D7C1C1;
-$light: #D7C1C1;
-$base-background-color:#4b4c52;
+$dark: #41272F;
+$light: #41272F;
+$base-background-color:#fff;
 $input-color: $dark;
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 $toggle-on-bg-color: $dark;
@@ -21,13 +21,13 @@ $input-color-placeholder: lighten($dark, 30%);
   //  background: linear-gradient(45deg, rgba(75,76,82,0.5) 0%,rgba(75,76,82,0.5) 100%); /* W3C */
   //  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#804b4c52', endColorstr='#804b4c52',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
-  background: url('../img/backgr.png') no-repeat top center;
+//  background: url('../img/backgr.png') no-repeat top center;
   background-size: cover;
 }
 
 
 .menu {
-  background:#41272F;
+  background: rgba(75, 147, 251, 0.27);
 }
 
 .logo-login {

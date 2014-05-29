@@ -1,5 +1,5 @@
 
-angular.module('myApp.service.firebase', ['firebase'])
+angular.module('caffeina.service.firebase', ['firebase'])
 
 // a simple utility to create references to Firebase paths
    .factory('firebaseRef', ['Firebase', 'FBURL', function(Firebase, FBURL) {
@@ -23,9 +23,10 @@ angular.module('myApp.service.firebase', ['firebase'])
        * @param {int} [limit]
        * @return a Firebase instance
        */
-      return function(path, limit) {
+      return function(path, limit,startAt,endAt) {
          var ref = firebaseRef(path);
          limit && (ref = ref.limit(limit));
+
          return $firebase(ref);
       }
    }]);

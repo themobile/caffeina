@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.controllers','firebase','ngCookies','datePicker','calevents', 'filters'])
+angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.config','caffeina.service.firebase','caffeina.controllers','firebase','ngCookies','datePicker','calevents', 'filters'])
 
 
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -45,7 +45,7 @@ angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.controllers'
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('login');
+        $urlRouterProvider.otherwise('home');
 
     })
 
@@ -55,7 +55,7 @@ angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.controllers'
         var loginAuto = $cookieStore.get('caffeinaLoginAuto');
         var auth={};
 
-        $location.path('/login');
+        $location.path('/home');
 
 
 //      TODO loginauto

@@ -22,7 +22,7 @@ angular.module('caffeina.controllers', ['ngCookies'])
         }
     }])
 
-    .controller('about', ['$scope', 'dataService', 'userService', '$firebase', function ($scope, dataService, userService, $firebase) {
+    .controller('about', ['$scope', 'userService', '$firebase', function ($scope, userService, $firebase) {
 
         var userEmail = userService.getUser().username;
 
@@ -116,37 +116,43 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
     }])
 
-    .controller('home', ['$scope', 'CalendarEvents','userService', '$firebase', function ($scope, CalendarEvents, userService, $firebase) {
-        $scope.ll = 2;
+    .controller('home', ['$scope', 'CalendarEvents', '$firebase','firebaseRef','leads', function ($scope,CalendarEvents, $firebase,firebaseRef,leads) {
         $scope.events = [];
-        var events = [
-            {
-                start: new Date(),
-                title: 'caffeina0'
-            },
-            {
-                start: '2014/04/28',
-                title: 'caffeina2'
-            },
-            {
-                start: '2014/06/28',
-                title: 'caffeinaAfter'
-            },
-            {
-                start: '2014/08/15',
-                title: 'caffeina3'
-            },
-            {
-                start: new Date('2014/09/10'),
-                title: 'caffeina4'
-            },
-            {
-                start: new Date('2014/09/02'),
-                title: 'caffeina5'
-            }
-        ];
+//        var events = [
+//            {
+//                start: new Date(),
+//                title: 'caffeina0'
+//            },
+//            {
+//                start: '2014/04/28',
+//                title: 'caffeina2'
+//            },
+//            {
+//                start: '2014/06/28',
+//                title: 'caffeinaAfter'
+//            },
+//            {
+//                start: '2014/08/15',
+//                title: 'caffeina3'
+//            },
+//            {
+//                start: new Date('2014/09/10'),
+//                title: 'caffeina4'
+//            },
+//            {
+//                start: new Date('2014/09/02'),
+//                title: 'caffeina5'
+//            }
+//        ];
 
-        CalendarEvents.setEvents($scope.events);
+
+        var tst=firebaseRef('/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads/');
+        var limi=tst.startAt(moment().valueOf("2014-05-01"));
+
+        $firebase(limi).$bind($scope,"eventuri").then(function(){
+            $scope.events= _.values($scope.eventuri);
+            CalendarEvents.setEvents($scope.events);
+        });
 
         $scope.addCalendarEvent = function () {
             var date = new Date();
@@ -163,23 +169,26 @@ angular.module('caffeina.controllers', ['ngCookies'])
             console.log('setdate');
         });
 
-        $scope.putEvents = function () {
-            $scope.events = events;
-            CalendarEvents.setEvents($scope.events);
 
-        };
 
-        $scope.signUp = function () {
-            var user = userService.getUser();
-            userService.signUp(user.email);
-            //                var newUsr = userEmail.replace('.', ',');
+        $scope.addLead=function() {
+
+            var lead={
+                "date":"2014-10-02",
+                "title":"Lead de incarcat prin servicii",
+                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"asdada@gmail.com"}
+            }
+
+            leads.add(lead);
 
 
         }
 
+
+
     }])
 
-    .controller('loginController', ['$scope', 'dataService', 'userService', '$cookieStore', '$location', '$ionicModal', function ($scope, dataService, userService, $cookieStore, $location, $ionicModal) {
+    .controller('loginController', ['$scope', 'userService', '$cookieStore', '$location', '$ionicModal', function ($scope, userService, $cookieStore, $location, $ionicModal) {
         $scope.login = function (type) {
             $scope.auth = userService.login(type, true);
         };
