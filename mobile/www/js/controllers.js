@@ -147,9 +147,10 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
 
         var tst=firebaseRef('/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads/');
-        var limi=tst.startAt(moment().valueOf("2014-05-01"));
+//        var limi=tst.startAt(moment().valueOf("2014-05-01"));
 
-        $firebase(limi).$bind($scope,"eventuri").then(function(){
+
+        $firebase(tst).$bind($scope,"eventuri").then(function(){
             $scope.events= _.values($scope.eventuri);
             CalendarEvents.setEvents($scope.events);
         });

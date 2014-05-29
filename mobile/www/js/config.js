@@ -11,7 +11,7 @@ angular.module('caffeina.config', [])
    .constant('loginRedirectPath', '/login')
 
    // your Firebase URL goes here
-   .constant('FBURL', 'https://caffeina.firebaseio.com')
+   .constant('fburl', 'https://caffeina.firebaseio.com')
 
    //you can use this one to try out a demo of the seed
 //   .constant('FBURL', 'https://angularfire-seed.firebaseio.com');
