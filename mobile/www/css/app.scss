@@ -1,7 +1,8 @@
 $font-size-base: 14px;
 $dark: #41272F;
 $light: #41272F;
-$base-background-color:#fff;
+$base-color:#41272F;
+$base-background-color: rgb(224, 220, 220);
 $input-color: $dark;
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 $toggle-on-bg-color: $dark;
@@ -27,7 +28,7 @@ $input-color-placeholder: lighten($dark, 30%);
 
 
 .menu {
-  background: rgba(75, 147, 251, 0.27);
+  background: #D7C1C1;
 }
 
 .logo-login {
