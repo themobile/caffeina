@@ -4,51 +4,74 @@ angular.module('caffeina.services', [])
     .constant('fireUrl', 'https://caffeina.firebaseio.com')
 
 
-    .factory('leads', ['$firebase', 'firebaseRef', 'userService', function ($firebase, firebaseRef, userService) {
-
-
+    .factory('leads', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', 'userService', function ($firebase, $firebaseSimpleLogin, firebaseRef, userService) {
+        var user = $firebaseSimpleLogin(firebaseRef());
         return {
+            add: function (lead) {
+                if (user.user && user.user.email) {
+                    var leadsRef = firebaseRef('/users/' + btoa(user.user.email) + '/leads/');
+                    leadsRef.child('counter').transaction(function (currentValue) {
+                        return (currentValue || 0) + 1
+                    }, function (err, commited, identity) {
+                        var now = moment().format("YYYY-MM-DD HH:mm:ss.SSS")
+                            ;
+                        if (err) {
+                            console.log("EROARE" + JSON.stringify(err));
+                        }
+                        else {
+                            if (commited) {
+                                lead.createdAt = now;
+                                lead.updatedAt = now;
+                                lead.version = 1;
+                                lead.isDeleted = false;
+                                leadsRef.child(identity.val()).setWithPriority(lead, lead.date);
+                            }
+                        }
+                    });
+                } else {
+                    console.log("MESAJ DE EROARE CA NU E LOGAT");
+                }
+            },
 
-//            get: function () {
-//
-//            },
-//
-//            getAllMonth: function (year, month) {
-//                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/');
-//                var startDate = moment(year.toString() + '-' + month.toString() + '-01').format('YYYY-MM-DD');
-//                var endDate = moment(startDate).add('month', 1).add('day', -1).format('YYYY-MM-DD');
-////                var leadsMonth=leadsRef.startAt(moment().valueOf(startDate)).endAt(moment().valueOf(endDate));
-//                var leadsMonth = leadsRef.startAt(startDate).endAt(endDate);
-//                leadsMonth.once('value', function(dataSnapShot){
-//                    console.log('asdas');
-//                })
-//            },
-//
-//            add: function (lead) {
-//                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/');
-//                leadsRef.push(lead).setPriority(lead.date);
-//            },
-//
-//            update: function (lead, leadId) {
-//                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/' + leadId);
-//                leadsRef.update(lead);
-//                leadsRef.setPriority(lead.date);
-//            },
-//
-//            remove: function (leadId) {
-//                var leadsRef = firebaseRef('/users/' + userService.getUserId() + '/leads/' + leadId).remove();
-//            }
-//
+            update: function (id, lead) {
+                if (user.user && user.user.email) {
+                    var leadsRef = firebaseRef('/users/' + btoa(user.user.email) + '/leads/')
+                        , now = moment().format("YYYY-MM-DD HH:mm:ss.SSS")
+                        ;
+                    leadsRef.child(id).once('value', function (dataSnapshoot) {
+                        lead.createdAt = dataSnapshoot.val().createdAt;
+                        lead.version = dataSnapshoot.val().version + 1;
+                        lead.updatedAt = now;
+                        lead.isDeleted = false;
+                        leadsRef.child(id).setWithPriority(lead, lead.date);
+                    });
+                } else {
+                    console.log("MESAJ DE EROARE CA NU E LOGAT");
+                }
+            },
 
-
+            remove: function (id) {
+                if (user.user && user.user.email) {
+                    var leadsRef = firebaseRef('/users/' + btoa(user.user.email) + '/leads/')
+                        , now = moment().format("YYYY-MM-DD HH:mm:ss.SSS")
+                        , lead
+                        ;
+                    leadsRef.child(id).once('value', function (dataSnapshoot) {
+                        lead = dataSnapshoot.val();
+                        lead.version = -1 * (lead.version + 1);
+                        lead.updatedAt = now;
+                        lead.isDeleted = true;
+                        leadsRef.child(id).setWithPriority(lead, lead.date);
+                    });
+                } else {
+                    console.log("MESAJ DE EROARE CA NU E LOGAT");
+                }
+            }
         }
-
-
     }])
 
 
     .factory('userService', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', 'syncData', function ($firebase, $firebaseSimpleLogin, firebaseRef, syncData) {
-//        var ref = new firebaseRef;
         var user = $firebaseSimpleLogin(firebaseRef());
         return {
 
@@ -59,15 +82,21 @@ angular.module('caffeina.services', [])
                     email: userEmail,
                     password: userPassword
                 }).then(function (response) {
-                        var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-                        userDetails.update({details: user.user});
-
-                    })
+                        var userFBRef = firebaseRef('/users/' + btoa(user.user.email))
+                            , currentDate = moment().format("YYYY-MM-DD-HH-mm-ss-SSS") + '-in'
+                            ;
+                        userFBRef.update({details: user.user});
+                        userFBRef.child('logs').child(currentDate).update({action: 'login'});
+                    });
                 return user;
 
             },
 
             logout: function () {
+                var currentDate = moment().format("YYYY-MM-DD-HH-mm-ss-SSS") + '-out'
+                    , logRef = firebaseRef('/users/' + btoa(user.user.email) + '/logs/' + currentDate)
+                    ;
+                logRef.update({action: 'logout'});
                 user.$logout();
 
             },
