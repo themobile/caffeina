@@ -1,50 +1,96 @@
 div(ng-switch='view')
     div(ng-switch-when='date')
-        table
-            thead
-                tr
-                    th(ng-click='prev()') ‹
-                    th.switch(colspan='5', ng-click='setView(\'month\')') {{date|date:"MMMM"}}
-                        span.an {{date|date:"yyyy"}}
-                    th(ng-click='next()') ›
-                tr
-                    th(ng-repeat='day in weekdays', style='overflow: hidden;') {{ day|date:"EEE" }}
-            tbody
-                tr(ng-repeat='week in weeks')
-                    td(ng-repeat='day in week')
+        //table
+        //    thead
+        //        tr
+        //            th(ng-click='prev()') ‹
+        //            th.switch(colspan='5', ng-click='setView(\'month\')') {{date|date:"MMMM"}}
+        //                span.an {{date|date:"yyyy"}}
+        //            th(ng-click='next()') ›
+        //        tr
+        //            th(ng-repeat='day in weekdays', style='overflow: hidden;') {{ day|date:"EEE" }}
+        //    tbody
+        //        tr(ng-repeat='week in weeks')
+        //            td(ng-repeat='day in week')
+        //
+        //                span(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
+        //                calendar-event(event="event",ng-if="hasEvent(day)", ng-repeat="event in getEvents(day)", ng-click="clickevents(day)")
+        //        tr(ng-show='weeks.length==5')
+        //            td(ng-repeat='day in [0,1,2,3,4,5,6]')
+        //                span.disabled
+        div.row
+            div.col.col-10(ng-click='prev()') <
+            div.col.col-80.switch(ng-click='setView(\'month\')') {{date|date:"MMMM"}}
+                span.an {{date|date:"yyyy"}}
+            div.col.col-10(ng-click='next()') >
 
-                        span(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
-                        calendar-event(event="event",ng-if="hasEvent(day)", ng-repeat="event in getEvents(day)", ng-click="clickevents(day)")
-                tr(ng-show='weeks.length==5')
-                    td(ng-repeat='day in [0,1,2,3,4,5,6]')
-                        span.disabled
+        div.row
+            div.col(ng-repeat='day in weekdays',style='overflow:hidden;') {{day|date:"EEE"}}
+
+        div.row(ng-repeat='week in weeks')
+            div.col(ng-repeat='day in week',style="text-align:center;position:relative")
+                span(style="text-align:center",ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
+                //calendar-event(event="event",ng-if="hasEvent(day)", ng-repeat="event in getEvents(day)", ng-click="clickevents(day)")
+                calendar-event(event="event",ng-if="hasEvent(day)", ng-click="clickevents(day)")
+        div.row(ng-show='weeks.length==5')
+            div.col(ng-repeat='a in [0,1,2,3,4,5,6]')
+                span
+
+
 
 
     //old
                         //span(ng-class='{\'now\':isNow(day),\'active\':isSameDay(day),\'disabled\':(day.getMonth()!=date.getMonth()),\'after\':isAfter(day),\'before\':isBefore(day)}', ng-click='setDate(day)', ng-bind='day.getDate()')
 
         div(ng-switch-when='year')
-            table
-                thead
-                    tr
-                        th(ng-click='prev(10)') ‹
-                        th.switch(colspan='5') {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
-                        th(ng-click='next(10)') ›
-                tbody
-                    tr
-                        td(colspan='7')
-                            span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-repeat='year in years', ng-click='setDate(year)', ng-bind='year.getFullYear()')
+
+            div.row
+                div.col.col-10(ng-click="prev(10)") <
+                div.col.col-90 {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
+                div.col.col-10(ng-click="next(10)") >
+
+            div.row(ng-repeat="group in yearsgroups")
+                div.col(ng-repeat='year in group')
+                    span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)', ng-bind='year.getFullYear()')
+
+
+
+
+
         div(ng-switch-when='month')
-            table
-                thead
-                    tr
-                        th(ng-click='prev()') ‹
-                        th.switch(colspan='5', ng-click='setView(\'year\')') {{ date|date:"yyyy" }}
-                        th(ng-click='next()') ›
-                tbody
-                    tr
-                        td(colspan='7')
-                            span(ng-repeat='month in months', ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
+            div.row
+                div.col.col-10(ng-click="prev()") <
+                div.col.col-90.switch(ng-click='setView(\'year\')') {{ date|date:"yyyy" }}
+                div.col.col-10(ng-click="next()") >
+            div.row(ng-repeat="group in monthsgroups")
+                div.col(ng-repeat='month in group')
+                    span( ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
+
+
+    //table
+            //    thead
+            //        tr
+            //            th(ng-click='prev(10)') ‹
+            //            th.switch(colspan='5') {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
+            //            th(ng-click='next(10)') ›
+            //    tbody
+            //        tr
+            //            td(colspan='7')
+            //                span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-repeat='year in years', ng-click='setDate(year)', ng-bind='year.getFullYear()')
+
+
+
+        //div(ng-switch-when='month')
+        //    table
+        //        thead
+        //            tr
+        //                th(ng-click='prev()') ‹
+        //                th.switch(colspan='5', ng-click='setView(\'year\')') {{ date|date:"yyyy" }}
+        //                th(ng-click='next()') ›
+        //        tbody
+        //            tr
+        //                td(colspan='7')
+        //                    span(ng-repeat='month in months', ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
         div(ng-switch-when='hours')
             table
                 thead

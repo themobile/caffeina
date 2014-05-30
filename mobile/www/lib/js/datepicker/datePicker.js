@@ -234,9 +234,17 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                     switch (view) {
                         case 'year':
                             scope.years = getVisibleYears(date);
+                            var n = 4;
+                            scope.yearsgroups = _.chain(scope.years).groupBy(function(element, index){
+                                return Math.floor(index/n);
+                            }).toArray().value();
                             break;
                         case 'month':
                             scope.months = getVisibleMonths(date);
+                            var n = 4;
+                            scope.monthsgroups = _.chain(scope.months).groupBy(function(element, index){
+                                return Math.floor(index/n);
+                            }).toArray().value();
                             break;
                         case 'date':
                             scope.weekdays = scope.weekdays || getDaysOfWeek();
