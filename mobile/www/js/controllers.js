@@ -116,12 +116,12 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
     }])
 
-    .controller('home', ['$scope', 'CalendarEvents', '$firebase','firebaseRef','firebaseRefUser','leads', function ($scope,CalendarEvents, $firebase,firebaseRef,firebaseRefUser,leads) {
+    .controller('home', ['$scope', 'CalendarEvents', '$firebase', 'firebaseRef', 'firebaseRefUser', 'leads', function ($scope, CalendarEvents, $firebase, firebaseRef, firebaseRefUser, leads) {
         $scope.events = [];
 
-        var leadsRef=firebaseRefUser('/leads/');
-        $firebase(leadsRef).$bind($scope,"eventsObject").then(function(){
-            $scope.events= _.values($scope.eventsObject);
+        var leadsRef = firebaseRefUser('/leads/');
+        $firebase(leadsRef).$bind($scope, "eventsObject").then(function () {
+            $scope.events = _.values($scope.eventsObject);
             CalendarEvents.setEvents($scope.events);
         });
 
@@ -142,26 +142,35 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
 
 //---------------teste ------------
-//        $scope.addLead=function() {
+
+        $scope.addLead = function () {
+
+            var anyDate = moment("2014-01-01").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD");
+            var lead = {
+                "date": anyDate,
+                "title": "Lead de incarcat prin servicii",
+                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"}
+            };
+            leads.add(lead);
+        };
+
 //
-//            var lead={
-//                "date":"2014-01-01",
-//                "title":"Lead de incarcat prin servicii",
-//                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"asdada@gmail.com"}
-//            }
-//            leads.add(lead);
-//        }
 //
-//
-//        $scope.updateLead=function() {
-//
-//            var lead={
-//                "date":"2015-05-01",
-//                "title":"Lead de modificat prin servicii",
-//                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"122323423@gmail.com"}
-//            }
-//            leads.update(lead,'-JO7GKm4-BIRsHI4ev9is');
-//        }
+        $scope.updateLead=function() {
+
+            var anyDate = moment("2014-01-01").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD");
+            var lead = {
+                "date": anyDate,
+                "title": "Lead de UPDAT-at prin servicii",
+                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"}
+            };
+            leads.update(4,lead);
+        };
+
+        $scope.removeLead=function() {
+            leads.remove(4);
+        };
+
 //
 //
 //        $scope.removeLead=function() {
@@ -181,7 +190,6 @@ angular.module('caffeina.controllers', ['ngCookies'])
 //        }
 
 //---------------teste ------------
-
 
 
     }])
