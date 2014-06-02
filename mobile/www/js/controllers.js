@@ -150,7 +150,7 @@ angular.module('caffeina.controllers', [])
 
             // push in local events for the selected day
             $scope.monthEvents=[];
-            $scope.monthEvents.push(_.find($scope.events, function(num) {return num.date==day}));
+            $scope.monthEvents=(_.filter($scope.events, function(num) {return num.date==day}));
 
         });
 
