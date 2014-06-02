@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('caffeina', ['ionic', 'caffeina.config', 'caffeina.services', 'caffeina.service.auth', 'ngCookies', 'angularLocalStorage', 'caffeina.service.firebase', 'caffeina.controllers', 'caffeina.controller.auth', 'caffeina.filters', 'firebase', 'datePicker', 'calevents'])
+angular.module('caffeina', ['ionic', 'caffeina.config', 'caffeina.services', 'caffeina.service.auth', 'ngCookies', 'angularLocalStorage', 'caffeina.service.firebase', 'caffeina.controllers', 'caffeina.controller.auth','caffeina.controller.tests', 'caffeina.filters', 'firebase', 'datePicker', 'calevents'])
 
 
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -42,6 +42,11 @@ angular.module('caffeina', ['ionic', 'caffeina.config', 'caffeina.services', 'ca
             .state('home', {
                 url: '/home',
                 templateUrl: 'templates/home.html'
+            })
+
+            .state('tests', {
+                url: '/tests',
+                templateUrl: 'templates/tests.html'
             });
 
         // if none of the above states are matched, use this as the fallback
