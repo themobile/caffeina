@@ -1,8 +1,8 @@
-angular.module('caffeina.controllers', ['ngCookies'])
+angular.module('caffeina.controllers', [])
 
 
 // A simple controller that shows a tapped item's data
-    .controller('MenuController', ['$scope', '$ionicSideMenuDelegate', 'userService', function ($scope, $ionicSideMenuDelegate, userService) {
+    .controller('MenuController', ['$scope', '$ionicSideMenuDelegate', 'userService', 'storage', '$state', function ($scope, $ionicSideMenuDelegate, userService, storage, $state) {
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -13,20 +13,22 @@ angular.module('caffeina.controllers', ['ngCookies'])
 
 
         $scope.$on('$firebaseSimpleLogin:logout', function (event) {
-
+            $scope.user = {};
         });
 
         $scope.logout = function () {
             userService.logout();
-            $scope.user = {};
+            storage.set('rememberMe', null);
+            storage.remove('caffeina_user');
+            $state.go('login')
         }
     }])
 
-    .controller('about', ['$scope', 'userService', '$firebase', function ($scope, userService, $firebase) {
+    .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', '$firebase', function ($scope, $ionicSideMenuDelegate, userService, $firebase) {
 
         var userEmail = userService.getUser().username;
-
-        var ref = new Firebase('https://caffeina.firebaseio.com/calendars/' + userEmail.replace(/\./g, ''));
+        var ref = new Firebase('https://caffeina.firebaseio.com/messages/' + userEmail.replace(/\./g, ''));
+        $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(true);
 
         $scope.messages = $firebase(ref);
         $scope.mesaj = '';
@@ -37,17 +39,15 @@ angular.module('caffeina.controllers', ['ngCookies'])
             $scope.mesaj = "";
         };
 
-        $scope.translateX = 1;
-
-
     }])
 
 
-    .controller('sortable', ['$scope', '$ionicPopup', function ($scope, $ionicPopup) {
+    .controller('sortable', ['$scope', '$ionicSideMenuDelegate', function ($scope, $ionicSideMenuDelegate) {
 //        $scope.data = {
 //            showDelete: false,
 //            showReorder:false
 //        };
+        $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(true);
 
         $scope.edit = function (item) {
             alert('Edit Item: ' + item.id);
@@ -68,235 +68,96 @@ angular.module('caffeina.controllers', ['ngCookies'])
         $scope.items = [
             { id: 1 },
             { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
-            { id: 6 },
-            { id: 7 },
-            { id: 8 },
-            { id: 9 },
             { id: 1 },
             { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
-            { id: 6 },
-            { id: 7 },
-            { id: 8 },
-            { id: 9 },
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
-            { id: 6 },
-            { id: 7 },
-            { id: 8 },
-            { id: 9 },
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
-            { id: 6 },
-            { id: 7 },
-            { id: 8 },
-            { id: 9 },
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
-            { id: 6 },
-            { id: 7 },
-            { id: 8 },
-            { id: 9 },
-            { id: 10 }
+            { id: 3 }
+
         ];
 
     }])
 
-    .controller('home', ['$scope', 'CalendarEvents', '$firebase','firebaseRef','firebaseRefUser','leads', function ($scope,CalendarEvents, $firebase,firebaseRef,firebaseRefUser,leads) {
+    .controller('home', ['$rootScope', '$scope', 'CalendarEvents', '$ionicSideMenuDelegate', '$firebase', 'userService', 'firebaseRef', 'firebaseRefUser', '$ionicLoading', function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, $ionicLoading) {
         $scope.events = [];
 
-        var leadsRef=firebaseRefUser('/leads/');
-        $firebase(leadsRef).$bind($scope,"eventsObject").then(function(){
-            $scope.events= _.values($scope.eventsObject);
-            CalendarEvents.setEvents($scope.events);
+        //drives the list with events for a selected day
+        $scope.monthEvents=[];
+
+        //load monthly data based on date
+        $scope.loadData = function (month) {
+            $ionicLoading.show({
+                template:'Loading app data...'
+            });
+
+            var startAt=moment(month, 'MMMM').startOf('month').format('YYYY-MM-DD');
+            var endAt=moment(month, 'MMMM').endOf('month').format('YYYY-MM-DD');
+                var leadsRef = firebaseRefUser('/leads/').startAt(startAt).endAt(endAt);
+                var kk = $firebase(leadsRef);
+                kk.$on('loaded', function (data) {
+                    $scope.events = _.values(data);
+                    CalendarEvents.setEvents($scope.events);
+                    $ionicLoading.hide();
+
+                });
+        };
+
+        $scope.init = function () {
+            //testing
+//            var fred=new Firebase('https://caffeina.firebaseio.com/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads')
+//            fred.on('value',function(dataSnapshot){
+//                var fredsnap=dataSnapshot;
+//
+//
+//                fredsnap.forEach(function(child){
+//
+//                    var add='https://caffeina.firebaseio.com/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads/'+child.name();
+//                    var kk=new Firebase(add);
+//                    kk.setPriority(child.val().date);
+//
+//                })
+//            })
+        };
+
+
+        // on firebase login
+        $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
+            $scope.loadData(moment().format('MMMM'));
+
         });
 
-//        $scope.addCalendarEvent = function () {
-//            var date = new Date();
-//            date.setDate($scope.events.length);
-//            $scope.events.push({
-//                start: date,
-//                title: 'Event #' + $scope.events.length
-//            });
-//            CalendarEvents.setEvents($scope.events);
-//        };
+        // on firebase logout
+        $rootScope.$on('$firebaseSimpleLogin:error', function (error) {
+            console.log(error);
+        });
 
 
+        //change data on month change
+        $scope.$on('calendar:changeMonth', function (event, date) {
+            $scope.monthEvents=[];
+            $scope.loadData(date);
+        });
+
+
+        //stop menu sliding on calendar swipe
+        $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(false);
+
+        // calendar loaded data
         $scope.$on('calendar:events', function (model, view) {
             console.log('setdate');
         });
 
+        // Click on event: search and display full event
+        $scope.$on('calendar:clickevent', function (event,day) {
 
-//---------------teste ------------
-//        $scope.addLead=function() {
-//
-//            var lead={
-//                "date":"2014-01-01",
-//                "title":"Lead de incarcat prin servicii",
-//                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"asdada@gmail.com"}
-//            }
-//            leads.add(lead);
-//        }
-//
-//
-//        $scope.updateLead=function() {
-//
-//            var lead={
-//                "date":"2015-05-01",
-//                "title":"Lead de modificat prin servicii",
-//                "contact":{"name":"Florian Cechi","phone":"7829387232","email":"122323423@gmail.com"}
-//            }
-//            leads.update(lead,'-JO7GKm4-BIRsHI4ev9is');
-//        }
-//
-//
-//        $scope.removeLead=function() {
-//
-//            leads.remove('-JO7GKm4-BIRsHI4ev9is');
-//        }
-//
-//
-//        $scope.getLeadsMonth=function(){
-//
-//            var month=1;
-//            var l=leads.getAllMonth(2014,1);
-//
-//
-//            console.log(JSON.stringify(l));
-//
-//        }
+            // push in local events for the selected day
+            $scope.monthEvents=[];
+            $scope.monthEvents.push(_.find($scope.events, function(num) {return num.date==day}));
 
-//---------------teste ------------
+        });
 
-
+        // hide loading screen and load current month
+        $ionicLoading.hide();
 
     }])
 
-    .controller('loginController', ['$scope', 'userService', '$cookieStore', '$location', '$ionicModal', function ($scope, userService, $cookieStore, $location, $ionicModal) {
-        $scope.login = function (type) {
-            $scope.auth = userService.login(type, true);
-        };
 
 
-        $scope.user = {};
-        $scope.loginType = $cookieStore.get('caffeinaLoginType') || '';
-        $scope.isAuto = $cookieStore.get('caffeinaLoginAuto');
-
-        //check cookies for first timers
-        (!$scope.loginType && !$scope.isAuto) ? $scope.firstTimeLogin = true : $scope.firstTimeLogin = false;
-
-
-        //isAuto change
-//        $scope.isCheckedChange = function() {
-//            $cookieStore.put('caffeinaLoginAuto',!$scope.isAuto);
-//        }
-
-
-        $scope.$on('$firebaseSimpleLogin:login', function (event, user) {
-            $cookieStore.put('caffeinaLoginType', user.provider);
-            $scope.loginType = user.provider;
-            $scope.firstTimeLogin = false;
-            $location.path('/home');
-
-//            $cookieStore.put('caffeinaUser', user);
-//            $cookieStore.put('caffeinaLoginAuto', $scope.isAuto);
-        });
-
-
-        $scope.$on('$firebaseSimpleLogin:logout', function (event) {
-            $scope.auth = {};
-            $scope.loginType = '';
-            $location.path('/login');
-
-        });
-
-
-        //ionic modal
-        $ionicModal.fromTemplateUrl('templates/signup_modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-                $scope.modal = modal;
-            });
-        $scope.openModal = function () {
-            $scope.modal.show();
-        };
-        $scope.closeModal = function () {
-            $scope.modal.hide();
-        };
-        //Cleanup the modal when we're done with it!
-        $scope.$on('$destroy', function () {
-            $scope.modal.remove();
-        });
-
-
-    }]);
-
-
-//    .controller('DemoCtrl', function ($scope, $famous) {
-//        var GenericSync = $famous['famous/inputs/GenericSync'];
-//        var Transitionable = $famous['famous/transitions/Transitionable']
-//        var EventHandler = $famous['famous/core/EventHandler']
-//
-//        var colors = [
-//            '#869B40',
-//            '#C2B02E',
-//            '#629286',
-//            '#B58963',
-//            '#9E9B8C'
-//        ];
-//
-//        var strings = [
-//            'famo.us',
-//            'angular',
-//            'javascript',
-//            'web',
-//            'wow',
-//            'such',
-//            'great'
-//        ];
-//
-//        var ELEMENTS = 150;
-//        var START_HUE = 320;
-//        var HUE_RANGE = 100;
-//        var SATURATION = 50;
-//        var LIGHTNESS = 50;
-//        var getHSL = function(index){
-//            var hue = (START_HUE + (HUE_RANGE * (index / ELEMENTS)));
-//            return "hsl(" +
-//                hue + "," +
-//                SATURATION + "%,"+
-//                LIGHTNESS + "%)";
-//        }
-//
-//        $scope.surfs = _.map(_.range(ELEMENTS), function(i){
-//            return {
-//                content: _.sample(strings),
-//                bgColor: getHSL(i)
-//            }
-//        });
-//
-//        setInterval(function(){
-//            for(var i = 0; i < ELEMENTS; i++){
-//                $scope.surfs[i].content = _.sample(strings);
-//            }
-//            if(!$scope.$$phase)
-//                $scope.$apply();
-//        }, 500);
-//
-//        $scope.enginePipe = new EventHandler();
-//    });

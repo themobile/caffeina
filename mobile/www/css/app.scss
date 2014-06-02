@@ -1,13 +1,24 @@
 $font-size-base: 14px;
 $dark: #41272F;
-$light: #41272F;
-$base-color:#41272F;
+$light: #E0DCDC;
+$base-color: #41272F;
 $base-background-color: rgb(224, 220, 220);
 $input-color: $dark;
-$font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 $toggle-on-bg-color: $dark;
 $toggle-on-border-color: none;
 $input-color-placeholder: lighten($dark, 30%);
+
+$checkbox-off-border-default: #41272F;
+$checkbox-on-bg-default: #41272F;
+$checkbox-off-bg-color: #E0DCDC;
+$checkbox-check-color: #E0DCDC;
+
+$font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+$font-size-base: 13px !default;
+$font-size-large: 20px !default;
+$font-size-small: 11px !default;
+$font-size-verysmall: 7px !default;
+
 
 //import default scss
 @import "../fonts/fonts.scss";
@@ -22,13 +33,12 @@ $input-color-placeholder: lighten($dark, 30%);
   //  background: linear-gradient(45deg, rgba(75,76,82,0.5) 0%,rgba(75,76,82,0.5) 100%); /* W3C */
   //  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#804b4c52', endColorstr='#804b4c52',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
-//  background: url('../img/backgr.png') no-repeat top center;
+  //  background: url('../img/backgr.png') no-repeat top center;
   background-size: cover;
 }
 
-
 .menu {
-  background: #D7C1C1;
+  background: #cdc9c9;
 }
 
 .logo-login {
@@ -40,7 +50,7 @@ $input-color-placeholder: lighten($dark, 30%);
   height: 200px;
 }
 
-.forma-login {
+.loginForm {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -51,7 +61,6 @@ $input-color-placeholder: lighten($dark, 30%);
   max-width: 200px;
   margin: 0 auto;
 }
-
 
 .toggle .track {
   border: none;
@@ -69,7 +78,7 @@ $input-color-placeholder: lighten($dark, 30%);
   padding: 0;
   border: none;
   box-shadow: none;
-  -webkit-transition: all  0.2s;
+  -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   transition: all 0.2s;
 
@@ -85,7 +94,6 @@ $input-color-placeholder: lighten($dark, 30%);
 .button-login {
   border-radius: 50%;
   background: none;
-  color:$light;
   width: 6em;
   height: 6em;
   border: none;
@@ -97,20 +105,19 @@ $input-color-placeholder: lighten($dark, 30%);
 }
 
 .button-login:hover, .button-login:active, .button-login:focus {
-  color:#e5883e;
+  color: #e5883e;
 }
 
-
 .input-label {
-  font-weight:normal;
-  color:#e5883e;
-  font-size:0.7em;
+  font-weight: normal;
+  color: #e5883e;
+  font-size: $font-size-verysmall;
 }
 
 .item {
-  background:transparent;
+  background: transparent;
   border: none;
-  border-bottom: 1px solid transparentize($light,0.9);
+  border-bottom: 1px solid transparentize($light, 0.9);
   font-size: $font-size-base;
   color: $dark;
 
@@ -119,19 +126,18 @@ $input-color-placeholder: lighten($dark, 30%);
   }
 }
 
-.card,.list-inset {
-  background:none;
+.card, .list-inset {
+  background: none;
 }
 
 .mmm {
-  background:red;
-  height:100%;
-  width:100%;
+  background: red;
+  height: 100%;
+  width: 100%;
 }
 
-
 [date-picker] .switch {
-  font-size: 36px;
+  font-size: $font-size-large;
   font-weight: 300;
 
   span.an {
@@ -139,4 +145,19 @@ $input-color-placeholder: lighten($dark, 30%);
     line-height: 40px;
 
   }
+}
+
+.buttonBarRight {
+  right: 0;
+  position: absolute;
+
+  button {
+    width: 50px;
+  }
+}
+
+.checkboxlogin {
+  width: 150px;
+  margin: 0 auto;
+  font-size: 0.8em;
 }

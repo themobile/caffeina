@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.config','caffeina.service.firebase','caffeina.controllers','firebase','ngCookies','datePicker','calevents', 'filters'])
+angular.module('caffeina', ['ionic', 'caffeina.config', 'caffeina.services', 'caffeina.service.auth', 'ngCookies', 'angularLocalStorage', 'caffeina.service.firebase', 'caffeina.controllers', 'caffeina.controller.auth', 'caffeina.filters', 'firebase', 'datePicker', 'calevents'])
 
 
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -45,34 +45,41 @@ angular.module('caffeina', ['ionic', 'caffeina.services', 'caffeina.config','caf
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('home');
+//        $urlRouterProvider.otherwise('login');
 
     })
 
-    .run(function ($rootScope, $cookieStore, $location,userService) {
-
-        var loginType = $cookieStore.get('caffeinaLoginType');
-        var loginAuto = $cookieStore.get('caffeinaLoginAuto');
-        var auth={};
-
-        $location.path('/home');
+    .run(function ($rootScope, $state, userService, storage,$ionicLoading) {
 
 
-//      TODO loginauto
-//      if (!loginType) {
-//            $location.path('/login');
-//        } else {
-//
-//            if (loginAuto) {
-//               auth = userService.login(loginType, true);
-//
-//                // TODO redirect to home
-//                $location.path('/chat');
-//            } else {
-//                $location.path('/login');
-//            }
-//        }
-    });
+
+//        $ionicLoading.show({
+//            template:'Loading app data...'
+//        });
+
+        var rememberMe , provider, token, caffeina_user;
+
+        rememberMe = storage.get('rememberMe');
+        caffeina_user = storage.get('caffeina_user');
+
+        if (caffeina_user) {
+            provider = caffeina_user.provider;
+            token = caffeina_user.accessToken;
+        }
+
+        if (rememberMe != true) {
+            userService.logout();
+            $state.go('login');
+        } else {
+            userService.login(provider, {
+                access_token: token,
+                rememberMe: rememberMe
+            });
+            $state.go('home');
+        }
+    })
+;
+
 
 // bootstrap the application
 var body = document.getElementsByTagName('body')[0];

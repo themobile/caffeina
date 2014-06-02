@@ -19,18 +19,20 @@ head
     //body(ng-app='caffeina', animation='slide-left-right-ios7')
     body(animation='slide-left-right-ios7')
 
-        ion-side-menus
+        ion-side-menus(ng-cloak,delegate-handle="home_screen")
             //
                  Center content
-            ion-side-menu-content
+            ion-side-menu-content(drag-content="shouldDragContent()")
                 //
                         The nav bar that will be updated as we navigate between views
                         Additional attributes set its look, ion-nav-bar animation and icons
                         Icons provided by Ionicons: http://ionicons.com/
                 ion-nav-bar(ng-controller='MenuController')
                     //ion-nav-back-button.button-icon.button-clear.ion-ios7-arrow-back
-                    button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
-
+                    button.button.icon.ion-navicon.button-clear.pull-left(ng-click="toggleLeft()")
+                    div.buttonBarRight
+                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty(ng-cloak)
+                        button.button.button-large.button-clear.icon.ion-ios7-search(ng-cloak)
                 //
 
                         The views will be rendered in the <ion-nav-view> directive below
@@ -39,9 +41,11 @@ head
                 ion-nav-view
 
 
+
+
             //
                Left menu
-            ion-side-menu(ng-cloack,side='left',ng-controller='MenuController')
+            ion-side-menu(side='left',ng-controller='MenuController')
                 .list
                     a.item.item-icon-left(href='#/home' ,nav-clear ,menu-close )
                         i.icon.ion-home
@@ -67,28 +71,35 @@ head
 
 
             //ionic/angularjs scripts
-
-
-
-
-
             script(src='lib/js/ionic.bundle.js')
             //script(src="http://code.ionicframework.com/1.0.0-beta.6/js/ionic.bundle.js")
-            script(type='text/javascript', src='lib/js/angular/angular-cookies.min.js')
+
+            //
+                angularfire
             script(src='lib/js/firebase/firebase.js')
             script(src='lib/js/firebase/firebase-simple-login.js')
             script(src='lib/js/firebase/angularfire.js')
+            script(src='lib/js/angular/angular-cookies.min.js')
+            script(src='lib/js/angular/angularLocalStorage.js')
+            //
+
+
+            //
+                utilities
             script(src='lib/js/moment/moment.min.js')
-            //script(src='lib/js/angular-ui/ui-bootstrap-tpls-0.10.0.min.js')
+            script(src='lib/js/underscore/underscore.js')
+            //
+
+            //
+                calendar
             script(src='lib/js/datepicker/datepicker.js')
-            //script(src='lib/js/datepicker/dateRange.js')
             script(src='lib/js/datepicker/input.js')
             script(src='lib/js/datepicker/calendar.js')
+            //
 
 
             //required by famous-angular
-            script(src='lib/js/underscore/underscore.js')
-            script(src='lib/js/require/require.js')
+            //script(src='lib/js/require/require.js')
             //script(src='lib/js/famous-angular/famous-angular.js')
 
 
@@ -101,5 +112,7 @@ head
             script(src='js/config.js')
             script(src='js/services.js')
             script(src='js/controllers.js')
+            script(src='js/controller.auth.js')
             script(src='js/filters.js')
             script(src='js/service.firebase.js')
+            script(src='js/service.auth.js')

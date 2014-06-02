@@ -1,10 +1,7 @@
-ion-view(title='')
+ion-view(title='',ng-init='init()')
     ion-content(padding='false', ng-controller='home')
-
-        calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents")
-
-        div.button-bar
-            a.button.button-clear(ng-click="addLead()") add
-            a.button.button-clear(ng-click="updateLead()") search
-
-
+        calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
+        ion-list
+            ion-item(ng-repeat='event in monthEvents')
+                h4 {{event.title}}
+                p {{event.date}}

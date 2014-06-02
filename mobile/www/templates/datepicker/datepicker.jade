@@ -1,116 +1,59 @@
 div(ng-switch='view')
+
+
+    //day view
     div(ng-switch-when='date')
-        //table
-        //    thead
-        //        tr
-        //            th(ng-click='prev()') ‹
-        //            th.switch(colspan='5', ng-click='setView(\'month\')') {{date|date:"MMMM"}}
-        //                span.an {{date|date:"yyyy"}}
-        //            th(ng-click='next()') ›
-        //        tr
-        //            th(ng-repeat='day in weekdays', style='overflow: hidden;') {{ day|date:"EEE" }}
-        //    tbody
-        //        tr(ng-repeat='week in weeks')
-        //            td(ng-repeat='day in week')
-        //
-        //                span(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
-        //                calendar-event(event="event",ng-if="hasEvent(day)", ng-repeat="event in getEvents(day)", ng-click="clickevents(day)")
-        //        tr(ng-show='weeks.length==5')
-        //            td(ng-repeat='day in [0,1,2,3,4,5,6]')
-        //                span.disabled
+
         div.row
-            div.col.col-10(ng-click='prev()') <
-            div.col.col-80.switch(ng-click='setView(\'month\')') {{date|date:"MMMM"}}
+            div.col.col-20
+                button.button-clear.button-full.ion-arrow-left-b(ng-click='prev()')
+            div.calendarTitle.col.col-60(ng-click='setView(\'month\')') {{date|date:"MMMM"|lowercase}}
                 span.an {{date|date:"yyyy"}}
-            div.col.col-10(ng-click='next()') >
+            div.col.col-20
+                button.button-clear.button-full.ion-arrow-right-b(ng-click='next()')
 
         div.row
-            div.col(ng-repeat='day in weekdays',style='overflow:hidden;') {{day|date:"EEE"}}
+            div.col(ng-repeat='day in weekdays',style='overflow:hidden;') {{day|date:"EEE"|lowercase}}
 
-        div.row(ng-repeat='week in weeks')
-            div.col(ng-repeat='day in week',style="text-align:center;position:relative")
-                span(style="text-align:center",ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
-                //calendar-event(event="event",ng-if="hasEvent(day)", ng-repeat="event in getEvents(day)", ng-click="clickevents(day)")
+        div.row.calendarRow(ng-repeat='week in weeks')
+            div.col.calElement(ng-repeat='day in week')
+                span(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
                 calendar-event(event="event",ng-if="hasEvent(day)", ng-click="clickevents(day)")
-        div.row(ng-show='weeks.length==5')
-            div.col(ng-repeat='a in [0,1,2,3,4,5,6]')
-                span
+        //div.row(ng-show='weeks.length==5')
+        //    div.col(ng-repeat='a in [0,1,2,3,4,5,6]')
+        //        span
+
+
+    //year view
+    div(ng-switch-when='year')
+
+        div.row
+            div.col.col-20
+                button.button-clear.button-full.ion-arrow-left-b(ng-click="prev(10)")
+            div.calendarTitle.col.col-60 {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
+                span.an
+            div.col.col-20
+                button.button-clear.button-full.ion-arrow-right-b(ng-click='next(10)')
+
+        div.row(ng-repeat="group in yearsgroups")
+            div.col(ng-repeat='year in group')
+                span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)', ng-bind='year.getFullYear()')
 
 
 
 
-    //old
-                        //span(ng-class='{\'now\':isNow(day),\'active\':isSameDay(day),\'disabled\':(day.getMonth()!=date.getMonth()),\'after\':isAfter(day),\'before\':isBefore(day)}', ng-click='setDate(day)', ng-bind='day.getDate()')
 
-        div(ng-switch-when='year')
+    //month view
+    div(ng-switch-when='month')
 
-            div.row
-                div.col.col-10(ng-click="prev(10)") <
-                div.col.col-90 {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
-                div.col.col-10(ng-click="next(10)") >
+        div.row
+            div.col.col-20
+                button.button-clear.button-full.ion-arrow-left-b(ng-click="prev()")
+            div.calendarTitle.col.col-60(ng-click='setView(\'year\')') {{ date|date:"yyyy"|lowercase }}
+                span.an
+            div.col.col-20
+                button.button-clear.button-full.ion-arrow-right-b(ng-click="next()")
+        div.row(ng-repeat="group in monthsgroups")
 
-            div.row(ng-repeat="group in yearsgroups")
-                div.col(ng-repeat='year in group')
-                    span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)', ng-bind='year.getFullYear()')
-
-
-
-
-
-        div(ng-switch-when='month')
-            div.row
-                div.col.col-10(ng-click="prev()") <
-                div.col.col-90.switch(ng-click='setView(\'year\')') {{ date|date:"yyyy" }}
-                div.col.col-10(ng-click="next()") >
-            div.row(ng-repeat="group in monthsgroups")
-                div.col(ng-repeat='month in group')
-                    span( ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
-
-
-    //table
-            //    thead
-            //        tr
-            //            th(ng-click='prev(10)') ‹
-            //            th.switch(colspan='5') {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
-            //            th(ng-click='next(10)') ›
-            //    tbody
-            //        tr
-            //            td(colspan='7')
-            //                span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-repeat='year in years', ng-click='setDate(year)', ng-bind='year.getFullYear()')
-
-
-
-        //div(ng-switch-when='month')
-        //    table
-        //        thead
-        //            tr
-        //                th(ng-click='prev()') ‹
-        //                th.switch(colspan='5', ng-click='setView(\'year\')') {{ date|date:"yyyy" }}
-        //                th(ng-click='next()') ›
-        //        tbody
-        //            tr
-        //                td(colspan='7')
-        //                    span(ng-repeat='month in months', ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
-        div(ng-switch-when='hours')
-            table
-                thead
-                    tr
-                        th(ng-click='prev(24)') ‹
-                        th.switch(colspan='5', ng-click='setView(\'date\')') {{ date|date:"dd MMMM yyyy" }}
-                        th(ng-click='next(24)') ›
-                tbody
-                    tr
-                        td(colspan='7')
-                            span(ng-repeat='hour in hours', ng-class='{\'now\':isNow(hour),\'active\':isSameHour(hour)}', ng-click='setDate(hour)', ng-bind='hour|time')
-        div(ng-switch-when='minutes')
-            table
-                thead
-                    tr
-                        th(ng-click='prev()') ‹
-                        th.switch(colspan='5', ng-click='setView(\'hours\')')
-                            | {{ date|date:"dd MMMM yyyy" }}
-                        th(ng-click='next()') ›
-                tbody
-                    tr
-                        td(colspan='7')
-                            span(ng-repeat='minute in minutes', ng-class='{active:isSameMinutes(minute),\'now\':isNow(minute)}', ng-click='setDate(minute)', ng-bind='minute|time')
+            div.col(ng-repeat='month in group')
+                span( ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')

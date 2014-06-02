@@ -3107,7 +3107,7 @@ a.subdued {
   border-style: solid;
   border-top: 1px solid transparent;
   border-bottom: 1px solid #dddddd;
-  background-color: #41272f;
+  background-color: #e0dcdc;
   /* border-width: 1px will actually create 2 device pixels on retina */
   /* this nifty trick sets an actual 1px border on hi-res displays */
   background-size: 0; }
@@ -3135,7 +3135,7 @@ a.subdued {
       background: transparent; }
   .bar.bar-light {
     border-color: #dddddd;
-    background-color: #41272f;
+    background-color: #e0dcdc;
     background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     color: #444444; }
     .bar.bar-light .title {
@@ -3270,7 +3270,7 @@ a.subdued {
 
 .bar-light .button {
   border-color: #dddddd;
-  background-color: #41272f;
+  background-color: #e0dcdc;
   color: #444444; }
   .bar-light .button:hover {
     color: #444444;
@@ -3536,13 +3536,13 @@ a.subdued {
 .tabs-light > .tabs,
 .tabs.tabs-light {
   border-color: #dddddd;
-  background-color: #41272f;
+  background-color: #e0dcdc;
   background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
   color: #444444; }
   .tabs-light > .tabs .tab-item .badge,
   .tabs.tabs-light .tab-item .badge {
     background-color: #444444;
-    color: #41272f; }
+    color: #e0dcdc; }
 
 .tabs-stable > .tabs,
 .tabs.tabs-stable {
@@ -3733,7 +3733,7 @@ a.subdued {
   .tab-item.tab-item-active.tab-item-light,
   .tab-item.active.tab-item-light,
   .tab-item.activated.tab-item-light {
-    color: #41272f; }
+    color: #e0dcdc; }
   .tab-item.tab-item-active.tab-item-stable,
   .tab-item.active.tab-item-stable,
   .tab-item.activated.tab-item-stable {
@@ -3993,7 +3993,7 @@ a.subdued {
  */
 .item {
   border-color: #dddddd;
-  background-color: #41272f;
+  background-color: #e0dcdc;
   color: #444444;
   position: relative;
   z-index: 2;
@@ -4044,7 +4044,7 @@ a.subdued {
     margin-right: 5px; }
   .item.item-light {
     border-color: #dddddd;
-    background-color: #41272f;
+    background-color: #e0dcdc;
     color: #444444; }
   .item.item-stable {
     border-color: #b2b2b2;
@@ -4776,7 +4776,7 @@ button.item.item-button-right {
 
 .tabs .tab-item .badge.badge-light,
 .badge.badge-light {
-  background-color: #41272f;
+  background-color: #e0dcdc;
   color: #444444; }
 .tabs .tab-item .badge.badge-stable,
 .badge.badge-stable {
@@ -5083,7 +5083,7 @@ textarea {
   border-radius: 2px;
   padding: 4px 8px 3px;
   border: none;
-  background-color: #41272f; }
+  background-color: #e0dcdc; }
 
 .item-stacked-label input {
   overflow: hidden;
@@ -5207,9 +5207,9 @@ input[type="checkbox"][readonly] {
   padding: 7px 7px;
   cursor: pointer; }
   .checkbox input:before, .checkbox .checkbox-icon:before {
-    border-color: #4a87ee; }
+    border-color: #41272f; }
   .checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
-    background: #4a87ee; }
+    background: #41272f; }
   .checkbox.checkbox-light input:before, .checkbox.checkbox-light .checkbox-icon:before {
     border-color: #dddddd; }
   .checkbox.checkbox-light input:checked:before, .checkbox.checkbox-light input:checked + .checkbox-icon:before {
@@ -5268,7 +5268,7 @@ input[type="checkbox"][readonly] {
     border-width: 1px;
     border-style: solid;
     border-radius: 28px;
-    background: white;
+    background: #e0dcdc;
     content: ' ';
     transition: background-color 20ms ease-in-out; }
 
@@ -5290,7 +5290,7 @@ input:checked + .checkbox-icon:before {
   display: table;
   width: 15px;
   height: 10.33333px;
-  border: 3px solid white;
+  border: 3px solid #e0dcdc;
   border-top: 0;
   border-right: 0;
   content: ' ';
@@ -5304,7 +5304,7 @@ input:checked + .checkbox-icon:before {
   top: 3px;
   left: 4px;
   border: none;
-  color: white;
+  color: #e0dcdc;
   content: '\2713';
   font-weight: bold;
   font-size: 20px; }
@@ -5421,7 +5421,7 @@ input:checked + .checkbox-icon:after {
   width: 28px;
   height: 28px;
   border-radius: 28px;
-  background-color: #41272f;
+  background-color: #e0dcdc;
   top: 7px;
   left: 7px; }
   .toggle .handle:before {
@@ -5435,7 +5435,7 @@ input:checked + .checkbox-icon:after {
   -webkit-transform: translate3d(22px, 0, 0);
   -moz-transform: translate3d(22px, 0, 0);
   transform: translate3d(22px, 0, 0);
-  background-color: #41272f; }
+  background-color: #e0dcdc; }
 
 .item-toggle.active {
   box-shadow: none; }
@@ -5527,7 +5527,7 @@ input[type="range"] {
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    background-color: #41272f;
+    background-color: #e0dcdc;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 1px 3px 5px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     -webkit-appearance: none; }
@@ -5734,7 +5734,7 @@ progress {
     margin-bottom: 10px; }
   .button.button-light {
     border-color: #dddddd;
-    background-color: #41272f;
+    background-color: #e0dcdc;
     color: #444444; }
     .button.button-light:hover {
       color: #444444;
@@ -7345,10 +7345,10 @@ a.button {
  * instead have colors which represent an emotion or generic theme.
  */
 .light, a.light {
-  color: #41272f; }
+  color: #e0dcdc; }
 
 .light-bg {
-  background-color: #41272f; }
+  background-color: #e0dcdc; }
 
 .light-border {
   border-color: #dddddd; }
@@ -7462,7 +7462,7 @@ a.button {
   background-size: cover; }
 
 .menu {
-  background: #D7C1C1; }
+  background: #cdc9c9; }
 
 .logo-login {
   background: url("../img/logo-login-12.png") no-repeat top center;
@@ -7472,7 +7472,7 @@ a.button {
   display: block;
   height: 200px; }
 
-.forma-login {
+.loginForm {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -7487,7 +7487,7 @@ a.button {
 
 .bar.bar-positive {
   background-color: none;
-  border-color: #41272f;
+  border-color: #e0dcdc;
   border: none;
   background-image: none; }
 
@@ -7496,7 +7496,7 @@ a.button {
   padding: 0;
   border: none;
   box-shadow: none;
-  -webkit-transition: all  0.2s;
+  -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   transition: all 0.2s; }
   .card .subtitle {
@@ -7508,7 +7508,6 @@ a.button {
 .button-login {
   border-radius: 50%;
   background: none;
-  color: #41272f;
   width: 6em;
   height: 6em;
   border: none;
@@ -7523,12 +7522,12 @@ a.button {
 .input-label {
   font-weight: normal;
   color: #e5883e;
-  font-size: 0.7em; }
+  font-size: 7px; }
 
 .item {
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(65, 39, 47, 0.1);
+  border-bottom: 1px solid rgba(224, 220, 220, 0.1);
   font-size: 14px;
   color: #41272f; }
   .item .item-toggle {
@@ -7543,8 +7542,19 @@ a.button {
   width: 100%; }
 
 [date-picker] .switch {
-  font-size: 36px;
+  font-size: 20px;
   font-weight: 300; }
   [date-picker] .switch span.an {
     font-size: 16px;
     line-height: 40px; }
+
+.buttonBarRight {
+  right: 0;
+  position: absolute; }
+  .buttonBarRight button {
+    width: 50px; }
+
+.checkboxlogin {
+  width: 150px;
+  margin: 0 auto;
+  font-size: 0.8em; }

@@ -1,66 +1,49 @@
 @import "variables";
 @import "mixins";
 
-[date-picker-wrapper]{
-  position: relative !important;
-  display:block;
-}
-
-[date-time-append] [date-picker]{
-  position: relative;
-  margin-right: -1000px;
-  margin-bottom: -1000px;
-}
-
 [date-range] [date-picker] {
-  .after.before{
+  .after.before {
     .buttonBackground(@btnInfoBackground, spin(@btnInfoBackgroundHighlight, 20));
   }
 }
 
 calendar-event {
-  border-bottom: 4px solid #41272F;
-  height: 100%;
-  width: 50%;
+  width: 60%;
+  height: 30px;
+  top: 5px;
+  left: 15%;
   display: block;
   position: absolute;
-  top: 0;
-  left: 25%;
-}
+  border-bottom: 3px solid red;
 
+}
 
 [date-picker] {
   .user-select(none);
-  .border-radius(4px);
 
   /* GENERAL */
 
   padding: 4px;
 
-
   span {
-      display: block;
-			cursor: pointer;
-			.border-radius(4px);
-			&:hover {
-//				background: @grayLighter;
-			}
-			&.disabled, &.disabled:hover {
-				background:none;
-				color: @grayLight;
-				cursor: default;
-			}
+    display: block;
+    cursor: pointer;
+    &:hover {
+      //				background: @grayLighter;
+    }
+    &.disabled, &.disabled:hover {
+      background: none;
+      color: @grayLight;
+      cursor: default;
+    }
 
   }
 
-  .active , .now{
-//    .buttonBackground(@btnPrimaryBackground, spin(@btnPrimaryBackground, 20));
-//    color: #fff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+  .active, .now {
+
   }
 
   .now {
-//    .buttonBackground(@btnDangerBackground, spin(@btnDangerBackground, 20));
   }
 
   .disabled {
@@ -71,81 +54,49 @@ calendar-event {
 
   /* SPECIFIC */
 
-
-
-  th:hover, [ng-switch-when="date"] td span:hover{
-//    background: @grayLighter;
-	  cursor: pointer;
+  [ng-switch-when="date"] span:hover {
+    //    background: @grayLighter;
+    cursor: pointer;
   }
 }
 
+[ng-switch-when="date"], [ng-switch-when="year"], [ng-switch-when="month"] {
+  text-align: center;
 
-//.eventCalendar tbody tr:nth-child(odd) {
-//  background-color: rgba(0,0,0,0.1);
-//}
-//.eventCalendar th {
-//  background-color: rgba(0,0,0,0.2);
-//}
-//
-//.eventCalendar td:nth-child(even) {
-//  background-color: rgba(0,0,0,0.1);
-//}
-//
-//.eventCalendar thead th {
-//  background-color: transparent;
-//  border:0;
-//}
-//
-//.eventCalendar thead tr:last-child th {
-//  border: 1px solid black;
-//}
-//
-//.eventCalendar table {
-//  border-collapse: collapse;
-//  width: 100%;
-//}
-//
-//.eventCalendar td, [date-picker] th{
-//  border: 1px solid black;
-//  padding: 5px;
-//  text-align: center;
-//}
-//.eventCalendar [ng-switch-when=date] td {
-//  width: calc(100% / 7 );
-//  vertical-align: top;
-//}
-//
-//.eventCalendar td span {
-//  float: right;
-//  font-size: 12px;
-//  display: block;
-//  padding: 0;
-//  width: 33%;
-//  margin: 0;
-//}
-//.eventCalendar .now {
-//  color:navy;
-//  font-weight:bold;
-//}
-//calendar.eventCalendar [ng-switch-when=date] td {
-//  position: relative;
-//  padding: 0;
-//  padding-top:25px;
-//}
-//
-//calendar.eventCalendar [ng-switch-when=date] td span {
-//  position: absolute;
-//  top: 5px;
-//  right: 5px;
-//  text-align: right;
-//  padding:0;
-//  width: auto;
-//  background: transparent !important;
-//}
-//
-//calendar.eventCalendar [ng-switch-when=date] td span.now {
-//  color: black;
-//}
+  .calendarTitle {
+    font-size: 32px;
+    line-height:35px;
+    padding-bottom: 20px;
+
+    span.an {
+      font-size: 14px;
+      padding-top: 10px;
+    }
+  }
+
+  div.col > span {
+    height: 30px;
+  }
+
+  .calendarRow {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+  }
+
+  .calElement {
+    position:relative;
+    line-height:30px;
+  }
+
+  .row + .row {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  button.button-full {
+    height:100%;
+  }
+
+}
 
 .eventCalendar .event {
   text-align: center;
@@ -156,7 +107,6 @@ calendar-event {
   background: none;
   height: 100%;
 }
-
 
 .event {
   text-align: center;

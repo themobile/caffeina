@@ -1,4 +1,4 @@
-angular.module('filters', [])
+angular.module('caffeina.filters', [])
 
 
     .filter('next3futureEvents', function () {

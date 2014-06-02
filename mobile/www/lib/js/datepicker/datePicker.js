@@ -146,8 +146,8 @@ function isSameMinutes(model, date) {
 }
 
 
-Module.directive('datePicker', ['datePickerConfig','$injector',
-    function datePickerDirective(datePickerConfig,$injector) {
+Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture',
+    function datePickerDirective(datePickerConfig, $injector, $ionicGesture) {
 
         //noinspection JSUnusedLocalSymbols
         return {
@@ -179,9 +179,15 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                     scope.view = scope.views[0];
                 }
 
-                scope.clickevents=function(day){
-                    console.log('clicked:'+day);
+                scope.clickevents = function (day) {
+//                    console.log('clicked2:' + day);
+                    scope.$emit('calendar:clickevent',moment(day).format('YYYY-MM-DD'));
+
                 }
+
+
+
+
 
                 scope.setView = function (nextView) {
                     if (scope.views.indexOf(nextView) !== -1) {
@@ -189,10 +195,34 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                     }
                 };
 
-                element.bind('swipe', function() {
 
-                    //TODO: change month depending on direction
-                });
+
+
+//
+                $ionicGesture.on('dragend', function (event) {
+
+                    event.gesture.preventDefault();
+
+                    if (event.gesture.deltaX > 70) {
+                        console.log('Delta !' + event.gesture.distance);
+                        scope.prev();
+                        scope.$apply();
+                    }
+
+                    if (event.gesture.deltaX < -70) {
+                        console.log('Delta !' + event.gesture.distance);
+
+                        scope.next();
+                        scope.$apply();
+                    }
+
+                    //TODO de impiedicat meniul sa se afiseze la swipe dreapta
+
+
+
+                }, element);
+
+
 
                 scope.setDate = function (date) {
                     scope.date = date;
@@ -230,25 +260,26 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                 function update() {
                     var view = scope.view;
                     var date = scope.date;
-                    var suplWeek=[];
+                    var suplWeek = [];
                     switch (view) {
                         case 'year':
                             scope.years = getVisibleYears(date);
                             var n = 4;
-                            scope.yearsgroups = _.chain(scope.years).groupBy(function(element, index){
-                                return Math.floor(index/n);
+                            scope.yearsgroups = _.chain(scope.years).groupBy(function (element, index) {
+                                return Math.floor(index / n);
                             }).toArray().value();
                             break;
                         case 'month':
                             scope.months = getVisibleMonths(date);
                             var n = 4;
-                            scope.monthsgroups = _.chain(scope.months).groupBy(function(element, index){
-                                return Math.floor(index/n);
+                            scope.monthsgroups = _.chain(scope.months).groupBy(function (element, index) {
+                                return Math.floor(index / n);
                             }).toArray().value();
                             break;
                         case 'date':
                             scope.weekdays = scope.weekdays || getDaysOfWeek();
                             scope.weeks = getVisibleWeeks(date);
+                            scope.$emit('calendar:changeMonth', moment(date).format('MMMM'));
 
                             break;
                         case 'hours':
@@ -354,10 +385,10 @@ Module.directive('datePicker', ['datePickerConfig','$injector',
                 scope.eventService = attrs.eventService || false;
                 if (scope.eventService && $injector.has(scope.eventService)) {
                     scope.eventService = $injector.get(scope.eventService);
-                    scope.$on('calendar:events', function () {
-//                        scope.$apply();
-//                        update();
-                    });
+//                    scope.$on('calendar:events', function () {
+////                        scope.$apply();
+////                        update();
+//                    });
                 }
 
                 /**

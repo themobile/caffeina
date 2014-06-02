@@ -50,9 +50,7 @@ Module.directive('calendarEvent', function() {
         },
         templateUrl: 'templates/datepicker/event.html',
         link: function(scope,elem,attrs){
-//            elem.bind('click', function(){
-//                scope.ll=5;
-//            });
+
         }
 
     }
