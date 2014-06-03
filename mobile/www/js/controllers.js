@@ -78,26 +78,34 @@ angular.module('caffeina.controllers', [])
 
     .controller('home', ['$rootScope', '$scope', 'CalendarEvents', '$ionicSideMenuDelegate', '$firebase', 'userService', 'firebaseRef', 'firebaseRefUser', '$ionicLoading', function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, $ionicLoading) {
         $scope.events = [];
+        $scope.datePickerControl = {};
+
+
+        $scope.goToday2 = function () {
+            $scope.$broadcast('gotoday');
+            $scope.$broadcast('scroll.refreshComplete');
+
+        };
 
         //drives the list with events for a selected day
-        $scope.monthEvents=[];
+        $scope.monthEvents = [];
 
         //load monthly data based on date
         $scope.loadData = function (month) {
             $ionicLoading.show({
-                template:'Loading app data...'
+                template: 'Loading app data...'
             });
 
-            var startAt=moment(month, 'MMMM').startOf('month').format('YYYY-MM-DD');
-            var endAt=moment(month, 'MMMM').endOf('month').format('YYYY-MM-DD');
-                var leadsRef = firebaseRefUser('/leads/').startAt(startAt).endAt(endAt);
-                var kk = $firebase(leadsRef);
-                kk.$on('loaded', function (data) {
-                    $scope.events = _.values(data);
-                    CalendarEvents.setEvents($scope.events);
-                    $ionicLoading.hide();
+            var startAt = moment(month, 'MMMM').startOf('month').format('YYYY-MM-DD');
+            var endAt = moment(month, 'MMMM').endOf('month').format('YYYY-MM-DD');
+            var leadsRef = firebaseRefUser('/leads/').startAt(startAt).endAt(endAt);
+            var kk = $firebase(leadsRef);
+            kk.$on('loaded', function (data) {
+                $scope.events = _.values(data);
+                CalendarEvents.setEvents($scope.events);
+                $ionicLoading.hide();
 
-                });
+            });
         };
 
         $scope.init = function () {
@@ -132,7 +140,7 @@ angular.module('caffeina.controllers', [])
 
         //change data on month change
         $scope.$on('calendar:changeMonth', function (event, date) {
-            $scope.monthEvents=[];
+            $scope.monthEvents = [];
             $scope.loadData(date);
         });
 
@@ -146,11 +154,13 @@ angular.module('caffeina.controllers', [])
         });
 
         // Click on event: search and display full event
-        $scope.$on('calendar:clickevent', function (event,day) {
+        $scope.$on('calendar:clickevent', function (event, day) {
 
             // push in local events for the selected day
-            $scope.monthEvents=[];
-            $scope.monthEvents=(_.filter($scope.events, function(num) {return num.date==day}));
+            $scope.monthEvents = [];
+            $scope.monthEvents = (_.filter($scope.events, function (num) {
+                return num.date == day
+            }));
 
         });
 

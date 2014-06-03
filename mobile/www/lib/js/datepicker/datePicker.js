@@ -160,6 +160,15 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
             },
             link: function (scope, element, attrs) {
 
+
+
+                scope.$on('gotoday', function(){
+                    console.log('changed');
+                    scope.date.setMonth(moment().month());
+                    update();
+                })
+
+
                 scope.date = new Date(scope.model || new Date());
                 scope.views = datePickerConfig.views.concat();
                 scope.view = attrs.view || datePickerConfig.view;
@@ -185,18 +194,11 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
 
                 }
 
-
-
-
-
                 scope.setView = function (nextView) {
                     if (scope.views.indexOf(nextView) !== -1) {
                         scope.view = nextView;
                     }
                 };
-
-
-
 
 //
                 $ionicGesture.on('dragend', function (event) {
@@ -215,10 +217,6 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                         scope.next();
                         scope.$apply();
                     }
-
-                    //TODO de impiedicat meniul sa se afiseze la swipe dreapta
-
-
 
                 }, element);
 
