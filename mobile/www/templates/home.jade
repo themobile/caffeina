@@ -1,6 +1,6 @@
 ion-view(title='',ng-init='init()')
     ion-content(padding='false', ng-controller='home')
-        ion-refresher(pulling-text="Pull to go today",on-refresh="goToday2()")
+        ion-refresher(pulling-text="Pull to go today",on-refresh="goToday()")
         calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
         ion-list
             ion-item(ng-repeat='event in monthEvents')

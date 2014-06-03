@@ -76,12 +76,12 @@ angular.module('caffeina.controllers', [])
 
     }])
 
-    .controller('home', ['$rootScope', '$scope', 'CalendarEvents', '$ionicSideMenuDelegate', '$firebase', 'userService', 'firebaseRef', 'firebaseRefUser', '$ionicLoading', function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, $ionicLoading) {
+    .controller('home', ['$rootScope', '$scope', 'CalendarEvents', '$ionicSideMenuDelegate', '$firebase', 'userService', 'firebaseRef', 'firebaseRefUser', '$ionicLoading','ngProgressLite', function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, $ionicLoading,ngProgressLite) {
         $scope.events = [];
         $scope.datePickerControl = {};
 
-
-        $scope.goToday2 = function () {
+        //event broadcasted to datepicker directive to go today
+        $scope.goToday = function () {
             $scope.$broadcast('gotoday');
             $scope.$broadcast('scroll.refreshComplete');
 
@@ -92,9 +92,11 @@ angular.module('caffeina.controllers', [])
 
         //load monthly data based on date
         $scope.loadData = function (month) {
-            $ionicLoading.show({
-                template: 'Loading app data...'
-            });
+//            $ionicLoading.show({
+//                template: 'Loading app data...'
+//            });
+
+            ngProgressLite.start();
 
             var startAt = moment(month, 'MMMM').startOf('month').format('YYYY-MM-DD');
             var endAt = moment(month, 'MMMM').endOf('month').format('YYYY-MM-DD');
@@ -103,7 +105,8 @@ angular.module('caffeina.controllers', [])
             kk.$on('loaded', function (data) {
                 $scope.events = _.values(data);
                 CalendarEvents.setEvents($scope.events);
-                $ionicLoading.hide();
+//                $ionicLoading.hide();
+                ngProgressLite.done();
 
             });
         };

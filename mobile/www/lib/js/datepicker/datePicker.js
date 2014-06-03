@@ -160,11 +160,11 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
             },
             link: function (scope, element, attrs) {
 
-
-
+                //event broadcasted from template to go to current month
                 scope.$on('gotoday', function(){
-                    console.log('changed');
+                    scope.date.setFullYear(moment().year());
                     scope.date.setMonth(moment().month());
+
                     update();
                 })
 
