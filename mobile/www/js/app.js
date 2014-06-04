@@ -3,9 +3,25 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
+// 'starter.services' is found in services.lead.js
 // 'starter.controllers' is found in controllers.js
-angular.module('caffeina', ['ionic', 'caffeina.config', 'caffeina.services', 'caffeina.service.auth', 'ngCookies', 'angularLocalStorage', 'caffeina.service.firebase', 'caffeina.controllers', 'caffeina.controller.auth','caffeina.controller.tests', 'caffeina.filters', 'firebase', 'datePicker', 'calevents','ngProgressLite'])
+angular.module('caffeina',
+        ['ionic',
+            'caffeina.config',
+            'caffeina.services.lead',
+            'caffeina.services.contact',
+            'caffeina.service.auth',
+            'ngCookies',
+            'angularLocalStorage',
+            'caffeina.service.firebase',
+            'caffeina.controllers',
+            'caffeina.controller.auth',
+            'caffeina.controller.tests',
+            'caffeina.filters',
+            'firebase',
+            'datePicker',
+            'calevents',
+            'ngProgressLite'])
 
 
     .config(function ($stateProvider, $urlRouterProvider) {

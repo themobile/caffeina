@@ -7,9 +7,9 @@ angular.module('caffeina.controller.tests', [])
             var lead = {
                 "date": anyDate,
                 "title": "Lead de incarcat prin servicii",
-                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com", id: 1}
+                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com", id1: 1}
             };
-            leads.add(lead);
+            leads.setLead(lead);
         };
 
         $scope.updateLead = function () {
@@ -18,22 +18,15 @@ angular.module('caffeina.controller.tests', [])
                 , idLead = $scope.idLead
                 ;
             var lead = {
+                "id": idLead,
                 "date": anyDate,
                 "title": "Lead de modificat prin servicii",
-                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "122323423@gmail.com"}
+                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "122323423@gmail.com", id: 2}
             };
-            leads.update(idLead, lead);
+            leads.setLead(lead);
         };
 
         $scope.removeLead = function () {
-            leads.remove(4);
+            leads.delLead($scope.idLead);
         };
-
-//
-//        $scope.getLeadsMonth = function () {
-//
-//            var month = 1;
-//            var l = leads.getAllMonth(2014, 1);
-//            console.log(JSON.stringify(l));
-//        }
     }]);
