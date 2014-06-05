@@ -62,7 +62,7 @@ calendar-event {
   left: 15%;
   display: block;
   position: absolute;
-  border-bottom: 3px solid red;
+  border-bottom: 3px solid #41272f;
 }
 [date-picker] {
   -webkit-user-select: none;

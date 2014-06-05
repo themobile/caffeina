@@ -31,7 +31,7 @@ head
                     //ion-nav-back-button.button-icon.button-clear.ion-ios7-arrow-back
                     button.button.icon.ion-navicon.button-clear.pull-left(ng-click="toggleLeft()")
                     div.buttonBarRight
-                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty(ng-cloak)
+                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty(ng-cloak,ng-click="add()",ng-show='!isInAdd')
                         button.button.button-large.button-clear.icon.ion-ios7-search(ng-cloak)
                 //
 
@@ -74,7 +74,9 @@ head
                     p.item(ng-show="user.id") Welcome {{user.displayName}}
 
 
-
+            //
+              cordova script (this will be a 404 during development)
+            script(src='cordova.js')
 
             //ionic/angularjs scripts
             script(src='lib/js/ionic.bundle.js')
@@ -85,9 +87,14 @@ head
             script(src='lib/js/firebase/firebase.js')
             script(src='lib/js/firebase/firebase-simple-login.js')
             script(src='lib/js/firebase/angularfire.js')
+
+
+            //
+                angular
             script(src='lib/js/angular/angular-cookies.min.js')
             script(src='lib/js/angular/angularLocalStorage.js')
             script(src='lib/js/ngprogress/ngprogress-lite.min.js')
+            script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
             //
 
 
@@ -95,6 +102,7 @@ head
                 utilities
             script(src='lib/js/moment/moment.min.js')
             script(src='lib/js/underscore/underscore.js')
+            script(src='https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyBGC42dyiEZxnvGlyqc1uXywVn7mTq60dM')
             //
 
             //
@@ -110,9 +118,7 @@ head
             //script(src='lib/js/famous-angular/famous-angular.js')
 
 
-            //
-               cordova script (this will be a 404 during development)
-            script(src='cordova.js')
+
             //
                  caffeina's scripts
             script(src='js/app.js')
@@ -120,6 +126,7 @@ head
             script(src='js/controllers.js')
             script(src='js/controller.auth.js')
             script(src='js/controller.tests.js')
+            script(src='js/controller.add.js')
             script(src='js/filters.js')
             script(src='js/service.firebase.js')
             script(src='js/service.auth.js')

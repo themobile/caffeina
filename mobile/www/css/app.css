@@ -5630,10 +5630,9 @@ input[type="range"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    position: absolute;
     top: 0;
     right: 0;
-    padding: 13px 45px 15px 15px;
+    padding: 13px 45px 15px 0;
     max-width: 65%;
     border: none;
     background: transparent;
@@ -5643,7 +5642,7 @@ input[type="range"] {
     white-space: nowrap;
     font-size: 14px;
     cursor: pointer;
-    direction: rtl; }
+    direction: ltr; }
   .item-select select::-ms-expand {
     display: none; }
   .item-select option {
@@ -6922,7 +6921,10 @@ a.button {
   -webkit-transform: translate3d(30%, 0, 0);
   -moz-transform: translate3d(30%, 0, 0);
   transform: translate3d(30%, 0, 0);
-  opacity: 0; }
+  opacity: 0;
+  animation-delay: 2s;
+  -webkit-animation-delay: 2s;
+  /* Safari and Chrome */ }
   .nav-title-slide-ios7 > .ng-enter.title, .nav-title-slide-ios7.ng-enter.title {
     -webkit-transform: translate3d(100%, 0, 0);
     -moz-transform: translate3d(100%, 0, 0);
@@ -6961,6 +6963,26 @@ a.button {
   -moz-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
   opacity: 0; }
+
+.animateList > .ng-enter, .animateList.ng-leave {
+  -webkit-transition: 400ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
+  -moz-transition: 400ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
+  -ms-transition: 400ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
+  -o-transition: 400ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
+  transition: 400ms cubic-bezier(0.25, 0.25, 0.75, 0.75) all;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap; }
+.animateList > .enter, .animateList.enter-active, .animateList.leave {
+  opacity: 0;
+  width: 0px;
+  height: 0px; }
+.animateList > .leave, .animateList.leave-active, .animateList.enter {
+  opacity: 1;
+  width: 150px;
+  height: 30px; }
 
 /**
  * Grid
@@ -7519,30 +7541,13 @@ a.button {
 .button-login:hover, .button-login:active, .button-login:focus {
   color: #e5883e; }
 
-.input-label {
-  font-weight: normal;
-  color: #e5883e;
-  font-size: 7px; }
-
-.item {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(224, 220, 220, 0.1);
-  font-size: 14px;
-  color: #41272f; }
-  .item .item-toggle {
-    background-color: transparent; }
-
-.card, .list-inset {
-  background: none; }
-
 .mmm {
-  background: red;
+  background: #41272f;
   height: 100%;
   width: 100%; }
 
 [date-picker] .switch {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300; }
   [date-picker] .switch span.an {
     font-size: 16px;
@@ -7563,7 +7568,7 @@ a.button {
   pointer-events: none; }
 
 .ngProgressLiteBar {
-  background: #b38190;
+  background: #b3b3b3;
   position: fixed;
   z-index: 100;
   top: 0;
@@ -7576,7 +7581,13 @@ a.button {
   right: 0px;
   width: 100px;
   height: 100%;
-  opacity: 1;
+  opacity: 0.4;
   -webkit-transform: rotate(3deg) translate(0px, -4px);
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px); }
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+  height: auto; }
+
+.platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
+  padding-top: 0; }

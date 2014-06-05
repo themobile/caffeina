@@ -1,0 +1,13 @@
+ion-view(title='task details')
+    ion-content(padding='false', ng-controller='taskdetails')
+        div
+            | Date: {{taskdetails.date}}
+            | <br/> Title: {{taskdetails.title}}
+            | <br/> Contact: {{taskdetails.contact.name}}
+
+
+        list.list-inset
+            label.item.item-input
+                input#Autocomplete(type='text',placeholder='Location',ng-model="result",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
+            div result: {{result}}
+

@@ -2,27 +2,65 @@ angular.module('caffeina.controllers', [])
 
 
 // A simple controller that shows a tapped item's data
-    .controller('MenuController', ['$scope', '$ionicSideMenuDelegate', 'userService', 'storage', '$state', function ($scope, $ionicSideMenuDelegate, userService, storage, $state) {
-        $scope.toggleLeft = function () {
-            $ionicSideMenuDelegate.toggleLeft();
-        };
+    .controller('MenuController',
+        [
+            '$rootScope'
+            ,'$scope'
+            , '$ionicSideMenuDelegate'
+            , 'userService'
+            , 'storage'
+            , '$state'
+            , '$ionicActionSheet'
+            , function ($rootScope,$scope, $ionicSideMenuDelegate, userService, storage, $state,$ionicActionSheet) {
 
-        $scope.$on('$firebaseSimpleLogin:login', function (event, user) {
-            $scope.user = userService.getUser();
-        });
+//            $scope.isInAdd = true;
+
+            $scope.toggleLeft = function () {
+                $ionicSideMenuDelegate.toggleLeft();
+            };
+
+            $scope.$on('$firebaseSimpleLogin:login', function (event, user) {
+                $scope.user = userService.getUser();
+            });
 
 
-        $scope.$on('$firebaseSimpleLogin:logout', function (event) {
-            $scope.user = {};
-        });
+            $scope.$on('$firebaseSimpleLogin:logout', function (event) {
+                $scope.user = {};
+            });
 
-        $scope.logout = function () {
-            userService.logout();
-            storage.set('rememberMe', null);
-            storage.remove('caffeina_user');
-            $state.go('login')
-        }
-    }])
+            $scope.logout = function () {
+                userService.logout();
+                storage.set('rememberMe', null);
+                storage.remove('caffeina_user');
+                $state.go('login')
+            }
+
+
+            $rootScope.$on('$stateChangeStart',
+                function(event, toState, toParams, fromState, fromParams){
+                    (toState.name=='addlead') ? $scope.isInAdd=true : $scope.isInAdd=false;
+
+
+                })
+
+
+            $scope.add = function () {
+                $ionicActionSheet.show({
+                    buttons:[
+                        {text:'thing <strong>to do</strong>'},
+                        {text:'inquiry'},
+                        {text:'job'}
+                    ],
+                    titleText:'what do you want to add?',
+                    buttonClicked:function(index){
+                        if (index==1) {
+                            $state.go('addlead');
+                            return true;
+                        }
+                    }
+                })
+            }
+        }])
 
     .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', '$firebase', function ($scope, $ionicSideMenuDelegate, userService, $firebase) {
 
@@ -76,7 +114,34 @@ angular.module('caffeina.controllers', [])
 
     }])
 
-    .controller('home', ['$rootScope', '$scope', 'CalendarEvents', '$ionicSideMenuDelegate', '$firebase', 'userService', 'firebaseRef', 'firebaseRefUser', '$ionicLoading','ngProgressLite', function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, $ionicLoading,ngProgressLite) {
+    .controller('taskdetails', ['$http', '$scope', '$state', '$stateParams', '$firebase', 'firebaseRefUser', 'ngProgressLite', 'userService', function ($http, $scope, $state, $stateParams, $firebase, firebaseRefUser, ngProgressLite, userService) {
+        $scope.taskId = $stateParams.taskId;
+        $scope.taskdetails = '';
+        $scope.loadData = function () {
+            ngProgressLite.start();
+            var leadsRef = firebaseRefUser('/leads/' + $scope.taskId);
+            var kk = $firebase(leadsRef);
+            kk.$on('loaded', function (data) {
+                $scope.taskdetails = data;
+                ngProgressLite.done();
+            });
+        };
+        $scope.loadData();
+
+
+        //google maps autocomplete
+        $scope.googleResults = '';
+        $scope.googleResultsOptions = {
+//            country:'ro'
+        };
+        $scope.googleResultsDetails = '';
+        $scope.result;
+
+
+    }])
+
+
+    .controller('home', ['$rootScope', '$scope', 'CalendarEvents', '$ionicSideMenuDelegate', '$firebase', 'userService', 'firebaseRef', 'firebaseRefUser', 'ngProgressLite', '$state', function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, $state) {
         $scope.events = [];
         $scope.datePickerControl = {};
 
@@ -90,11 +155,16 @@ angular.module('caffeina.controllers', [])
         //drives the list with events for a selected day
         $scope.monthEvents = [];
 
+
+        $scope.goto = function (key) {
+            console.log(key);
+            $state.go('task', {taskId: key});
+        }
+
+
         //load monthly data based on date
         $scope.loadData = function (month) {
-//            $ionicLoading.show({
-//                template: 'Loading app data...'
-//            });
+//
 
             ngProgressLite.start();
 
@@ -103,29 +173,16 @@ angular.module('caffeina.controllers', [])
             var leadsRef = firebaseRefUser('/leads/').startAt(startAt).endAt(endAt);
             var kk = $firebase(leadsRef);
             kk.$on('loaded', function (data) {
-                $scope.events = _.values(data);
+                var keys = _.keys(data);
+                var actualdata = _.values(data);
+                var intermed = _.map(actualdata, function (num, key) {
+                    return num.keia = keys[key]
+                })
+                $scope.events = actualdata;
                 CalendarEvents.setEvents($scope.events);
-//                $ionicLoading.hide();
                 ngProgressLite.done();
 
             });
-        };
-
-        $scope.init = function () {
-            //testing
-//            var fred=new Firebase('https://caffeina.firebaseio.com/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads')
-//            fred.on('value',function(dataSnapshot){
-//                var fredsnap=dataSnapshot;
-//
-//
-//                fredsnap.forEach(function(child){
-//
-//                    var add='https://caffeina.firebaseio.com/users/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t/leads/'+child.name();
-//                    var kk=new Firebase(add);
-//                    kk.setPriority(child.val().date);
-//
-//                })
-//            })
         };
 
 
@@ -137,7 +194,8 @@ angular.module('caffeina.controllers', [])
 
         // on firebase logout
         $rootScope.$on('$firebaseSimpleLogin:error', function (error) {
-            console.log(error);
+//            console.log('home controller login error');
+//            console.log(error);
         });
 
 
@@ -166,9 +224,6 @@ angular.module('caffeina.controllers', [])
             }));
 
         });
-
-        // hide loading screen and load current month
-        $ionicLoading.hide();
 
     }])
 

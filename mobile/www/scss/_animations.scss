@@ -355,6 +355,8 @@ $ios7-transition-duration: 340ms;
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
     @include translate3d(100%, 0, 0);
     z-index: 2;
+
+
   }
   > .ng-leave, &.ng-leave {
     z-index: 1;
@@ -590,6 +592,8 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
     &.title {
       @include translate3d(100%, 0, 0);
     }
+    animation-delay:2s;
+    -webkit-animation-delay:2s; /* Safari and Chrome */
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     @include translate3d(0, 0, 0);
@@ -621,3 +625,38 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
     }
   }
 }
+
+
+
+
+
+.animateList {
+  > .ng-enter,&.ng-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space:nowrap;
+}
+
+
+  > .enter,&.enter-active,&.leave{
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+}
+
+  > .leave,&.leave-active,&.enter {
+    opacity: 1;
+    width: 150px;
+    height: 30px;
+}
+}
+
+

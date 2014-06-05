@@ -1,5 +1,6 @@
 $font-size-base: 14px;
 $dark: #41272F;
+
 $light: #E0DCDC;
 $base-color: #41272F;
 $base-background-color: rgb(224, 220, 220);
@@ -14,10 +15,10 @@ $checkbox-off-bg-color: #E0DCDC;
 $checkbox-check-color: #E0DCDC;
 
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
-$font-size-base: 13px !default;
-$font-size-large: 20px !default;
-$font-size-small: 11px !default;
-$font-size-verysmall: 7px !default;
+//$font-size-base: 13px !default;
+//$font-size-large: 20px !default;
+//$font-size-small: 11px !default;
+//$font-size-verysmall: 7px !default;
 
 
 //import default scss
@@ -108,30 +109,25 @@ $font-size-verysmall: 7px !default;
   color: #e5883e;
 }
 
-.input-label {
-  font-weight: normal;
-  color: #e5883e;
-  font-size: $font-size-verysmall;
-}
 
 .item {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid transparentize($light, 0.9);
-  font-size: $font-size-base;
-  color: $dark;
+//  background: transparent;
+//  border: none;
+//  border-bottom: 1px solid transparentize($light, 0.9);
+//  font-size: $font-size-base;
+//  color: $dark;
 
   .item-toggle {
-    background-color: transparent;
+//    background-color: transparent;
   }
 }
 
 .card, .list-inset {
-  background: none;
+//  background: none;
 }
 
 .mmm {
-  background: red;
+  background: $dark;
   height: 100%;
   width: 100%;
 }
@@ -168,7 +164,7 @@ $font-size-verysmall: 7px !default;
 }
 
 .ngProgressLiteBar {
-  background: lighten($dark,40);
+  background: lighten(desaturate($dark,60),50);
   position: fixed;
   z-index: 100;
   top: 0;
@@ -183,8 +179,17 @@ $font-size-verysmall: 7px !default;
   width: 100px;
   height: 100%;
 //  box-shadow: 0 0 10px lighten($dark,3), 0 0 5px lighten($dark,3);
-  opacity: 1;
+  opacity: 0.4;
   -webkit-transform: rotate(3deg) translate(0px, -4px);
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px);
+}
+
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+  height:auto;
+}
+
+.platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
+  padding-top: 0;
 }

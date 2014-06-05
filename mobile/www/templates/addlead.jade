@@ -1,0 +1,36 @@
+ion-view(title='add lead', ng-controller='addlead')
+    ion-content(padding='true')
+        form.addJob
+            div.list
+                label.item.item-input
+                    span.input-label lead date/time
+                    input(type='date',ng-model='newLead.date')
+                label.item.item-input
+                    span.input-label lead time
+                    input(type='time',ng-model='newLead.time')
+                label.item.item-input.item-select
+                    span.input-label lead type
+                    select(ng-model="newLead.title")
+                        option wedding
+                        option baptizing
+                        option(ng-selected='1') session
+                        option product
+                        option event
+
+                span.item contact details
+                span.item contact details
+                span.item contact details
+                label.item.item-input
+                    span.input-label name
+                    input(type='text',placeholder='name',ng-model='newLead.contact.name')
+                label.item.item-input
+                    span.input-label email
+                    input(type='email',placeholder='email',ng-model='newLead.contact.email')
+                label.item.item-input
+                    span.input-label phone
+                    input(type='tel',placeholder='phone number',ng-model='newLead.contact.phone')
+
+
+        //div.bar.bar-footer
+        button.button.button-clear(ng-click="cancel()") Cancel
+        button.button.button-clear(ng-click='addLead()') Save
