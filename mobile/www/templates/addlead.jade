@@ -3,23 +3,24 @@ ion-view(title='add lead', ng-controller='addlead')
         form.addJob
             div.list
                 label.item.item-input
-                    span.input-label lead date/time
-                    input(type='date',ng-model='newLead.date')
+                    span.input-label when
+                    input(type='date',ng-model='newLead.date',required)
                 label.item.item-input
-                    span.input-label lead time
+                    span.input-label time
                     input(type='time',ng-model='newLead.time')
                 label.item.item-input.item-select
-                    span.input-label lead type
+                    span.input-label type
                     select(ng-model="newLead.title")
                         option wedding
                         option baptizing
                         option(ng-selected='1') session
                         option product
                         option event
+                label.item.item-input
+                    span.input-label where
+                    input#Autocomplete.ellip(type='text',placeholder='Location',ng-model="newLead.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
 
-                span.item contact details
-                span.item contact details
-                span.item contact details
+                h4.list-inset contact details
                 label.item.item-input
                     span.input-label name
                     input(type='text',placeholder='name',ng-model='newLead.contact.name')

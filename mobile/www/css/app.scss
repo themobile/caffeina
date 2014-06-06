@@ -2,17 +2,17 @@ $font-size-base: 14px;
 $dark: #41272F;
 
 $light: #E0DCDC;
-$base-color: #41272F;
-$base-background-color: rgb(224, 220, 220);
+$base-color: $dark;
+$base-background-color: $light;
 $input-color: $dark;
 $toggle-on-bg-color: $dark;
 $toggle-on-border-color: none;
-$input-color-placeholder: lighten($dark, 30%);
+$input-color-placeholder: transparentize($dark, 0.5);
 
-$checkbox-off-border-default: #41272F;
-$checkbox-on-bg-default: #41272F;
-$checkbox-off-bg-color: #E0DCDC;
-$checkbox-check-color: #E0DCDC;
+$checkbox-off-border-default: $dark;
+$checkbox-on-bg-default: $dark;
+$checkbox-off-bg-color: $light;
+$checkbox-check-color: $light;
 
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 //$font-size-base: 13px !default;
@@ -164,12 +164,12 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
 }
 
 .ngProgressLiteBar {
-  background: lighten(desaturate($dark,60),50);
+  background: transparentize($dark,0.8);
   position: fixed;
   z-index: 100;
   top: 0;
   left: 0;
-  height: 2px;
+  height: 4px;
 }
 
 .ngProgressLite .ngProgressLiteBarShadow {
@@ -218,4 +218,28 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   }
 
 
+}
+
+
+.ellip {
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.input-label {
+  max-width: 30%;
+}
+
+.item-input input {
+  border-bottom:1px solid transparentize($dark,0.8);
+}
+.list-inset {
+  background-color: $light !important;
+  margin: 40px 0 10px 10px;
+  border-bottom:1px solid transparentize($dark,0.8);
+  padding-bottom:5px;
 }

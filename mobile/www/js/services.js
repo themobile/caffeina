@@ -1,4 +1,4 @@
-angular.module('caffeina.services.lead', [])
+angular.module('caffeina.services', [])
 
     .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', 'userService', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, userService, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())

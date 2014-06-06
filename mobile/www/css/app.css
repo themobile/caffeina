@@ -5174,13 +5174,13 @@ input[type="file"] {
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #a06174; }
+  color: rgba(65, 39, 47, 0.5); }
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #a06174; }
+  color: rgba(65, 39, 47, 0.5); }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #a06174; }
+  color: rgba(65, 39, 47, 0.5); }
 
 input[disabled],
 select[disabled],
@@ -7568,12 +7568,12 @@ a.button {
   pointer-events: none; }
 
 .ngProgressLiteBar {
-  background: #b3b3b3;
+  background: rgba(65, 39, 47, 0.2);
   position: fixed;
   z-index: 100;
   top: 0;
   left: 0;
-  height: 2px; }
+  height: 4px; }
 
 .ngProgressLite .ngProgressLiteBarShadow {
   display: block;
@@ -7609,3 +7609,23 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     color: white; }
     #isConnected > span h3 {
       color: white; }
+
+.ellip {
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis; }
+
+.input-label {
+  max-width: 30%; }
+
+.item-input input {
+  border-bottom: 1px solid rgba(65, 39, 47, 0.2); }
+
+.list-inset {
+  background-color: #e0dcdc !important;
+  margin: 40px 0 10px 10px;
+  border-bottom: 1px solid rgba(65, 39, 47, 0.2);
+  padding-bottom: 5px; }
