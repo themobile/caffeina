@@ -16,28 +16,20 @@ angular.module('caffeina.services.lead', [])
             var leadsRef = leadsServiceReturn._leadsFBRef()
                 , promise = $q.defer()
                 , now = leadsServiceReturn._now()
-                , lead4Del = {}
                 , lead
                 ;
 
             leadsRef.child(leadId).once('value', function (leadSnapshoot) {
-                lead4Del.updatedAt = now;
-                lead4Del.isDeleted = true;
                 lead = leadSnapshoot.val();
                 if (lead) {
-
                     if (lead.isDeleted) {
                         //fixme: refuz sa sterg ceva deja sters
                         promise.reject({});
                     } else {
-                        lead4Del.date = lead.date;
-                        lead4Del.title = lead.title;
-                        lead4Del.contactId = lead.contactId;
-
-                        lead4Del.createdAt = lead.createdAt;
-                        lead4Del.version = -1 * (lead.version + 1);
-
-                        leadsRef.child(leadId).setWithPriority(lead4Del, lead4Del.date, function () {
+                        lead.updatedAt = now;
+                        lead.isDeleted = true;
+                        lead.version = -1 * (lead.version + 1);
+                        leadsRef.child(leadId).setWithPriority(lead, lead.date, function () {
                             promise.resolve(leadId);
                         });
                     }
@@ -65,13 +57,14 @@ angular.module('caffeina.services.lead', [])
                 lead4Set.isDeleted = false;
 
                 lead4Set.date = lead.date;
-                lead4Set.title = lead.title;
+                lead4Set.type = lead.type;
                 lead4Set.contactId = lead.contactId;
-
+                if (lead.details) {
+                    lead4Set.details = lead.details;
+                }
                 leadFB = leadSnapshoot.val();
 
                 if (leadFB) {
-
                     if (leadFB.isDeleted) {
                         //fixme: refuz modificare lead sters
                         promise.reject({})
@@ -83,8 +76,6 @@ angular.module('caffeina.services.lead', [])
                             promise.resolve(leadId);
                         });
                     }
-
-
                 } else {
 
                     lead4Set.createdAt = now;
@@ -119,7 +110,8 @@ angular.module('caffeina.services.lead', [])
                         id: lead.id,
                         contactId: contactId,
                         date: lead.date,
-                        title: lead.title
+                        details: lead.details,
+                        type: lead.type
                     });
                 }).then(function (leadId) {
                         //fixme: success

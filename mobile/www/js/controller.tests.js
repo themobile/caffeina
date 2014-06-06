@@ -6,7 +6,7 @@ angular.module('caffeina.controller.tests', [])
             var anyDate = moment("2014-01-01").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD");
             var lead = {
                 "date": anyDate,
-                "title": "Lead de incarcat prin servicii",
+                "type": "Lead de incarcat prin servicii",
                 "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com", id1: 1}
             };
             leads.setLead(lead);
@@ -20,8 +20,8 @@ angular.module('caffeina.controller.tests', [])
             var lead = {
                 "id": idLead,
                 "date": anyDate,
-                "title": "Lead de modificat prin servicii",
-                "contact": {"name": "Florian Cechi", "phone": "7829387232", "email": "122323423@gmail.com", id: 2}
+                "type": "Session",
+                "contact": {id: 2}
             };
             leads.setLead(lead);
         };
