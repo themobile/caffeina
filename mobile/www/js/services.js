@@ -1,6 +1,6 @@
 angular.module('caffeina.services', [])
 
-    .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', 'userService', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, userService, $q) {
+    .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , dmlService = {}
             ;
@@ -119,6 +119,89 @@ angular.module('caffeina.services', [])
 
         // public
         dmlService.setPrimaryTemplate = function (templates) {
+            var templates = [
+                {
+                    name: 'wedding',
+                    tasks: [
+                        {
+                            name: 'engagement session',
+                            shift: -60,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'civil ceremony',
+                            shift: -1,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'preparations',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'ceremony',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'party',
+                            shift: 0,
+                            isMain: true,
+                            alert: -1
+                        },
+                        {
+                            name: 'trash the dress',
+                            shift: 10,
+                            isMain: false,
+                            alert: -1
+                        }
+                    ]
+                },
+                {
+                    name: 'baptizing',
+                    tasks: [
+                        {
+                            name: 'family session',
+                            shift: -1,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'preparations',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'ceremony',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'party',
+                            shift: 0,
+                            isMain: true,
+                            alert: -1
+                        }
+                    ]
+                },
+                {
+                    name: 'family session',
+                    tasks: [
+                        {
+                            name: 'session',
+                            shift: 0,
+                            isMain: true,
+                            alert: -1
+                        }
+                    ]
+                }
+            ];
             var templFBRef = dmlService._templateFBRef()
                 , rootFBRef = dmlService._rootFBRef()
                 , prm = $q.defer()

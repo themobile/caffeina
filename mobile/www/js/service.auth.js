@@ -1,11 +1,11 @@
 angular.module('caffeina.service.auth', [])
 
-    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', function ($firebaseSimpleLogin, firebaseRef) {
+    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', function ($firebaseSimpleLogin, firebaseRef, dmlservice) {
         var user = $firebaseSimpleLogin(firebaseRef())
-            , userservice = {}
+            , userServiceObject = {}
             ;
 
-        userservice.login = function (type, attr) {
+        userServiceObject.login = function (type, attr) {
 
             user.$login(type, {
                 rememberMe: attr.rememberMe,
@@ -14,60 +14,35 @@ angular.module('caffeina.service.auth', [])
 //                    password: attr.password
             }).then(function (response) {
                     var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-                    userDetails.update({details: user.user});
-
+                    return userDetails.update({details: user.user});
+                }).then(function () {
+                    var ref = dmlservice._rootFBRef()
+                        ;
+                    ref.child('templates').once('value', function (snapsoot) {
+                        var tmpl = snapsoot.val()
+                            ;
+                        if (!(tmpl)) {
+                            return dmlservice.setPrimaryTemplate();
+                        }
+                    });
                 });
             return user;
         };
 
-        userservice.logout = function () {
+        userServiceObject.logout = function () {
             user.$logout();
 
         };
 
-        userservice.getUser = function () {
+        userServiceObject.getUser = function () {
             return user.user;
         };
 
-        userservice.getUserId = function () {
+        userServiceObject.getUserId = function () {
             return  user.user ? btoa(user.user.email) : null;
         };
 
-        return userservice;
-
-//        return {
-//
-//            login: function (type, attr) {
-//
-//                user.$login(type, {
-//                    rememberMe: attr.rememberMe,
-//                    access_token: attr.access_token
-////                    email: attr.email,
-////                    password: attr.password
-//                }).then(function (response) {
-//                        var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-//                        userDetails.update({details: user.user});
-//
-//                    });
-//                return user;
-//
-//            },
-//
-//            logout: function () {
-//                user.$logout();
-//
-//            },
-//
-//            getUser: function () {
-//                return user.user;
-//
-//            },
-//
-//            getUserId: function () {
-//                return  user.user ? btoa(user.user.email) : null;
-//            }
-//
-//        }
+        return userServiceObject;
     }]);
 
 
