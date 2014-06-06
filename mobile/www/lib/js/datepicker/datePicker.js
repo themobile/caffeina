@@ -164,7 +164,7 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                 scope.$on('gotoday', function(){
                     scope.date.setFullYear(moment().year());
                     scope.date.setMonth(moment().month());
-
+                    scope.view='date';
                     update();
                 })
 
@@ -197,6 +197,7 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                 scope.setView = function (nextView) {
                     if (scope.views.indexOf(nextView) !== -1) {
                         scope.view = nextView;
+                        scope.$emit('viewchanged');
                     }
                 };
 

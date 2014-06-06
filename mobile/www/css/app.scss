@@ -193,3 +193,29 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
   padding-top: 0;
 }
+
+
+#isConnected {
+  background:$dark;
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  z-index:999;
+
+  > span {
+    margin: 50% auto 0 auto;
+    width: 100%;
+    padding: 0 20px;
+    position: absolute;
+    text-align: center;
+    color: white;
+
+    h3 {
+      color:white;
+    }
+  }
+
+
+}
