@@ -9,8 +9,7 @@ angular.module('caffeina',
         [
             'ionic',
             'caffeina.config',
-            'caffeina.services.lead',
-            'caffeina.services.contact',
+            'caffeina.services',
             'caffeina.service.auth',
             'ngCookies',
             'angularLocalStorage',
@@ -123,4 +122,4 @@ var body = document.getElementsByTagName('body')[0];
 angular.element(document).ready(function () {
     angular.bootstrap(body, ['caffeina']);
 
-})
+});
