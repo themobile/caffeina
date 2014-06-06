@@ -13,8 +13,8 @@ angular.module('caffeina.controller.add', [])
             , 'storage'
             , '$state'
             , '$ionicLoading'
-            , 'leads'
-            , function ($rootScope, $scope, userService, $firebaseSimpleLogin, storage, $state, $ionicLoading, leads) {
+            , 'dmlservice'
+            , function ($rootScope, $scope, userService, $firebaseSimpleLogin, storage, $state, $ionicLoading, dmlservice) {
 
 
 
