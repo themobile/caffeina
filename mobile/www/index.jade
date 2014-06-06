@@ -74,61 +74,67 @@ head
                     p.item(ng-show="user.id") Welcome {{user.displayName}}
 
 
-            //
-              cordova script (this will be a 404 during development)
-            script(src='cordova.js')
+        div#isconnected(ng-show='!isConnected',ng-controller='isconnected')
+            span
+                | <h3>caffeina says:</h3>
+                | <p>you're offline! <br/>get some connection, dude!</p>
+                button.button Refresh
 
-            //ionic/angularjs scripts
-            script(src='lib/js/ionic.bundle.js')
-            //script(src="http://code.ionicframework.com/1.0.0-beta.6/js/ionic.bundle.js")
+        //
+          cordova script (this will be a 404 during development)
+        script(src='cordova.js')
 
-            //
-                angularfire
-            script(src='lib/js/firebase/firebase.js')
-            script(src='lib/js/firebase/firebase-simple-login.js')
-            script(src='lib/js/firebase/angularfire.js')
+        //ionic/angularjs scripts
+        script(src='lib/js/ionic.bundle.js')
+        //script(src="http://code.ionicframework.com/1.0.0-beta.6/js/ionic.bundle.js")
 
-
-            //
-                angular
-            script(src='lib/js/angular/angular-cookies.min.js')
-            script(src='lib/js/angular/angularLocalStorage.js')
-            script(src='lib/js/ngprogress/ngprogress-lite.min.js')
-            script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
-            //
+        //
+            angularfire
+        script(src='lib/js/firebase/firebase.js')
+        script(src='lib/js/firebase/firebase-simple-login.js')
+        script(src='lib/js/firebase/angularfire.js')
 
 
-            //
-                utilities
-            script(src='lib/js/moment/moment.min.js')
-            script(src='lib/js/underscore/underscore.js')
-            script(src='https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyBGC42dyiEZxnvGlyqc1uXywVn7mTq60dM')
-            //
-
-            //
-                calendar
-            script(src='lib/js/datepicker/datepicker.js')
-            script(src='lib/js/datepicker/input.js')
-            script(src='lib/js/datepicker/calendar.js')
-            //
+        //
+            angular
+        script(src='lib/js/angular/angular-cookies.min.js')
+        script(src='lib/js/angular/angularLocalStorage.js')
+        script(src='lib/js/ngprogress/ngprogress-lite.min.js')
+        script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
+        //
 
 
-            //required by famous-angular
-            //script(src='lib/js/require/require.js')
-            //script(src='lib/js/famous-angular/famous-angular.js')
+        //
+            utilities
+        script(src='lib/js/moment/moment.min.js')
+        script(src='lib/js/underscore/underscore.js')
+        script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwYA_6LbdHODE-aKsZSAS3n9yWIByJZzc&libraries=places&sensor=false')
+        //
+
+        //
+            calendar
+        script(src='lib/js/datepicker/datepicker.js')
+        script(src='lib/js/datepicker/input.js')
+        script(src='lib/js/datepicker/calendar.js')
+        //
+
+
+        //required by famous-angular
+        //script(src='lib/js/require/require.js')
+        //script(src='lib/js/famous-angular/famous-angular.js')
 
 
 
-            //
-                 caffeina's scripts
-            script(src='js/app.js')
-            script(src='js/config.js')
-            script(src='js/controllers.js')
-            script(src='js/controller.auth.js')
-            script(src='js/controller.tests.js')
-            script(src='js/controller.add.js')
-            script(src='js/filters.js')
-            script(src='js/service.firebase.js')
-            script(src='js/service.auth.js')
-            script(src='js/services.lead.js')
-            script(src='js/services.contact.js')
+        //
+             caffeina's scripts
+        script(src='js/app.js')
+        script(src='js/config.js')
+        script(src='js/controllers.js')
+        script(src='js/controller.auth.js')
+        script(src='js/controller.tests.js')
+        script(src='js/controller.add.js')
+        script(src='js/filters.js')
+        script(src='js/service.firebase.js')
+        script(src='js/service.auth.js')
+        script(src='js/services.lead.js')
+        script(src='js/services.contact.js')

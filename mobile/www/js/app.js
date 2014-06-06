@@ -6,7 +6,8 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('caffeina',
-        ['ionic',
+        [
+            'ionic',
             'caffeina.config',
             'caffeina.services.lead',
             'caffeina.services.contact',
@@ -22,7 +23,9 @@ angular.module('caffeina',
             'firebase',
             'datePicker',
             'calevents',
-            'ngProgressLite'])
+            'ngProgressLite',
+            'ngAutocomplete'
+        ])
 
 
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -51,15 +54,15 @@ angular.module('caffeina',
 
             .state('task', {
                 url: '/task/:taskId',
-                templateUrl: 'templates/task_details.html'
+                templateUrl: 'templates/task_details.html',
 //                controller:function($stateParams){
 //                    $stateParams.taskId;
 //                }
             })
 
-            .state('addlead',{
-                url:'/addlead',
-                templateUrl:'templates/addlead.html'
+            .state('addlead', {
+                url: '/addlead',
+                templateUrl: 'templates/addlead.html'
 
             })
 
@@ -73,22 +76,28 @@ angular.module('caffeina',
 
     })
 
-    .run(function ($rootScope, $state, userService, storage,$ionicLoading) {
-
-        $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams){
-                //store previous state
-                $rootScope.$previousState=fromState;
-            })
-
-//        $ionicLoading.show({
-//            template:'Loading app data...'
-//        });
-
-        var rememberMe , provider, token, caffeina_user;
+    .run(function ($rootScope, $state, userService, storage, Firebase) {
+        var rememberMe , provider, token, caffeina_user, presenceRef;
 
         rememberMe = storage.get('rememberMe');
         caffeina_user = storage.get('caffeina_user');
+
+
+        presenceRef = new Firebase('https://caffeina.firebaseio.com/.info/connected');
+        presenceRef.on('value', function (snap) {
+            if (snap.val() === true) {
+                $rootScope.$broadcast('isConnected',true);
+            } else {
+                $rootScope.$broadcast('isConnected',false);
+            }
+        });
+
+
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+                //store previous state
+                $rootScope.$previousState = fromState;
+            });
 
         if (caffeina_user) {
             provider = caffeina_user.provider;
@@ -99,10 +108,10 @@ angular.module('caffeina',
             userService.logout();
             $state.go('login');
         } else {
-            userService.login(provider, {
-                access_token: token,
-                rememberMe: rememberMe
-            });
+//            userService.login(provider, {
+//                access_token: token,
+//                rememberMe: rememberMe
+//            });
             $state.go('home');
         }
     })
