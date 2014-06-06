@@ -75,6 +75,7 @@ angular.module('caffeina.services', [])
                 ;
             fbRef.child(objId).once('value', function (objSnapshoot) {
                 var dataSnapshoot = objSnapshoot.val()
+                    , objPriority = objSnapshoot.getPriority()
                     ;
                 if (dataSnapshoot) {
                     if (dataSnapshoot.isDeleted) {
@@ -84,7 +85,7 @@ angular.module('caffeina.services', [])
                         dataSnapshoot.updatedAt = now;
                         dataSnapshoot.version = -((dataSnapshoot.version || 0) + 1);
                         dataSnapshoot.isDeleted = true;
-                        fbRef.child(objId).setWithPriority(dataSnapshoot, dataSnapshoot.priority, function () {
+                        fbRef.child(objId).setWithPriority(dataSnapshoot, objPriority, function () {
                             promise.resolve(objId);
                         })
                     }
@@ -101,6 +102,38 @@ angular.module('caffeina.services', [])
 
         dmlService._contactFBRef = function () {
             return firebaseRef('/users/' + btoa(user.user.email) + '/contacts/');
+        };
+
+        dmlService._templateFBRef = function () {
+            return firebaseRef('/templates/');
+        };
+
+//        dmlService.setPrimaryTemplate = function (templates) {
+//            var templFBRef = dmlService._templateFBRef()
+//                ;
+//            dmlService._add(templFBRef, templates, null).then(function (saved) {
+//                //fixme: succes
+//            }, function (error) {
+//                //fixme: error
+//            });
+//        };
+
+        // public
+        dmlService.setPrimaryTemplate = function (templates) {
+            var templFBRef = dmlService._templateFBRef()
+                , prm = $q.defer()
+                , promise = prm.promise
+                , xx = 0
+                ;
+            _.each(templates, function (template) {
+                prm = dmlService._add(templFBRef, {name: template.name}, null).then(function () {
+                    xx++;
+                });
+            });
+            prm.then(function () {
+                prm.promise.resolve(xx);
+            });
+            return prm.promise;
         };
 
         dmlService.getContact = function (contact) {
