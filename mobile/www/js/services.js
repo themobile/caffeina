@@ -1,6 +1,6 @@
 angular.module('caffeina.services', [])
 
-    .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', 'userService', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, userService, $q) {
+    .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , dmlService = {}
             ;
@@ -96,6 +96,7 @@ angular.module('caffeina.services', [])
             return promise.promise;
         };
 
+        // refs
         dmlService._leadsFBRef = function () {
             return firebaseRef('/users/' + btoa(user.user.email) + '/leads/');
         };
@@ -105,35 +106,130 @@ angular.module('caffeina.services', [])
         };
 
         dmlService._templateFBRef = function () {
-            return firebaseRef('/templates/');
+            return firebaseRef('/users/' + btoa(user.user.email) + '/templates/');
         };
 
-//        dmlService.setPrimaryTemplate = function (templates) {
-//            var templFBRef = dmlService._templateFBRef()
-//                ;
-//            dmlService._add(templFBRef, templates, null).then(function (saved) {
-//                //fixme: succes
-//            }, function (error) {
-//                //fixme: error
-//            });
-//        };
+        dmlService._taskFBRef = function (templId) {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/templates/' + templId + '/tasks/');
+        };
+
+        dmlService._rootFBRef = function () {
+            return firebaseRef('/users/' + btoa(user.user.email));
+        };
 
         // public
         dmlService.setPrimaryTemplate = function (templates) {
+            var templates = [
+                {
+                    name: 'wedding',
+                    tasks: [
+                        {
+                            name: 'engagement session',
+                            shift: -60,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'civil ceremony',
+                            shift: -1,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'preparations',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'ceremony',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'party',
+                            shift: 0,
+                            isMain: true,
+                            alert: -1
+                        },
+                        {
+                            name: 'trash the dress',
+                            shift: 10,
+                            isMain: false,
+                            alert: -1
+                        }
+                    ]
+                },
+                {
+                    name: 'baptizing',
+                    tasks: [
+                        {
+                            name: 'family session',
+                            shift: -1,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'preparations',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'ceremony',
+                            shift: 0,
+                            isMain: false,
+                            alert: -1
+                        },
+                        {
+                            name: 'party',
+                            shift: 0,
+                            isMain: true,
+                            alert: -1
+                        }
+                    ]
+                },
+                {
+                    name: 'family session',
+                    tasks: [
+                        {
+                            name: 'session',
+                            shift: 0,
+                            isMain: true,
+                            alert: -1
+                        }
+                    ]
+                }
+            ];
             var templFBRef = dmlService._templateFBRef()
+                , rootFBRef = dmlService._rootFBRef()
                 , prm = $q.defer()
                 , promise = prm.promise
                 , xx = 0
                 ;
+            promise = promise.then(function () {
+                return rootFBRef.child('templates').remove();
+            });
             _.each(templates, function (template) {
-                prm = dmlService._add(templFBRef, {name: template.name}, null).then(function () {
-                    xx++;
+                promise = promise.then(function () {
+                    return dmlService._add(templFBRef, {name: template.name}, null).then(function (tmplId) {
+                        var prm2 = $q.defer()
+                            , promise2 = prm2.promise
+                            ;
+                        _.each(template.tasks, function (task) {
+                            promise2 = promise2.then(function () {
+                                var ref = dmlService._taskFBRef(tmplId);
+                                return dmlService._add(ref, task, null);
+                            })
+                        });
+                        prm2.resolve(0);
+                        return promise2;
+                    });
                 });
             });
-            prm.then(function () {
-                prm.promise.resolve(xx);
-            });
-            return prm.promise;
+            prm.resolve(xx);
+            return promise;
         };
 
         dmlService.getContact = function (contact) {
