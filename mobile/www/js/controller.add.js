@@ -26,23 +26,20 @@ angular.module('caffeina.controller.add', [])
                     phone:'',
                     email:''
                 },
-                title:'',
+                type:'session',
                 id1:5
             }
 
 
 
             $scope.cancel=function(){
-                if ($rootScope.$previousState.name){
-                $state.go($rootScope.$previousState);
-                } else {
-                    $state.go('home');
-                }
+//                if ($rootScope.$previousState.name){
+//                $state.go($rootScope.$previousState);
+//                } else {
+                    $state.transitionTo('home');
+//                }
             }
 
-            $scope.addLead = function () {
-                $scope.newLead.date=moment($scope.newLead.date).format("YYYY-MM-DD");
-                leads.setLead($scope.newLead);
-            }
+//
 
         }]);

@@ -4,11 +4,10 @@ head
     meta(charset='utf-8')
     meta(name='viewport', content='initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width')
     title Ionic Seed App
+
+
     //
-       ionic css
-    //link(href='lib/css/ionic.css', rel='stylesheet')
-    //
-       your app's css
+       caffeina css
     link(href='css/app.css', rel='stylesheet')
     link(href='css/datepicker/datepicker.css', rel='stylesheet')
     link(href='lib/js/famous-angular/famous-angular.css', rel='stylesheet')
@@ -23,24 +22,19 @@ head
             //
                  Center content
             ion-side-menu-content(drag-content="shouldDragContent()")
-                //
-                        The nav bar that will be updated as we navigate between views
-                        Additional attributes set its look, ion-nav-bar animation and icons
-                        Icons provided by Ionicons: http://ionicons.com/
-                ion-nav-bar(ng-controller='MenuController')
-                    //ion-nav-back-button.button-icon.button-clear.ion-ios7-arrow-back
-                    button.button.icon.ion-navicon.button-clear.pull-left(ng-click="toggleLeft()")
-                    div.buttonBarRight
-                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty(ng-cloak,ng-click="add()",ng-show='!isInAdd')
-                        button.button.button-large.button-clear.icon.ion-ios7-search(ng-cloak)
-                //
 
-                        The views will be rendered in the <ion-nav-view> directive below
-                        Templates are in the /templates folder (but you could also
-                        have templates inline in this html file if you'd like).
+
+                // if state is ADD then navbar is custom, otherwise is standard
+                ion-nav-bar(ng-controller='MenuController',ng-show='!isInAdd')
+                    ion-nav-buttons(side='left')
+                        button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
+                    ion-nav-buttons(side='right')
+                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty.padding-right(ng-cloak,ng-click="add()")
+                        button.button.button-large.button-clear.icon.ion-ios7-search.padding-left(ng-cloak)
+
+
+                // views
                 ion-nav-view
-
-
 
 
             //
@@ -54,7 +48,6 @@ head
                     a.item.item-icon-left(href='#/tests' ,nav-clear ,menu-close )
                         i.icon.ion-chatbubble-working
                         | Tests
-
 
                     a.item.item-icon-left(href='#/chat' ,nav-clear ,menu-close )
                         i.icon.ion-chatbubble-working
@@ -74,11 +67,11 @@ head
                     p.item(ng-show="user.id") Welcome {{user.displayName}}
 
 
-        div#isconnected(ng-show='!isConnected',ng-controller='isconnected')
-            span
-                | <h3>caffeina says:</h3>
-                | <p>you're offline! <br/>get some connection, dude!</p>
-                button.button Refresh
+        //div#isconnected(ng-show='!isConnected',ng-controller='isconnected')
+        //    span
+        //        | <h3>caffeina says:</h3>
+        //        | <p>you're offline! <br/>get some connection, dude!</p>
+        //        button.button Refresh
 
         //
           cordova script (this will be a 404 during development)
@@ -114,7 +107,7 @@ head
         //
             calendar
         script(src='lib/js/datepicker/datepicker.js')
-        script(src='lib/js/datepicker/input.js')
+        //script(src='lib/js/datepicker/input.js')
         script(src='lib/js/datepicker/calendar.js')
         //
 

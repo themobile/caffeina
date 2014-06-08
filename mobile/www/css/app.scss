@@ -1,18 +1,23 @@
 $font-size-base: 14px;
 $dark: #41272F;
-
-$light: #E0DCDC;
+$light: #f6f2f2;
 $base-color: $dark;
 $base-background-color: $light;
 $input-color: $dark;
 $toggle-on-bg-color: $dark;
 $toggle-on-border-color: none;
 $input-color-placeholder: transparentize($dark, 0.5);
-
+$menu-bg: darken($light, 3);
 $checkbox-off-border-default: $dark;
 $checkbox-on-bg-default: $dark;
 $checkbox-off-bg-color: $light;
 $checkbox-check-color: $light;
+
+$calm: $dark;
+$positive: $dark;
+
+
+
 
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 //$font-size-base: 13px !default;
@@ -20,26 +25,109 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
 //$font-size-small: 11px !default;
 //$font-size-verysmall: 7px !default;
 
-
 //import default scss
 @import "../fonts/fonts.scss";
 @import "../scss/ionic.scss";
 
-.pane, .view {
-  //  background: -moz-linear-gradient(45deg, rgba(75,76,82,0.5) 0%, rgba(75,76,82,0.5) 100%); /* FF3.6+ */
-  //  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(75,76,82,0.5)), color-stop(100%,rgba(75,76,82,0.5))); /* Chrome,Safari4+ */
-  //  background: -webkit-linear-gradient(45deg, rgba(75,76,82,0.5) 0%,rgba(75,76,82,0.5) 100%); /* Chrome10+,Safari5.1+ */
-  //  background: -o-linear-gradient(45deg, rgba(75,76,82,0.5) 0%,rgba(75,76,82,0.5) 100%); /* Opera 11.10+ */
-  //  background: -ms-linear-gradient(45deg, rgba(75,76,82,0.5) 0%,rgba(75,76,82,0.5) 100%); /* IE10+ */
-  //  background: linear-gradient(45deg, rgba(75,76,82,0.5) 0%,rgba(75,76,82,0.5) 100%); /* W3C */
-  //  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#804b4c52', endColorstr='#804b4c52',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+@import "datepicker/datepicker.css";
 
-  //  background: url('../img/backgr.png') no-repeat top center;
+.pane, .view {
   background-size: cover;
 }
+//.action-sheet-backdrop {
+//  background-color: rgba(246,242,242,0);
+//
+//  &.active {
+//    background-color: rgba(246,242,242,0.5);
+//  }
+//}
 
+
+.action-sheet-group {
+  background-color: darken($light,3);
+}
+
+.action-sheet-title {
+  color: transparentize($base-color, 0.5);
+}
+
+
+//menu
 .menu {
-  background: #cdc9c9;
+  background: darken($light, 3);
+
+  .item {
+    border: none;
+    background-color: $menu-bg;
+  }
+
+  .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
+    border: none;
+    background-color: $menu-bg;
+  }
+}
+
+.item-divider {
+  background-color: $light;
+  min-height: 20px;
+}
+
+legend {
+  border: none;
+  margin-bottom: none;
+  line-height: 2;
+  padding-left: 9px;
+
+}
+
+form {
+  //  padding: 0;
+  //  border: none;
+
+
+  .row {
+    padding-top:0;
+    padding-bottom:0;
+  }
+
+  .col {
+    padding: 0;
+
+    input {
+      background-color: $light;
+      padding: 6px 0 5px 8px;
+    }
+
+    label {
+      padding-left: 2px;
+    }
+
+    .toggle {
+      padding-left: 5px;
+    }
+
+  }
+
+  .item-toggle {
+    padding: 12px;
+    font-size: 14px;
+
+  }
+
+  .item-select select {
+    padding: 0;
+  }
+
+  .item {
+    border-width: 0;
+    border-bottom-width: 1px;
+    margin: 0;
+  }
+
+  textarea {
+    background-color: $light;
+    display: table;
+  }
 }
 
 .logo-login {
@@ -109,23 +197,6 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
   color: #e5883e;
 }
 
-
-.item {
-//  background: transparent;
-//  border: none;
-//  border-bottom: 1px solid transparentize($light, 0.9);
-//  font-size: $font-size-base;
-//  color: $dark;
-
-  .item-toggle {
-//    background-color: transparent;
-  }
-}
-
-.card, .list-inset {
-//  background: none;
-}
-
 .mmm {
   background: $dark;
   height: 100%;
@@ -158,13 +229,12 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
   font-size: 0.8em;
 }
 
-
 .ngProgressLite {
   pointer-events: none;
 }
 
 .ngProgressLiteBar {
-  background: transparentize($dark,0.8);
+  background: transparentize($dark, 0.8);
   position: fixed;
   z-index: 100;
   top: 0;
@@ -178,31 +248,29 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
   right: 0px;
   width: 100px;
   height: 100%;
-//  box-shadow: 0 0 10px lighten($dark,3), 0 0 5px lighten($dark,3);
+  //  box-shadow: 0 0 10px lighten($dark,3), 0 0 5px lighten($dark,3);
   opacity: 0.4;
   -webkit-transform: rotate(3deg) translate(0px, -4px);
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px);
 }
 
-
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
-  height:auto;
+//  height: auto;
 }
 
 .platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
   padding-top: 0;
 }
 
-
 #isConnected {
-  background:$dark;
-  position:absolute;
-  top:0;
-  left:0;
-  height:100%;
-  width:100%;
-  z-index:999;
+  background: $dark;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
 
   > span {
     margin: 50% auto 0 auto;
@@ -213,13 +281,11 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     color: white;
 
     h3 {
-      color:white;
+      color: white;
     }
   }
 
-
 }
-
 
 .ellip {
   white-space: nowrap;
@@ -230,16 +296,3 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   text-overflow: ellipsis;
 }
 
-.input-label {
-  max-width: 30%;
-}
-
-.item-input input {
-  border-bottom:1px solid transparentize($dark,0.8);
-}
-.list-inset {
-  background-color: $light !important;
-  margin: 40px 0 10px 10px;
-  border-bottom:1px solid transparentize($dark,0.8);
-  padding-bottom:5px;
-}

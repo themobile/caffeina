@@ -36,13 +36,21 @@ angular.module('caffeina.controllers', [])
             }
 
 
+
+            // set isInAdd if state is addlead
             $rootScope.$on('$stateChangeStart',
                 function (event, toState, toParams, fromState, fromParams) {
                     (toState.name == 'addlead') ? $scope.isInAdd = true : $scope.isInAdd = false;
-
-
                 })
 
+
+            $scope.cancel = function () {
+                if ($rootScope.$previousState.name) {
+                    $state.go($rootScope.$previousState);
+                } else {
+                    $state.go('home');
+                }
+            }
 
             $scope.add = function () {
                 $ionicActionSheet.show({
@@ -54,7 +62,7 @@ angular.module('caffeina.controllers', [])
                     titleText: 'what do you want to add?',
                     buttonClicked: function (index) {
                         if (index == 1) {
-                            $state.go('addlead');
+                            $state.transitionTo('addlead');
                             return true;
                         }
                     }
@@ -135,7 +143,7 @@ angular.module('caffeina.controllers', [])
 
         };
         $scope.googleResultsDetails = '';
-        $scope.result='';
+        $scope.result = '';
 
 
     }])
@@ -146,7 +154,7 @@ angular.module('caffeina.controllers', [])
 
         $scope.isConnected = true;
         $scope.$on('isConnected', function (event, value) {
-            $scope.isConnected=value;
+            $scope.isConnected = value;
 //            $scope.isConnected=false;
 
         });

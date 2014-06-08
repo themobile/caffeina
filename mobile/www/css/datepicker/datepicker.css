@@ -71,7 +71,7 @@ calendar-event {
   -o-user-select: none;
   user-select: none;
   /* GENERAL */
-  padding: 4px;
+  padding: 0px;
   /* SPECIFIC */
 }
 [date-picker] span {
@@ -102,13 +102,11 @@ calendar-event {
 [ng-switch-when="month"] .calendarTitle {
   font-size: 32px;
   line-height: 35px;
-  padding-bottom: 20px;
 }
 [ng-switch-when="date"] .calendarTitle span.an,
 [ng-switch-when="year"] .calendarTitle span.an,
 [ng-switch-when="month"] .calendarTitle span.an {
   font-size: 14px;
-  padding-top: 10px;
 }
 [ng-switch-when="date"] div.col > span,
 [ng-switch-when="year"] div.col > span,
