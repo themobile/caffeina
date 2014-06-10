@@ -16,9 +16,6 @@ $checkbox-check-color: $light;
 $calm: $dark;
 $positive: $dark;
 
-
-
-
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 //$font-size-base: 13px !default;
 //$font-size-large: 20px !default;
@@ -34,6 +31,7 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
 .pane, .view {
   background-size: cover;
 }
+
 //.action-sheet-backdrop {
 //  background-color: rgba(246,242,242,0);
 //
@@ -42,15 +40,13 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
 //  }
 //}
 
-
 .action-sheet-group {
-  background-color: darken($light,3);
+  background-color: darken($light, 3);
 }
 
 .action-sheet-title {
   color: transparentize($base-color, 0.5);
 }
-
 
 //menu
 .menu {
@@ -80,56 +76,6 @@ legend {
 
 }
 
-form {
-  //  padding: 0;
-  //  border: none;
-
-
-  .row {
-    padding-top:0;
-    padding-bottom:0;
-  }
-
-  .col {
-    padding: 0;
-
-    input {
-      background-color: $light;
-      padding: 6px 0 5px 8px;
-    }
-
-    label {
-      padding-left: 2px;
-    }
-
-    .toggle {
-      padding-left: 5px;
-    }
-
-  }
-
-  .item-toggle {
-    padding: 12px;
-    font-size: 14px;
-
-  }
-
-  .item-select select {
-    padding: 0;
-  }
-
-  .item {
-    border-width: 0;
-    border-bottom-width: 1px;
-    margin: 0;
-  }
-
-  textarea {
-    background-color: $light;
-    display: table;
-  }
-}
-
 .logo-login {
   background: url("../img/logo-login-12.png") no-repeat top center;
   background-size: contain;
@@ -149,10 +95,6 @@ form {
 .autologin {
   max-width: 200px;
   margin: 0 auto;
-}
-
-.toggle .track {
-  border: none;
 }
 
 .bar.bar-positive {
@@ -256,7 +198,7 @@ form {
 }
 
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
-//  height: auto;
+  //  height: auto;
 }
 
 .platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
@@ -296,3 +238,66 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   text-overflow: ellipsis;
 }
 
+form {
+
+  font-size:14px;
+
+  .row {
+    padding: 0;
+  }
+
+  .col {
+    padding: 0;
+  }
+
+  .item-toggle {
+//    padding: 6px 0 5px 8px;
+    font-size:14px;
+    margin:5px 0;
+
+  }
+
+  .item-select {
+    margin-top:0;
+    height:51px;
+    select {
+      padding: 9px 5px;
+    }
+
+  }
+
+
+  .item-input input  {
+    flex:1 0 auto;
+    padding-right:0;
+    line-height:34px;
+
+  }
+
+  .item.item-input input {
+    padding-right:0 !important;
+    line-height:34px;
+  }
+
+
+  input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly] {
+    color:lightgrey;
+    background-color:$light;
+  }
+
+
+  label.item {
+    margin: 5px 2px !important;
+
+  }
+  .item {
+    border-width: 0;
+    border-bottom-width: 1px;
+    font-size:14;
+  }
+
+  textarea {
+    background-color:$light;
+    display:table;
+  }
+}

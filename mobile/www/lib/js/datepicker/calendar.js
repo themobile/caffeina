@@ -12,12 +12,12 @@ var Module = angular.module('calevents', []);
  *  // repeat
  * ]
  */
-Module.provider('CalendarEvents', function() {
+Module.provider('CalendarEvents', function () {
     var calendarEvents = {};
     return {
-        $get: function($rootScope) {
+        $get: function ($rootScope) {
             return {
-                setEvents: function(events) {
+                setEvents: function (events) {
                     calendarEvents = {};
                     for (var i = 0; i < events.length; i++) {
                         //
@@ -29,10 +29,10 @@ Module.provider('CalendarEvents', function() {
                     }
                     $rootScope.$broadcast('calendar:events', events);
                 },
-                hasEvent: function(date) {
+                hasEvent: function (date) {
                     return (new Date(date).toDateString() in calendarEvents);
                 },
-                getEvents: function(date) {
+                getEvents: function (date) {
                     var date = new Date(date).toDateString();
                     return calendarEvents[date];
                 }
@@ -42,29 +42,32 @@ Module.provider('CalendarEvents', function() {
 });
 
 
-Module.directive('calendarEvent', function() {
+Module.directive('calendarEvent', function () {
     return {
         restrict: 'E',
         scope: {
             event: '='
         },
         templateUrl: 'templates/datepicker/event.html',
-        link: function(scope,elem,attrs){
-
+        link: function (scope, elem, attrs) {
+            console.log(event);
+            elem.bind('click',function(event){
+                console.log('clicked');
+            })
         }
 
     }
 });
 
-Module.directive('calendar', function() {
+Module.directive('calendar', function () {
     return {
         restrict: 'E',
-        scope:true,
-        template: function(element, attrs) {
+        scope: true,
+        template: function (element, attrs) {
             return ['<div date-picker ', (attrs.eventService ? 'event-service="' + attrs.eventService + '"' : ''), (attrs.view ? 'view="' + attrs.view + '" ' : 'view="date"'), (attrs.template ? 'template="' + attrs.template + '" ' : ''),
                 'min-view="', (attrs.minView || 'date'), '"></div>'].join('');
         },
-        link: function(scope) {
+        link: function (scope) {
             scope.views = ['year', 'month', 'date'];
             scope.view = 'date';
         }

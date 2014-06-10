@@ -83,7 +83,7 @@ calendar-event span {
   -o-user-select: none;
   user-select: none;
   /* GENERAL */
-  padding: 0px;
+  padding: 0 5px;
   /* SPECIFIC */
 }
 [date-picker] span {
@@ -100,7 +100,7 @@ calendar-event span {
   background-color: rgba(255, 0, 0, 0.07);
 }
 [date-picker] .now {
-  background: rgba(255, 0, 0, 0.04);
+  background: rgba(65, 39, 47, 0.03);
 }
 [date-picker] .disabled {
   background: none;
@@ -114,6 +114,13 @@ calendar-event span {
 [ng-switch-when="year"],
 [ng-switch-when="month"] {
   text-align: center;
+  height: 100%;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  -webkit-flex-flow: column wrap;
+  -moz-flex-flow: column wrap;
+  flex-flow: row wrap;
 }
 [ng-switch-when="date"] .calendarTitle,
 [ng-switch-when="year"] .calendarTitle,

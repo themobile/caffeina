@@ -7490,20 +7490,12 @@ a.button {
 .action-sheet-title {
   color: rgba(65, 39, 47, 0.5); }
 
-menu
 .menu {
   background: #f0e9e9; }
-  menu
   .menu .item {
     border: none;
     background-color: #f0e9e9; }
-  menu
-  .menu .item.active, menu
-  .menu .item.activated, menu
-  .menu .item-complex.active .item-content, menu
-  .menu .item-complex.activated .item-content, menu
-  .menu .item .item-content.active, menu
-  .menu .item .item-content.activated {
+  .menu .item.active, .menu .item.activated, .menu .item-complex.active .item-content, .menu .item-complex.activated .item-content, .menu .item .item-content.active, .menu .item .item-content.activated {
     border: none;
     background-color: #f0e9e9; }
 
@@ -7516,31 +7508,6 @@ legend {
   margin-bottom: none;
   line-height: 2;
   padding-left: 9px; }
-
-form .row {
-  padding-top: 0;
-  padding-bottom: 0; }
-form .col {
-  padding: 0; }
-  form .col input {
-    background-color: #f6f2f2;
-    padding: 6px 0 5px 8px; }
-  form .col label {
-    padding-left: 2px; }
-  form .col .toggle {
-    padding-left: 5px; }
-form .item-toggle {
-  padding: 12px;
-  font-size: 14px; }
-form .item-select select {
-  padding: 0; }
-form .item {
-  border-width: 0;
-  border-bottom-width: 1px;
-  margin: 0; }
-form textarea {
-  background-color: #f6f2f2;
-  display: table; }
 
 .logo-login {
   background: url("../img/logo-login-12.png") no-repeat top center;
@@ -7559,9 +7526,6 @@ form textarea {
 .autologin {
   max-width: 200px;
   margin: 0 auto; }
-
-.toggle .track {
-  border: none; }
 
 .bar.bar-positive {
   background-color: none;
@@ -7670,3 +7634,37 @@ form textarea {
   -o-text-overflow: ellipsis;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis; }
+
+form {
+  font-size: 14px; }
+  form .row {
+    padding: 0; }
+  form .col {
+    padding: 0; }
+  form .item-toggle {
+    font-size: 14px;
+    margin: 5px 0; }
+  form .item-select {
+    margin-top: 0;
+    height: 51px; }
+    form .item-select select {
+      padding: 9px 5px; }
+  form .item-input input {
+    flex: 1 0 auto;
+    padding-right: 0;
+    line-height: 34px; }
+  form .item.item-input input {
+    padding-right: 0 !important;
+    line-height: 34px; }
+  form input[disabled], form select[disabled], form textarea[disabled], form input[readonly]:not(.cloned-text-input), form textarea[readonly]:not(.cloned-text-input), form select[readonly] {
+    color: lightgrey;
+    background-color: #f6f2f2; }
+  form label.item {
+    margin: 5px 2px !important; }
+  form .item {
+    border-width: 0;
+    border-bottom-width: 1px;
+    font-size: 14; }
+  form textarea {
+    background-color: #f6f2f2;
+    display: table; }

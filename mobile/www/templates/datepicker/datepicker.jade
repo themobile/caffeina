@@ -18,7 +18,7 @@ div(ng-switch='view')
         div.row.calendarRow(ng-repeat='week in weeks')
             div.col.calElement(ng-repeat='day in week')
                 span(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
-                calendar-event(event="event",ng-if="hasEvent(day)", ng-click="clickevents(day)")
+                calendar-event(event="event",ng-if="hasEvent(day)", ng-class="{hasEvent:hasEvent(dayActivated)}",ng-click="clickevents(day)")
         //div.row(ng-show='weeks.length==5')
         //    div.col(ng-repeat='a in [0,1,2,3,4,5,6]')
         //        span

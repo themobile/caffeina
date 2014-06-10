@@ -19,18 +19,20 @@ angular.module('caffeina.controller.add', [])
 
 
 
-            $scope.newLead={
-                date:new Date(),
-                contact:{
-                    name:'',
-                    phone:'',
-                    email:''
-                },
-                type:'session',
-                id1:5
+
+            $scope.init=function(){
+
+                $scope.newLead={
+                    date:moment().format('DD/MM/YYYY'),
+                    contact:{
+                        name:'daniel',
+                        phone:'',
+                        email:''
+                    },
+                    type:'session',
+                    id1:5
+                }
             }
-
-
 
             $scope.cancel=function(){
 //                if ($rootScope.$previousState.name){

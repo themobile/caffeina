@@ -40,7 +40,7 @@ calendar-event {
 
   /* GENERAL */
 
-  padding: 0px;
+  padding: 0 5px;
 
   span {
     display: block;
@@ -61,7 +61,7 @@ calendar-event {
   }
 
   .now {
-    background: rgba(255, 0, 0, 0.04);
+    background: @dark;
   }
 
   .disabled {
@@ -80,6 +80,16 @@ calendar-event {
 
 [ng-switch-when="date"], [ng-switch-when="year"], [ng-switch-when="month"] {
   text-align: center;
+  height: 100%;
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  -webkit-flex-flow: column wrap;
+  -moz-flex-flow: column wrap;
+  flex-flow: row wrap;
+
+
 
   .calendarTitle {
     font-size: 32px;

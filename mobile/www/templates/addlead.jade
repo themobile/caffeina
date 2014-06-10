@@ -1,4 +1,4 @@
-ion-nav-bar(ng-controller='addlead')
+ion-nav-bar(ng-controller='addlead',ng-init='init()')
     ion-nav-buttons(side='left')
         button.button.button-clear.pull-left(ng-click='cancel()') cancel
     ion-nav-buttons(side='right')
@@ -8,49 +8,50 @@ ion-view
     ion-content(padding='true',has-bouncing='true',scroll="true")
         form.list(name="addLead")
             legend inquiry details
-            label.item.item-input
-                span.input-label date
-                input(placeholder='date',type='date',ng-model='newLead.date',required)
+
             div.row
                 .col
                     label.item.item-input
-                        span.input-label time
-                        input(type='time',ng-model='newLead.time')
+                        i.positive.icon.ion-ios7-calendar.placeholder-icon
+                        //span.input-label date
+                        input(name='newLead.date',type='date',ng-model='newLead.date',required)
+
                 .col
-                    //label.toggle
-                        input(type='checkbox')
-                    ion-toggle(ng-model='newLead.allDay', toggle-class='toggle-calm') All day?
+                    label.item.item-input
+                        i.positive.icon.ion-ios7-clock.placeholder-icon
+                        input(name='newLead.time',type='time',ng-model='newLead.time',ng-disabled='newLead.allDay')
 
-            label.item.item-input.item-select
-                span.input-label type
-                select(placeholder='what',ng-model="newLead.type")
-                    option wedding
-                    option baptizing
-                    option(ng-selected='1') session
-                    option product
-                    option event
-            label.item.item-input
-                //span.input-label where
-                input#Autocomplete.ellip(type='text',placeholder='where',ng-model="newLead.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
+
+            div.row
+                .col
+                    ion-toggle(name='newLead.allDay',ng-model='newLead.allDay', toggle-class='toggle-calm') All day?
+
+                .col
+                    label.item.item-input.item-select
+                        //span.input-label type
+                        i.positive.icon.ion-ios7-information.placeholder-icon
+                        select(name='newLead.type',placeholder='what',ng-model="newLead.type")
+                            option wedding
+                            option baptizing
+                            option(ng-selected='1') session
+                            option product
+                            option event
+
 
             label.item.item-input
-                //span.input-label notes
-                textarea(placeholder='notes',rows='3',ng-model='newLead.info')
+                i.positive.icon.ion-ios7-location.placeholder-icon
+                input#Autocomplete.ellip(name='newLead.location',type='text',placeholder='where',ng-model="newLead.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
+
+            label.item.item-input
+                textarea(name='newLead.info',placeholder='notes',rows='3',ng-model='newLead.info')
             div.item-divider
-            //h4.icon-left.ion-ios7-contact.list-inset contact details
             legend contact info
             label.item.item-input
-                //span.input-label name
-                input(type='text',placeholder='name',ng-model='newLead.contact.name')
+                i.positive.icon.ion-ios7-person.placeholder-icon
+                input(name='newLead.contact.name',type='text',placeholder='name',ng-model='newLead.contact.name',value="bob")
             label.item.item-input
-                //span.input-label email
-                input(type='email',placeholder='email',ng-model='newLead.contact.email')
+                i.positive.icon.ion-ios7-email.placeholder-icon
+                input(name='newLead.contact.email',type='email',placeholder='email',ng-model='newLead.contact.email')
             label.item.item-input
-                //span.input-label phone
-                input(type='tel',placeholder='phone number',ng-model='newLead.contact.phone')
-
-
-
-    //div.bar.bar-footer
-    //button.button.button-clear(ng-click="cancel()") Cancel
-    //button.button.button-clear(ng-click='addLead()') Save
+                i.icon.positive.ion-ios7-telephone.placeholder-icon
+                input(name='newLead.contact.phone',type='tel',placeholder='phone number',ng-model='newLead.contact.phone')

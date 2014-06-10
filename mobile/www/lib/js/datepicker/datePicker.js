@@ -161,10 +161,10 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
             link: function (scope, element, attrs) {
 
                 //event broadcasted from template to go to current month
-                scope.$on('gotoday', function(){
+                scope.$on('gotoday', function () {
                     scope.date.setFullYear(moment().year());
                     scope.date.setMonth(moment().month());
-                    scope.view='date';
+                    scope.view = 'date';
                     update();
                 })
 
@@ -190,9 +190,10 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
 
                 scope.clickevents = function (day) {
 //                    console.log('clicked2:' + day);
-                    scope.$emit('calendar:clickevent',moment(day).format('YYYY-MM-DD'));
-
+                    scope.dayActivated = day;
+                    scope.$emit('calendar:clickevent', moment(day).format('YYYY-MM-DD'));
                 }
+
 
                 scope.setView = function (nextView) {
                     if (scope.views.indexOf(nextView) !== -1) {
@@ -201,23 +202,41 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                     }
                 };
 
+//swipeup
+//                $ionicGesture.on('dragend', function (event) {
 //
-                $ionicGesture.on('dragend', function (event) {
+//                    event.gesture.preventDefault();
+//
+//                    if (event.gesture.deltaY > -70) {
+////                        console.log('Delta !' + event.gesture.distance);
+//                        scope.prev();
+//                        scope.$apply();
+//                    }
+//
+//                    if (event.gesture.deltaY < 70) {
+////                        console.log('Delta !' + event.gesture.distance);
+//
+//                        scope.next();
+//                        scope.$apply();
+//                    }
+//
+//                }, element);
+
+
+                $ionicGesture.on('swipeup', function (event) {
 
                     event.gesture.preventDefault();
+                    scope.next();
+                    scope.$apply();
 
-                    if (event.gesture.deltaX > 70) {
-                        console.log('Delta !' + event.gesture.distance);
-                        scope.prev();
-                        scope.$apply();
-                    }
+                }, element);
 
-                    if (event.gesture.deltaX < -70) {
-                        console.log('Delta !' + event.gesture.distance);
 
-                        scope.next();
-                        scope.$apply();
-                    }
+                $ionicGesture.on('swipedown', function (event) {
+
+                    event.gesture.preventDefault();
+                    scope.prev();
+                    scope.$apply();
 
                 }, element);
 
