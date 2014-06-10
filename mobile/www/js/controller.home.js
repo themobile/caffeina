@@ -22,12 +22,9 @@ angular.module('caffeina.controller.home', [])
 
             $scope.datePickerControl = {};
 
-            //drives the list with events for a selected day
-            $scope.monthEvents = [];
+            //drives the view current event
+            $scope.selectedEvent = {};
 
-
-            //signal that events were loaded from month change not from login event
-            $scope.monthEventsLoaded = false;
 
 
             //event broadcasted to datepicker directive to go today
@@ -46,7 +43,14 @@ angular.module('caffeina.controller.home', [])
             //slide to event description clicked in event list
             $scope.goto = function (key) {
                 console.log(key);
-                $state.transitionTo('task', {taskId: key});
+                ngProgressLite.start();
+                var leadsRef = firebaseRefUser('/leads/' + key);
+                var kk = $firebase(leadsRef);
+                kk.$on('loaded', function (data) {
+                    $scope.selectedEvent = data;
+                    ngProgressLite.done();
+                    $ionicSlideBoxDelegate.$getByHandle('calendar_slider').next();
+                });
             }
 
 

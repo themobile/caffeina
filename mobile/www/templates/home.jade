@@ -14,3 +14,9 @@ ion-view(ng-init='init()',ng-controller='home')
                             p {{event.date}}
 
             ion-slide
+                ion-content(padding='true')
+                    div
+                        | Date: {{selectedEvent.date}}
+                        | <br/> Title: {{selectedEvent.title}}
+                        | <br/> Contact: {{selectedEvent.contact.name}}
+
