@@ -9,14 +9,14 @@ ion-view(ng-init='init()',ng-controller='home')
                 ion-content(padding='false',scroll='true')
                     ion-list.padding
                         //list events, those in the clicked day are marked with isCurrent
-                        ion-item(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}')
-                            h4(ng-click='goto(event.keia)') {{event.title}}
+                        ion-item(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='goto(event.keia)')
+                            h4 {{event.type}} | {{event.title}}
                             p {{event.date}}
 
             ion-slide
                 ion-content(padding='true')
                     div
                         | Date: {{selectedEvent.date}}
-                        | <br/> Title: {{selectedEvent.title}}
+                        | <br/> Title: {{selectedEvent.type}}
                         | <br/> Contact: {{selectedEvent.contact.name}}
 
