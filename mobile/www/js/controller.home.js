@@ -13,7 +13,8 @@ angular.module('caffeina.controller.home', [])
             , 'ngProgressLite'
             , '$state'
             , '$timeout'
-            , function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, $state, $timeout) {
+            , '$ionicSlideBoxDelegate'
+            , function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, $state, $timeout,$ionicSlideBoxDelegate) {
 
 
             // data for calendar
@@ -42,7 +43,7 @@ angular.module('caffeina.controller.home', [])
             };
 
 
-            //goto task clicked in event list
+            //slide to event description clicked in event list
             $scope.goto = function (key) {
                 console.log(key);
                 $state.transitionTo('task', {taskId: key});
@@ -114,8 +115,8 @@ angular.module('caffeina.controller.home', [])
             });
 
 
-            //stop menu sliding on calendar swipe
-            $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(false);
+//            //stop menu sliding on calendar swipe
+//            $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(false);
 
             // calendar loaded data
             $scope.$on('calendar:events', function (model, view) {
@@ -125,10 +126,16 @@ angular.module('caffeina.controller.home', [])
             // Click on event: search and display full event
             $scope.$on('calendar:clickevent', function (event, day) {
                 // push in local events for the selected day
-                $scope.monthEvents = [];
-                $scope.monthEvents = (_.filter($scope.events, function (num) {
-                    return num.date == day
-                }));
+                $ionicSlideBoxDelegate.$getByHandle('calendar_slider').next();
+
+                //mark events for the current selected day with property isCurrent
+                _.map($scope.events, function (num) {
+                     if (num.date == day) {
+                         return num.isCurrent=true;
+                    } else {
+                         return num.isCurrent=false;
+                     }
+                });
 
             });
 

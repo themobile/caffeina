@@ -301,3 +301,13 @@ form {
     display:table;
   }
 }
+
+
+//clicked day events are bold
+.isCurrent {
+  font-weight:700;
+
+  h4,p {
+    color:red;
+  }
+}

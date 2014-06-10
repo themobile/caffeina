@@ -74,7 +74,6 @@ angular.module('caffeina.controllers', [])
 
         var userEmail = userService.getUser().username;
         var ref = new Firebase('https://caffeina.firebaseio.com/messages/' + userEmail.replace(/\./g, ''));
-        $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(true);
 
         $scope.messages = $firebase(ref);
         $scope.mesaj = '';
@@ -93,7 +92,6 @@ angular.module('caffeina.controllers', [])
 //            showDelete: false,
 //            showReorder:false
 //        };
-        $ionicSideMenuDelegate.$getByHandle('home_screen').canDragContent(true);
 
         $scope.edit = function (item) {
             alert('Edit Item: ' + item.id);

@@ -7668,3 +7668,8 @@ form {
   form textarea {
     background-color: #f6f2f2;
     display: table; }
+
+.isCurrent {
+  font-weight: 700; }
+  .isCurrent h4, .isCurrent p {
+    color: red; }
