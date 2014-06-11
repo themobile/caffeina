@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('caffeina.config', [])
+angular.module('caffeina')
 
    // version of this seed app is compatible with angularFire 0.6
    // see tags for other versions: https://github.com/firebase/angularFire-seed/tags
@@ -11,7 +11,7 @@ angular.module('caffeina.config', [])
    .constant('loginRedirectPath', '/login')
 
    // your Firebase URL goes here
-   .constant('fburl', 'https://caffeina.firebaseio.com')
+   .constant('fburl', 'https://caffeina.firebaseio.com');
 
    //you can use this one to try out a demo of the seed
 //   .constant('FBURL', 'https://angularfire-seed.firebaseio.com');

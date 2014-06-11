@@ -1,4 +1,4 @@
-angular.module('caffeina.controller.tests', [])
+angular.module('caffeina.controllers')
 
     .controller('tests', ['$scope', 'dmlservice', function ($scope, dmlservice) {
 

@@ -6,26 +6,19 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('caffeina',
-        [
-            'ionic',
-            'caffeina.config',
-            'caffeina.services',
-            'caffeina.service.auth',
-            'ngCookies',
-            'angularLocalStorage',
-            'caffeina.service.firebase',
-            'caffeina.controllers',
-            'caffeina.controller.auth',
-            'caffeina.controller.tests',
-            'caffeina.controller.add',
-            'caffeina.controller.home',
-            'caffeina.filters',
-            'firebase',
-            'datePicker',
-            'calevents',
-            'ngProgressLite',
-            'ngAutocomplete'
-        ])
+    [
+        'ionic',
+        'caffeina.services',
+        'caffeina.controllers',
+        'caffeina.filters',
+        'angularLocalStorage',
+        'ngCookies',
+        'firebase',
+        'datePicker',
+        'calevents',
+        'ngProgressLite',
+        'ngAutocomplete'
+    ])
 
 
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -86,9 +79,9 @@ angular.module('caffeina',
         presenceRef = new Firebase('https://caffeina.firebaseio.com/.info/connected');
         presenceRef.on('value', function (snap) {
             if (snap.val() === true) {
-                $rootScope.$broadcast('isConnected',true);
+                $rootScope.$broadcast('isConnected', true);
             } else {
-                $rootScope.$broadcast('isConnected',false);
+                $rootScope.$broadcast('isConnected', false);
             }
         });
 

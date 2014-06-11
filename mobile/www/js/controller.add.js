@@ -1,7 +1,7 @@
 /**
  * Created by daniel on 05/06/14.
  */
-angular.module('caffeina.controller.add', [])
+angular.module('caffeina.controllers')
 
 
     .controller('addlead',

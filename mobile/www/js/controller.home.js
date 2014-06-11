@@ -1,4 +1,4 @@
-angular.module('caffeina.controller.home', [])
+angular.module('caffeina.controllers')
 
     .controller('home',
         [
@@ -26,7 +26,7 @@ angular.module('caffeina.controller.home', [])
             $scope.selectedEvent = {};
 
             $scope.init=function() {
-                $ionicSlideBoxDelegate.go(0);
+//                $ionicSlideBoxDelegate.go(0);
             }
 
             //event broadcasted to datepicker directive to go today

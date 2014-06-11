@@ -1,4 +1,4 @@
-angular.module('caffeina.controller.auth', [])
+angular.module('caffeina.controllers')
 
 
     .controller('loginController', ['$rootScope', '$scope', 'userService', '$firebaseSimpleLogin', 'storage', '$state', '$ionicLoading', function ($rootScope, $scope, userService, $firebaseSimpleLogin, storage, $state, $ionicLoading) {
