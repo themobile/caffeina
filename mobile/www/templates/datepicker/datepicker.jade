@@ -40,8 +40,8 @@ div(ng-switch='view')
 
         div.calendarDetails
             div.row(ng-repeat="group in yearsgroups")
-                div.col(ng-repeat='year in group')
-                    span(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)', ng-bind='year.getFullYear()')
+                div.col.year(ng-repeat='year in group')
+                    div(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)', ng-bind='year.getFullYear()')
 
 
 
@@ -63,5 +63,5 @@ div(ng-switch='view')
 
             div.row(ng-repeat="group in monthsgroups")
 
-                    div.col(ng-repeat='month in group')
+                    div.col.month(ng-repeat='month in group')
                         span( ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
