@@ -50,26 +50,34 @@ Module.directive('calendarEvent', function () {
         },
         templateUrl: 'templates/datepicker/event.html',
         link: function (scope, elem, attrs) {
-            console.log(event);
-            elem.bind('click',function(event){
-                console.log('clicked');
-            })
+//            console.log(event);
+//            elem.bind('click',function(event){
+//                console.log('clicked');
+//            })
         }
 
     }
 });
 
-Module.directive('calendar', function () {
+Module.directive('calendar', ['$animate','$timeout',function ($animate,$timeout) {
     return {
         restrict: 'E',
         scope: true,
         template: function (element, attrs) {
-            return ['<div date-picker ', (attrs.eventService ? 'event-service="' + attrs.eventService + '"' : ''), (attrs.view ? 'view="' + attrs.view + '" ' : 'view="date"'), (attrs.template ? 'template="' + attrs.template + '" ' : ''),
-                'min-view="', (attrs.minView || 'date'), '"></div>'].join('');
+            return [
+                '<div date-picker '
+                , (attrs.eventService ? 'event-service="' + attrs.eventService + '"' : '')
+                , (attrs.view ? 'view="' + attrs.view + '" ' : 'view="date"')
+                , (attrs.template ? 'template="' + attrs.template + '" ' : '')
+                , 'min-view="', (attrs.minView || 'date'), '"></div>'
+            ].join('');
         },
-        link: function (scope) {
+        link: function (scope,element,attrs) {
             scope.views = ['year', 'month', 'date'];
             scope.view = 'date';
+
+
+
         }
     };
-});
+}]);

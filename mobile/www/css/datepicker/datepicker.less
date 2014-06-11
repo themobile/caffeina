@@ -8,36 +8,33 @@
 }
 
 calendar-event {
-  width: 100%;
-  height: 40px;
   display: block;
-  position: relative;
-  z-index: 999;
-  margin-top: -40px;
-
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  left: 0;
 
   span {
+    display: block;
     background-color: orange;
-
-    height:6px;
-    width:6px;
+    height: 6px;
+    width: 6px;
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
-    position:absolute;
-    bottom:4px;
-    left:50%;
-    margin-left:-4px;
-    display:block;
+    bottom: 10px;
+    left: 50%;
+    position: absolute;
+    margin-left: -4px;
   }
 
 }
 
-
-
 [date-picker] {
   .user-select(none);
-
+  position:absolute;
+  height:100%;
   /* GENERAL */
 
   padding: 0 5px;
@@ -57,7 +54,7 @@ calendar-event {
   }
 
   .activated {
-      background-color: rgba(255, 0, 0, 0.07);
+    background-color: rgba(255, 0, 0, 0.07);
   }
 
   .now {
@@ -80,70 +77,94 @@ calendar-event {
 
 [ng-switch-when="date"], [ng-switch-when="year"], [ng-switch-when="month"] {
   text-align: center;
-  height: 100%;
-  display: flex;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: flex;
-  -webkit-flex-flow: column wrap;
-  -moz-flex-flow: column wrap;
-  flex-flow: row wrap;
+
+  .calendarHeader {
+    height: 15%;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    -moz-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    justify-content: center;
 
 
 
-  .calendarTitle {
-    font-size: 32px;
-    line-height:35px;
-//    padding-bottom: 20px;
+    button {
 
-    span.an {
-      font-size: 14px;
-//      padding-top: 10px;
     }
   }
 
-  div.col > span {
-    height: 40px;
+  .calendarDays {
+    height: 10%;
   }
 
-  .calendarRow {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+  .calendarDetails {
+    height: 75%;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+
+
+
+    -webkit-flex-flow: column wrap;
+    -moz-flex-flow: column wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    justify-content: space-around;
   }
 
-  .calElement {
-    position: relative;
-    line-height: 40px;
+  .day {
+
+  }
+
+  .calendarTitle {
+    font-size: 12px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    -webkit-flex-flow: column wrap;
+    -moz-flex-flow: column wrap;
+    flex-flow: column wrap;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    justify-content: center;
+    align-items: center;
+
+
+
+
+    span.an {
+
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 24px;
+
+
+    }
+  }
+
+  div.col {
+    display: flex;
     padding: 0;
-    height: 40px;
+    position:relative;
+    align-items: center;
+    justify-content: center;
+
+
+
+
   }
 
-  .row + .row {
-    margin-top: 0;
-    padding: 0;
+  .row {
+    border-top: 1px solid rgba(0, 0, 0, 0.11);
   }
 
   button.button-full {
-    height:100%;
+    height: 100%;
   }
 
-}
-
-.eventCalendar .event {
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.5s ease-in-out;
-  position: absolute;
-  width: 100%;
-  background: none;
-  height: 100%;
-}
-
-.event {
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.5s ease-in-out;
-  position: absolute;
-  width: 100%;
-  background: none;
-  height: 100%;
 }

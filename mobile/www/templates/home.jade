@@ -4,12 +4,12 @@ ion-view(ng-init='init()',ng-controller='home')
             ion-slide
                 ion-content(padding='false',scroll='false')
                     //ion-refresher(pulling-text="Pull to go today",on-refresh="goToday()")
-                    calendar.eventCalendar(ng-class='{"fade-in-not-out":notfirsttime}',view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
+                    calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
             ion-slide
                 ion-content(padding='false',scroll='true')
                     ion-list.padding
                         //list events, those in the clicked day are marked with isCurrent
-                        ion-item(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='goto(event.keia)')
+                        ion-item(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='viewTask(event.key)')
                             h4 {{event.type}} | {{event.title}}
                             p {{event.date}}
 

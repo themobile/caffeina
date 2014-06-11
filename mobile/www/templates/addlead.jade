@@ -14,7 +14,7 @@ ion-view
                     label.item.item-input
                         i.positive.icon.ion-ios7-calendar.placeholder-icon
                         //span.input-label date
-                        input(name='newLead.date',type='date',ng-model='newLead.date',required)
+                        input(id="exampleInput",type='date',ng-model='newLead.date',placeholder="yyyy-MM-dd", required)
 
                 .col
                     label.item.item-input
@@ -48,7 +48,7 @@ ion-view
             legend contact info
             label.item.item-input
                 i.positive.icon.ion-ios7-person.placeholder-icon
-                input(name='newLead.contact.name',type='text',placeholder='name',ng-model='newLead.contact.name',value="bob")
+                input(name='newLead.contact.name',type='text',placeholder='name',ng-model='newLead.contact.name')
             label.item.item-input
                 i.positive.icon.ion-ios7-email.placeholder-icon
                 input(name='newLead.contact.email',type='email',placeholder='email',ng-model='newLead.contact.email')
