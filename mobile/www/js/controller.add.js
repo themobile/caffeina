@@ -23,7 +23,7 @@ angular.module('caffeina.controller.add', [])
             $scope.init=function(){
 
                 $scope.newLead={
-                    date:moment().format('DD/MM/YYYY'),
+                    date:new Date(2014,02,02),
                     contact:{
                         name:'daniel',
                         phone:'',

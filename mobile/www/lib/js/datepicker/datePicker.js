@@ -146,8 +146,13 @@ function isSameMinutes(model, date) {
 }
 
 
-Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture',
-    function datePickerDirective(datePickerConfig, $injector, $ionicGesture) {
+Module.directive('datePicker', [
+    'datePickerConfig'
+    , '$injector'
+    , '$ionicGesture'
+    , '$animate'
+    , '$timeout'
+    , function datePickerDirective(datePickerConfig, $injector, $ionicGesture, $animate, $timeout) {
 
         //noinspection JSUnusedLocalSymbols
         return {
@@ -159,14 +164,6 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                 before: '=?'
             },
             link: function (scope, element, attrs) {
-
-                //event broadcasted from template to go to current month
-                scope.$on('gotoday', function () {
-                    scope.date.setFullYear(moment().year());
-                    scope.date.setMonth(moment().month());
-                    scope.view = 'date';
-                    update();
-                })
 
 
                 scope.date = new Date(scope.model || new Date());
@@ -202,44 +199,40 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                     }
                 };
 
-//swipeup
-//                $ionicGesture.on('dragend', function (event) {
-//
-//                    event.gesture.preventDefault();
-//
-//                    if (event.gesture.deltaY > -70) {
-////                        console.log('Delta !' + event.gesture.distance);
-//                        scope.prev();
-//                        scope.$apply();
-//                    }
-//
-//                    if (event.gesture.deltaY < 70) {
-////                        console.log('Delta !' + event.gesture.distance);
-//
-//                        scope.next();
-//                        scope.$apply();
-//                    }
-//
-//                }, element);
 
+                //event broadcasted from template to go to current month
+                scope.$on('gotoday', function () {
+                    scope.date.setFullYear(moment().year());
+                    scope.date.setMonth(moment().month());
+                    scope.view = 'date';
+                    update();
+                })
 
+//
+                //change months on swipeup
                 $ionicGesture.on('swipeup', function (event) {
-
                     event.gesture.preventDefault();
                     scope.next();
-                    scope.$apply();
+                    scope.$apply(function(){
+                        $animate.addClass(element, 'slide-in-up2', function () {
+                            $animate.removeClass(element, 'slide-in-up2');
+                        });
+                    });
+
 
                 }, element);
 
-
+                //change months on swipedown
                 $ionicGesture.on('swipedown', function (event) {
-
                     event.gesture.preventDefault();
                     scope.prev();
-                    scope.$apply();
+                    scope.$apply(function(){
+                        $animate.addClass(element, 'slide-in-down2', function () {
+                            $animate.removeClass(element, 'slide-in-down2');
+                        });
+                    });
 
                 }, element);
-
 
 
                 scope.setDate = function (date) {
@@ -260,6 +253,8 @@ Module.directive('datePicker', ['datePickerConfig', '$injector', '$ionicGesture'
                             /*falls through*/
                             case 'date':
                                 scope.model.setDate(date.getDate());
+
+
                             /*falls through*/
                             case 'month':
                                 scope.model.setMonth(date.getMonth());

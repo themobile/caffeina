@@ -2862,7 +2862,7 @@ cite {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #41272f;
-  font-weight: 500;
+  font-weight: 700;
   font-family: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif;
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
@@ -2944,7 +2944,7 @@ dd {
   line-height: 1.42857; }
 
 dt {
-  font-weight: bold; }
+  font-weight: 700; }
 
 blockquote {
   margin: 0 0 20px;
@@ -3660,7 +3660,7 @@ a.subdued {
   white-space: nowrap;
   font-weight: 400;
   font-size: 14px;
-  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "Open Sans", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   opacity: 0.7; }
   .tab-item:hover {
     cursor: pointer; }
@@ -6851,9 +6851,9 @@ a.button {
 
 .slide-in-up.ng-enter,
 .slide-in-up > .ng-enter {
-  -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms;
-  -moz-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms;
-  transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms; }
+  -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 300ms;
+  -moz-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 300ms;
+  transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 300ms; }
 
 .slide-in-up.ng-enter-active,
 .slide-in-up > .ng-enter-active {
@@ -7483,6 +7483,193 @@ a.button {
 
 .pane, .view {
   background-size: cover; }
+
+strong {
+  font-weight: 700; }
+
+@-webkit-keyframes slideInFromBottom {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0); } }
+
+@-moz-keyframes slideInFromBottom {
+  from {
+    -moz-transform: translateY(100%); }
+
+  to {
+    -moz-transform: translateY(0); } }
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%); }
+
+  to {
+    transform: translateY(0); } }
+
+@-webkit-keyframes slideOutToUp {
+  from {
+    -webkit-transform: translate3d(0, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, -100%, 0); } }
+
+@-moz-keyframes slideOutToUp {
+  from {
+    -moz-transform: translateY(0); }
+
+  to {
+    -moz-transform: translateY(-100%); } }
+
+@keyframes slideOutToUp {
+  from {
+    transform: translateY(0); }
+
+  to {
+    transform: translateY(-100%); } }
+
+.slide-in-up2 {
+  -webkit-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0); }
+  .slide-in-up2.ng-add, .slide-in-up2 > .ng-add {
+    -webkit-animation-name: slideInFromBottom;
+    -moz-animation-name: slideInFromBottom;
+    animation-name: slideInFromBottom;
+    -webkit-animation-duration: 250ms;
+    -moz-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+  .slide-in-up2.ng-remove, .slide-in-up2 > .ng-remove {
+    -webkit-animation-name: slideOutToUp;
+    -moz-animation-name: slideOutToUp;
+    animation-name: slideOutToUp;
+    -webkit-animation-duration: 250ms;
+    -moz-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+.slide-in-up2-add {
+  -webkit-transform: translate3d(0, 0%, 0);
+  -moz-transform: translate3d(0, 0%, 0);
+  transform: translate3d(0, 0%, 0);
+  -webkit-animation-duration: 250ms;
+  -moz-animation-duration: 250ms;
+  animation-duration: 250ms;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+.slide-in-up2-add-active {
+  -webkit-animation-name: slideInFromBottom;
+  -moz-animation-name: slideInFromBottom;
+  animation-name: slideInFromBottom; }
+
+@-webkit-keyframes slideInFromTop {
+  from {
+    -webkit-transform: translate3d(0, -100%, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0); } }
+
+@-moz-keyframes slideInFromTop {
+  from {
+    -moz-transform: translateY(-100%); }
+
+  to {
+    -moz-transform: translateY(0); } }
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%); }
+
+  to {
+    transform: translateY(0); } }
+
+@-webkit-keyframes slideOutToBottom {
+  from {
+    -webkit-transform: translate3d(0, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 100%, 0); } }
+
+@-moz-keyframes slideOutToBottom {
+  from {
+    -moz-transform: translateY(0); }
+
+  to {
+    -moz-transform: translateY(100%); } }
+
+@keyframes slideOutToBottom {
+  from {
+    transform: translateY(0); }
+
+  to {
+    transform: translateY(100%); } }
+
+.slide-in-down2 {
+  -webkit-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0); }
+  .slide-in-down2.ng-add, .slide-in-down2 > .ng-add {
+    -webkit-animation-name: slideInFromTop;
+    -moz-animation-name: slideInFromTop;
+    animation-name: slideInFromTop;
+    -webkit-animation-duration: 250ms;
+    -moz-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+  .slide-in-down2.ng-remove, .slide-in-down2 > .ng-remove {
+    -webkit-animation-name: slideOutToBottom;
+    -moz-animation-name: slideOutToBottom;
+    animation-name: slideOutToBottom;
+    -webkit-animation-duration: 250ms;
+    -moz-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+.slide-in-down2-add {
+  -webkit-transform: translate3d(0, 0%, 0);
+  -moz-transform: translate3d(0, 0%, 0);
+  transform: translate3d(0, 0%, 0);
+  -webkit-animation-duration: 250ms;
+  -moz-animation-duration: 250ms;
+  animation-duration: 250ms;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+.slide-in-down2-add-active {
+  -webkit-animation-name: slideInFromTop;
+  -moz-animation-name: slideInFromTop;
+  animation-name: slideInFromTop; }
 
 .action-sheet-group {
   background-color: #f0e9e9; }

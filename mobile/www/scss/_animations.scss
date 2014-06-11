@@ -459,6 +459,13 @@ $ios7-transition-duration: 340ms;
   @include animation-name(slideOutToLeft);
 }
 
+
+
+
+
+
+
+
 .slide-in-right {
   @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
@@ -512,6 +519,9 @@ $ios7-transition-duration: 340ms;
 }
 
 
+
+
+
 /**
  * Slide up from the bottom, used for modals
  * --------------------------------------------------
@@ -522,7 +532,7 @@ $ios7-transition-duration: 340ms;
 }
 .slide-in-up.ng-enter,
 .slide-in-up > .ng-enter {
-  @include transition(all $slide-in-up-function 400ms);
+  @include transition(all $slide-in-up-function 300ms);
 }
 .slide-in-up.ng-enter-active,
 .slide-in-up > .ng-enter-active {

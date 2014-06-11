@@ -32,13 +32,141 @@ $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-se
   background-size: cover;
 }
 
-//.action-sheet-backdrop {
-//  background-color: rgba(246,242,242,0);
-//
-//  &.active {
-//    background-color: rgba(246,242,242,0.5);
-//  }
-//}
+
+strong {
+  font-weight: 700;
+}
+
+
+
+// Slide In From Bottom
+// -------------------------------
+
+@-webkit-keyframes slideInFromBottom {
+  from { -webkit-transform: translate3d(0,100%, 0); }
+  to { -webkit-transform: translate3d(0, 0, 0); }
+}
+@-moz-keyframes slideInFromBottom {
+  from { -moz-transform: translateY(100%); }
+  to { -moz-transform: translateY(0); }
+}
+@keyframes slideInFromBottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+
+
+// Slide Out To Top
+// -------------------------------
+
+@-webkit-keyframes slideOutToUp {
+  from { -webkit-transform: translate3d(0, 0, 0); }
+  to { -webkit-transform: translate3d(0,-100%, 0); }
+}
+@-moz-keyframes slideOutToUp {
+  from { -moz-transform: translateY(0); }
+  to { -moz-transform: translateY(-100%); }
+}
+@keyframes slideOutToUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+
+.slide-in-up2 {
+  @include translate3d(0,100%,0);
+  &.ng-add, > .ng-add {
+    @include animation-name(slideInFromBottom);
+    @include animation-duration($transition-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+  &.ng-remove, > .ng-remove {
+    @include animation-name(slideOutToUp);
+    @include animation-duration($transition-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+}
+
+.slide-in-up2-add {
+  @include translate3d(0,0%,0);
+  @include animation-duration($transition-duration);
+  @include animation-timing-function(ease-in-out);
+  @include animation-fill-mode(both);
+}
+.slide-in-up2-add-active {
+  @include animation-name(slideInFromBottom);
+}
+
+
+
+
+// Slide In From top
+// -------------------------------
+
+@-webkit-keyframes slideInFromTop {
+  from { -webkit-transform: translate3d(0,-100%, 0); }
+  to { -webkit-transform: translate3d(0, 0, 0); }
+}
+@-moz-keyframes slideInFromTop {
+  from { -moz-transform: translateY(-100%); }
+  to { -moz-transform: translateY(0); }
+}
+@keyframes slideInFromTop {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+
+
+
+// Slide Out To Bottom
+// -------------------------------
+
+@-webkit-keyframes slideOutToBottom {
+  from { -webkit-transform: translate3d(0, 0, 0); }
+  to { -webkit-transform: translate3d(0,100%, 0); }
+}
+@-moz-keyframes slideOutToBottom {
+  from { -moz-transform: translateY(0); }
+  to { -moz-transform: translateY(100%); }
+}
+@keyframes slideOutToBottom {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+
+
+
+
+.slide-in-down2 {
+  @include translate3d(0,100%,0);
+  &.ng-add, > .ng-add {
+    @include animation-name(slideInFromTop);
+    @include animation-duration($transition-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+  &.ng-remove, > .ng-remove {
+    @include animation-name(slideOutToBottom);
+    @include animation-duration($transition-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+}
+
+.slide-in-down2-add {
+  @include translate3d(0,0%,0);
+  @include animation-duration($transition-duration);
+  @include animation-timing-function(ease-in-out);
+  @include animation-fill-mode(both);
+}
+.slide-in-down2-add-active {
+  @include animation-name(slideInFromTop);
+}
 
 .action-sheet-group {
   background-color: darken($light, 3);
@@ -240,7 +368,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 
 form {
 
-  font-size:14px;
+  font-size: 14px;
 
   .row {
     padding: 0;
@@ -251,40 +379,37 @@ form {
   }
 
   .item-toggle {
-//    padding: 6px 0 5px 8px;
-    font-size:14px;
-    margin:5px 0;
+    //    padding: 6px 0 5px 8px;
+    font-size: 14px;
+    margin: 5px 0;
 
   }
 
   .item-select {
-    margin-top:0;
-    height:51px;
+    margin-top: 0;
+    height: 51px;
     select {
       padding: 9px 5px;
     }
 
   }
 
-
-  .item-input input  {
-    flex:1 0 auto;
-    padding-right:0;
-    line-height:34px;
+  .item-input input {
+    flex: 1 0 auto;
+    padding-right: 0;
+    line-height: 34px;
 
   }
 
   .item.item-input input {
-    padding-right:0 !important;
-    line-height:34px;
+    padding-right: 0 !important;
+    line-height: 34px;
   }
-
 
   input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly] {
-    color:lightgrey;
-    background-color:$light;
+    color: lightgrey;
+    background-color: $light;
   }
-
 
   label.item {
     margin: 5px 2px !important;
@@ -293,21 +418,20 @@ form {
   .item {
     border-width: 0;
     border-bottom-width: 1px;
-    font-size:14;
+    font-size: 14;
   }
 
   textarea {
-    background-color:$light;
-    display:table;
+    background-color: $light;
+    display: table;
   }
 }
 
-
 //clicked day events are bold
 .isCurrent {
-  font-weight:700;
+  font-weight: 700;
 
-  h4,p {
-    color:red;
+  h4, p {
+    color: red;
   }
 }

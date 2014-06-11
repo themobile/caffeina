@@ -56,25 +56,25 @@
   background-color: #24528c \9;
 }
 calendar-event {
-  width: 100%;
-  height: 40px;
   display: block;
-  position: relative;
-  z-index: 999;
-  margin-top: -40px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  left: 0;
 }
 calendar-event span {
+  display: block;
   background-color: orange;
   height: 6px;
   width: 6px;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
-  position: absolute;
-  bottom: 4px;
+  bottom: 10px;
   left: 50%;
+  position: absolute;
   margin-left: -4px;
-  display: block;
 }
 [date-picker] {
   -webkit-user-select: none;
@@ -82,6 +82,8 @@ calendar-event span {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+  position: absolute;
+  height: 100%;
   /* GENERAL */
   padding: 0 5px;
   /* SPECIFIC */
@@ -114,69 +116,78 @@ calendar-event span {
 [ng-switch-when="year"],
 [ng-switch-when="month"] {
   text-align: center;
-  height: 100%;
+}
+[ng-switch-when="date"] .calendarHeader,
+[ng-switch-when="year"] .calendarHeader,
+[ng-switch-when="month"] .calendarHeader {
+  height: 15%;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+  -moz-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+}
+[ng-switch-when="date"] .calendarDays,
+[ng-switch-when="year"] .calendarDays,
+[ng-switch-when="month"] .calendarDays {
+  height: 10%;
+}
+[ng-switch-when="date"] .calendarDetails,
+[ng-switch-when="year"] .calendarDetails,
+[ng-switch-when="month"] .calendarDetails {
+  height: 75%;
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  -webkit-flex-flow: column wrap;
+  -moz-flex-flow: column wrap;
+  flex-flow: row wrap;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  justify-content: space-around;
+}
+[ng-switch-when="date"] .calendarTitle,
+[ng-switch-when="year"] .calendarTitle,
+[ng-switch-when="month"] .calendarTitle {
+  font-size: 12px;
   display: -webkit-flex;
   display: -moz-flex;
   display: flex;
   -webkit-flex-flow: column wrap;
   -moz-flex-flow: column wrap;
-  flex-flow: row wrap;
-}
-[ng-switch-when="date"] .calendarTitle,
-[ng-switch-when="year"] .calendarTitle,
-[ng-switch-when="month"] .calendarTitle {
-  font-size: 32px;
-  line-height: 35px;
+  flex-flow: column wrap;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  align-items: center;
 }
 [ng-switch-when="date"] .calendarTitle span.an,
 [ng-switch-when="year"] .calendarTitle span.an,
 [ng-switch-when="month"] .calendarTitle span.an {
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
 }
-[ng-switch-when="date"] div.col > span,
-[ng-switch-when="year"] div.col > span,
-[ng-switch-when="month"] div.col > span {
-  height: 40px;
-}
-[ng-switch-when="date"] .calendarRow,
-[ng-switch-when="year"] .calendarRow,
-[ng-switch-when="month"] .calendarRow {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.11);
-}
-[ng-switch-when="date"] .calElement,
-[ng-switch-when="year"] .calElement,
-[ng-switch-when="month"] .calElement {
+[ng-switch-when="date"] div.col,
+[ng-switch-when="year"] div.col,
+[ng-switch-when="month"] div.col {
+  display: flex;
+  padding: 0;
   position: relative;
-  line-height: 40px;
-  padding: 0;
-  height: 40px;
+  align-items: center;
+  justify-content: center;
 }
-[ng-switch-when="date"] .row + .row,
-[ng-switch-when="year"] .row + .row,
-[ng-switch-when="month"] .row + .row {
-  margin-top: 0;
-  padding: 0;
+[ng-switch-when="date"] .row,
+[ng-switch-when="year"] .row,
+[ng-switch-when="month"] .row {
+  border-top: 1px solid rgba(0, 0, 0, 0.11);
 }
 [ng-switch-when="date"] button.button-full,
 [ng-switch-when="year"] button.button-full,
 [ng-switch-when="month"] button.button-full {
-  height: 100%;
-}
-.eventCalendar .event {
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.5s ease-in-out;
-  position: absolute;
-  width: 100%;
-  background: none;
-  height: 100%;
-}
-.event {
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.5s ease-in-out;
-  position: absolute;
-  width: 100%;
-  background: none;
   height: 100%;
 }
