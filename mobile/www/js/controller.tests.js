@@ -36,14 +36,30 @@ angular.module('caffeina.controllers')
 
         $scope.addJob = function () {
             var job = {
-                date: moment("2014-01-01").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD"),
+                date: moment("2014-01-01 10:00").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
-                time: "11:00",
                 type: "wedding",
+                typeId: 1,
+                isBooked: true,
+                isTasksGenerated: false,
                 location: "str noua bucuresti",
                 notes: "comentariuiu",
                 contact: {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"}
-            }
+//                contact: {id:1}
+            };
+//            console.log('start');
+//            console.log(moment().format('mm:ss.sss'));
+            dmlservice.setJob(job);
         };
+
+        $scope.year = "2014";
+        $scope.month = "3";
+
+        $scope.getTasks = function () {
+            dmlservice.getOut($scope.year, $scope.month).then(function (ee) {
+                console.log('veveveve');
+            });
+        };
+
 
     }]);

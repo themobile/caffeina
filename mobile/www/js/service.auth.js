@@ -16,7 +16,7 @@ angular.module('caffeina.services')
                     var userDetails = firebaseRef('/users/' + btoa(user.user.email));
                     return userDetails.update({details: user.user});
                 }).then(function () {
-                    var ref = dmlservice._userFBRef()
+                    var ref = dmlservice._userRootFBRef()
                         ;
                     ref.child('templates').once('value', function (snapsoot) {
                         var tmpl = snapsoot.val()
