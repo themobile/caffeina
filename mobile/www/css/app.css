@@ -7481,12 +7481,6 @@ a.button {
   -webkit-transition: none !important;
   transition: none !important; }
 
-.pane, .view {
-  background-size: cover; }
-
-strong {
-  font-weight: 700; }
-
 @-webkit-keyframes slideInFromBottom {
   from {
     -webkit-transform: translate3d(0, 100%, 0); }
@@ -7670,6 +7664,12 @@ strong {
   -webkit-animation-name: slideInFromTop;
   -moz-animation-name: slideInFromTop;
   animation-name: slideInFromTop; }
+
+.pane, .view {
+  background-size: cover; }
+
+strong {
+  font-weight: 700; }
 
 .action-sheet-group {
   background-color: #f0e9e9; }
