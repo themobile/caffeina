@@ -109,149 +109,118 @@ angular.module('caffeina.services', [])
             return firebaseRef('/users/' + btoa(user.user.email) + '/templates/');
         };
 
-        dmlService._taskFBRef = function (templId) {
+        dmlService._taskTemplateFBRef = function (templId) {
             return firebaseRef('/users/' + btoa(user.user.email) + '/templates/' + templId + '/tasks/');
         };
 
+        dmlService._userFBRef = function () {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/');
+        };
+
         dmlService._rootFBRef = function () {
-            return firebaseRef('/users/' + btoa(user.user.email));
+            return firebaseRef('/');
+        };
+
+        dmlService._rootTemplateFBRef = function () {
+            return firebaseRef('/templates/');
+        };
+
+
+        dmlService._getRootTemplate = function () {
+            var defered = $q.defer()
+                , rootFBRef = dmlService._rootFBRef()
+                , arrayRet = []
+                ;
+
+            rootFBRef.child('templates').once('value', function (templateSnapsoot) {
+                var templateObj = templateSnapsoot.val()
+                    ;
+                _.each(templateObj, function (template) {
+                    if (template.name) {
+                        var tasks = []
+                            ;
+                        _.each(template.tasks, function (task) {
+                            if (task.name) {
+                                tasks.push({
+                                    name: task.name,
+                                    shift: task.shift,
+                                    isMain: task.isMain,
+                                    alert: task.alert
+                                });
+                            }
+                        });
+                        arrayRet.push({
+                            name: template.name,
+                            tasks: tasks
+                        });
+                    }
+                });
+                defered.resolve(arrayRet);
+            });
+            return defered.promise;
         };
 
         // public
-        dmlService.setPrimaryTemplate = function (templates) {
-            var templates = [
-                {
-                    name: 'wedding',
-                    tasks: [
-                        {
-                            name: 'engagement session',
-                            shift: -60,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'civil ceremony',
-                            shift: -1,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'preparations',
-                            shift: 0,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'ceremony',
-                            shift: 0,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'party',
-                            shift: 0,
-                            isMain: true,
-                            alert: -1
-                        },
-                        {
-                            name: 'trash the dress',
-                            shift: 10,
-                            isMain: false,
-                            alert: -1
-                        }
-                    ]
-                },
-                {
-                    name: 'baptizing',
-                    tasks: [
-                        {
-                            name: 'family session',
-                            shift: -1,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'preparations',
-                            shift: 0,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'ceremony',
-                            shift: 0,
-                            isMain: false,
-                            alert: -1
-                        },
-                        {
-                            name: 'party',
-                            shift: 0,
-                            isMain: true,
-                            alert: -1
-                        }
-                    ]
-                },
-                {
-                    name: 'family session',
-                    tasks: [
-                        {
-                            name: 'session',
-                            shift: 0,
-                            isMain: true,
-                            alert: -1
-                        }
-                    ]
-                }
-            ];
+        dmlService.setInitTemplate = function () {
             var templFBRef = dmlService._templateFBRef()
-                , rootFBRef = dmlService._rootFBRef()
-                , prm = $q.defer()
-                , promise = prm.promise
-                , xx = 0
+                , rootFBRef = dmlService._userFBRef()
+                , defered = $q.defer()
+                , promise = defered.promise
+                , cnt = 0
+                , templates = []
                 ;
+
             promise = promise.then(function () {
                 return rootFBRef.child('templates').remove();
-            });
-            _.each(templates, function (template) {
-                promise = promise.then(function () {
-                    return dmlService._add(templFBRef, {name: template.name}, null).then(function (tmplId) {
-                        var prm2 = $q.defer()
-                            , promise2 = prm2.promise
-                            ;
-                        _.each(template.tasks, function (task) {
-                            promise2 = promise2.then(function () {
-                                var ref = dmlService._taskFBRef(tmplId);
-                                return dmlService._add(ref, task, null);
-                            })
+            }).then(function () {
+                    return dmlService._getRootTemplate();
+                }).then(function (arrayTemplate) {
+                    _.each(arrayTemplate, function (elemTemplate) {
+                        templates.push(elemTemplate);
+                    });
+                }).then(function () {
+                    _.each(templates, function (template) {
+                        promise = promise.then(function () {
+                            return dmlService._add(templFBRef, {name: template.name}, null).then(function (tmplId) {
+                                var defered2 = $q.defer()
+                                    , promise2 = defered2.promise
+                                    ;
+                                _.each(template.tasks, function (task) {
+                                    promise2 = promise2.then(function () {
+                                        var ref = dmlService._taskTemplateFBRef(tmplId);
+                                        return dmlService._add(ref, task, null);
+                                    })
+                                });
+                                defered2.resolve(0);
+                                return promise2;
+                            });
                         });
-                        prm2.resolve(0);
-                        return promise2;
                     });
                 });
-            });
-            prm.resolve(xx);
-            return promise;
+            defered.resolve(cnt);
+            return defered.promise;
         };
 
         dmlService.getContact = function (contact) {
-            var promise = $q.defer()
+            var defered = $q.defer()
                 , contactId = (contact || {}).id ? contact.id : 0
                 , contactRef = dmlService._contactFBRef()
                 , newContact = {}
                 ;
             contactRef.child(contactId).once('value', function (contactSnapshoot) {
                 if (contactSnapshoot.val()) {
-                    promise.resolve(contactId);
+                    defered.resolve(contactId);
                 } else {
                     newContact.name = contact.name ? contact.name : 'unknown';
                     if (contact.phone) newContact.phone = contact.phone;
                     if (contact.email) newContact.email = contact.email;
                     if (contact.details) newContact.details = contact.details;
                     dmlService._add(contactRef, newContact, newContact.name).then(function (newId) {
-                        promise.resolve(newId);
+                        defered.resolve(newId);
                     });
                 }
             });
-            return promise.promise;
+            return defered.promise;
         };
 
         dmlService.setLead = function (lead) {

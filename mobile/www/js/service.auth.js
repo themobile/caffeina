@@ -16,13 +16,13 @@ angular.module('caffeina.service.auth', [])
                     var userDetails = firebaseRef('/users/' + btoa(user.user.email));
                     return userDetails.update({details: user.user});
                 }).then(function () {
-                    var ref = dmlservice._rootFBRef()
+                    var ref = dmlservice._userFBRef()
                         ;
                     ref.child('templates').once('value', function (snapsoot) {
                         var tmpl = snapsoot.val()
                             ;
                         if (!(tmpl)) {
-                            return dmlservice.setPrimaryTemplate();
+                            return dmlservice.setInitTemplate();
                         }
                     });
                 });

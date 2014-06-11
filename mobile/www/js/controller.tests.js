@@ -30,8 +30,13 @@ angular.module('caffeina.controller.tests', [])
             dmlservice.delLead($scope.idLead);
         };
 
-        $scope.setPrimaryTemplate = function () {
-            dmlservice.setPrimaryTemplate()
+        $scope.setInitTemplate = function () {
+            dmlservice.setInitTemplate()
+        };
+
+        $scope.getRootTemplate = function () {
+            var unarray = dmlservice.getRootTemplate()
+                ;
         };
 
 
