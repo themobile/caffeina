@@ -3,7 +3,7 @@ html
 head
     meta(charset='utf-8')
     meta(name='viewport', content='initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width')
-    title Ionic Seed App
+    title Caffeina
 
 
     //
@@ -72,28 +72,38 @@ head
         //        | <p>you're offline! <br/>get some connection, dude!</p>
         //        button.button Refresh
 
+
+
+
+
+
         //
-          cordova script (this will be a 404 during development)
-        script(src='cordova.js')
+            angular
+        script(src='lib/js/ionic.bundle.js')
+        //script(src='lib/js/angular-ui/angular-ui-router.min.js')
+        //script(src='lib/js/angular/angular-animate.min.js')
+        //script(src='lib/js/angular/angular-sanitize.min.js')
+        //script(src='lib/js/angular/angular-resource.min.js')
+        script(src='lib/js/angular/angular-cookies.min.js')
+        script(src='lib/js/angular/angularLocalStorage.js')
+        //script(src='lib/js/angular-ui/angular-ui-router.min.js')
+        script(src='lib/js/ngprogress/ngprogress-lite.min.js')
+        script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
+
+
 
         //ionic/angularjs scripts
-        script(src='lib/js/ionic.bundle.js')
+        script(src='lib/js/ionic.min.js')
         //script(src="http://code.ionicframework.com/1.0.0-beta.6/js/ionic.bundle.js")
 
+
         //
-            angularfire
+                    angularfire
         script(src='lib/js/firebase/firebase.js')
         script(src='lib/js/firebase/firebase-simple-login.js')
         script(src='lib/js/firebase/angularfire.js')
 
 
-        //
-            angular
-        script(src='lib/js/angular/angular-cookies.min.js')
-        script(src='lib/js/angular/angularLocalStorage.js')
-        script(src='lib/js/ngprogress/ngprogress-lite.min.js')
-        script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
-        //
 
 
         //
@@ -128,3 +138,11 @@ head
         script(src='js/services.js')
         script(src='js/service.firebase.js')
         script(src='js/service.auth.js')
+
+
+
+
+
+        //
+            cordova script (this will be a 404 during development)
+        script(src='cordova.js')

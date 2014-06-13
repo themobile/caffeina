@@ -11,4 +11,10 @@ ion-view(title='tests')
         br
         input.input(ng-model="year")
         input.input(ng-model="month")
-        button.button(ng-click="getTasks()") add a job
+        button.button(ng-click="getTasks(3)") add a job
+
+
+        ul(ng-repeat='event in events')
+            li {{event.date}}
+
+        button(ng-click="") force

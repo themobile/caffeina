@@ -1,6 +1,6 @@
 angular.module('caffeina.controllers')
 
-    .controller('tests', ['$scope', 'dmlservice', function ($scope, dmlservice) {
+    .controller('tests', ['$scope', 'dmlservice', 'dmll', '$firebase', '$q', '$rootScope', '$timeout', function ($scope, dmlservice, dmll, $firebase, $q, $rootScope, $timeout) {
 
         $scope.addLead = function () {
             var anyDate = moment("2014-01-01").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD");
@@ -55,10 +55,55 @@ angular.module('caffeina.controllers')
         $scope.year = "2014";
         $scope.month = "3";
 
+
+        $scope.promises = [];
+        $scope.events = [];
+
+
+        $scope.$watch('events', function (nv, ov) {
+            console.log('events');
+        })
+
         $scope.getTasks = function () {
-            dmlservice.getOut($scope.year, $scope.month).then(function (ee) {
-                console.log('veveveve');
-            });
+//            var startAt = moment($scope.year + '-' + $scope.month + '-01').format('YYYY-MM-DD')
+//                , endAt = moment($scope.year + '-' + $scope.month + '-01').add('months', 1).add('days', -1).format('YYYY-MM-DD')
+//                , taskRef = dmlservice._tasksFBRef()
+//                , jobRef = dmlservice._jobsFBRef()
+//                , promises = []
+//                ;
+//            console.log(moment().format('HH:mm:ss SSS'));
+//
+//            var doQuery = function (task) {
+//                var d = $q.defer();
+//                jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
+//                    task.jobObject = jobSnapshoot.val();
+//                    d.resolve(task);
+//                }, function (error) {
+//                    d.reject(error);
+//                });
+//                return d.promise;
+//            };
+//
+//            taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
+//                _.each(_.values(tasksSnapshoot.val()), (function (task) {
+//                    if (task) {
+//                        promises.push(doQuery(task));
+//                    }
+//                }));
+//
+//                $q.all(promises).then(function(res){
+//                    $scope.events=res;
+//                    console.log(moment().format('HH:mm:ss SSS'));
+//                })
+//            });
+
+//
+             dmll.getTasks($scope.year, $scope.month)
+                .then(function (res) {
+                     $scope.events =res;
+                });
+
+
         };
 
 

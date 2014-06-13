@@ -1,5 +1,6 @@
 angular.module('caffeina.services', ['firebase'])
 
+
     .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , dmlService = {}
@@ -310,32 +311,45 @@ angular.module('caffeina.services', ['firebase'])
             return d.promise;
         };
 
+
+        dmlService.promises = [];
+
+
         dmlService.getCalendar = function (year, month) {
             var startAt = moment(year + '-' + month + '-01').format('YYYY-MM-DD')
                 , endAt = moment(year + '-' + month + '-01').add('months', 1).add('days', -1).format('YYYY-MM-DD')
                 , taskRef = dmlService._tasksFBRef()
-                , jobRef = dmlService._jobsFBRef()
-                , results = []
-//                , deferred = $q.defer()
-//                , promise = deferred.promise
+                , jobRef = $firebase(dmlService._jobsFBRef())
+                , promises = []
                 ;
 
-            taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
-                results = tasksSnapshoot.val()
-                    ;
+
+            var doQuery = function (task) {
+                var d = $q.defer();
+                jobRef.$child(task.jobId).$on('loaded', function (jobSnapshoot) {
+                    task.jobObject = jobSnapshoot;
+                    d.resolve(task);
+                }, function (error) {
+                    d.reject(error);
+                });
+                promises.push(d.promise);
+            };
+
+            $firebase(taskRef.startAt(startAt).endAt(endAt)).$on('loaded', function (tasksSnapshoot) {
+                _.each(_.values(tasksSnapshoot), (function (task) {
+                    if (task) doQuery(task);
+                }));
             });
 
-//            taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
-//                _.each(tasksSnapshoot.val(), function (task) {
-//                    if (task) {
-//                        jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
-//                            task.jobObject = jobSnapshoot.val();
-//                            results.push(task);
-//                        });
-//                    }
-//                });
-//            });
-            return results;
+
+            $q.all(promises).then(function (result) {
+                console.log('results' + result);
+                return result;
+            });
+//                console.log('service');
+//                console.log(result);
+
+
         };
 
         dmlService.getOut = function (y, m) {
@@ -442,5 +456,56 @@ angular.module('caffeina.services', ['firebase'])
 
         return dmlService;
     }
+
+
+
+
     ])
+
+    .factory('dmll', ['dmlservice', '$firebase', '$q', function (dmlservice, $firebase, $q) {
+
+        return {
+//
+
+            getTasks: function (year, month) {
+                var startAt = moment(year + '-' + month + '-01').format('YYYY-MM-DD')
+                    , endAt = moment(year + '-' + month + '-01').add('months', 1).add('days', -1).format('YYYY-MM-DD')
+                    , taskRef = dmlservice._tasksFBRef()
+                    , jobRef = dmlservice._jobsFBRef()
+                    , promises = []
+                    , v = $q.defer()
+                    ;
+
+
+                var doQuery = function (task) {
+                    var d = $q.defer();
+                    jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
+                        task.jobObject = jobSnapshoot.val();
+                        d.resolve(task);
+                    }, function (error) {
+                        d.reject(error);
+                    });
+                    return d.promise;
+                };
+
+
+                taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
+                    _.each(_.values(tasksSnapshoot.val()), (function (task) {
+                        if (task) {
+                            promises.push(doQuery(task));
+                        }
+                        v.resolve(promises);
+                    }));
+                });
+
+                return $q.all([v.promise]).then(function () {
+                    return $q.all(promises);
+                });
+
+            }
+        }
+
+    }])
+
+
 ;
