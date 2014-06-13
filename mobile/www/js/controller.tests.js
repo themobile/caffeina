@@ -65,46 +65,10 @@ angular.module('caffeina.controllers')
         })
 
         $scope.getTasks = function () {
-//            var startAt = moment($scope.year + '-' + $scope.month + '-01').format('YYYY-MM-DD')
-//                , endAt = moment($scope.year + '-' + $scope.month + '-01').add('months', 1).add('days', -1).format('YYYY-MM-DD')
-//                , taskRef = dmlservice._tasksFBRef()
-//                , jobRef = dmlservice._jobsFBRef()
-//                , promises = []
-//                ;
-//            console.log(moment().format('HH:mm:ss SSS'));
-//
-//            var doQuery = function (task) {
-//                var d = $q.defer();
-//                jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
-//                    task.jobObject = jobSnapshoot.val();
-//                    d.resolve(task);
-//                }, function (error) {
-//                    d.reject(error);
-//                });
-//                return d.promise;
-//            };
-//
-//            taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
-//                _.each(_.values(tasksSnapshoot.val()), (function (task) {
-//                    if (task) {
-//                        promises.push(doQuery(task));
-//                    }
-//                }));
-//
-//                $q.all(promises).then(function(res){
-//                    $scope.events=res;
-//                    console.log(moment().format('HH:mm:ss SSS'));
-//                })
-//            });
-
-//
              dmll.getTasks($scope.year, $scope.month)
                 .then(function (res) {
                      $scope.events =res;
                 });
-
-
         };
-
 
     }]);
