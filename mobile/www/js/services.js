@@ -102,11 +102,6 @@ angular.module('caffeina.services', ['firebase'])
         };
 
         // refs
-        dmlService._leadsFBRef = function () {
-            return firebaseRef('/users/' + btoa(user.user.email) + '/leads/');
-        };
-
-
         dmlService._rootFBRef = function () {
             return firebaseRef('/');
         };
@@ -257,13 +252,12 @@ angular.module('caffeina.services', ['firebase'])
                             task = taskArr[1];
                             task.id = taskArr[0];
                             if (!(task.isDeleted)) {
-
                                 newTask.jobId = jobId;
                                 newTask.taskTemplateId = task.id;
                                 newTask.name = task.name;
-                                if (jobLocation) newTask.location = jobLocation;
                                 if (task.isMain) {
                                     newTask.date = jobDate;
+                                    if (jobLocation) newTask.location = jobLocation;
                                 } else {
                                     newTask.date = moment(jobDate).add('days', task.shift).format('YYYY-MM-DD HH:mm:ss.SSS');
                                 }
@@ -275,7 +269,6 @@ angular.module('caffeina.services', ['firebase'])
 
                     _.each(tasks, function (task) {
                         promise = promise.then(function () {
-//                            return dmlService.addTask(task);
                             return dmlService._add(taskRef, task, task.date);
                         }).then(function (taskId) {
                             taskIds.push(taskId);
@@ -294,77 +287,42 @@ angular.module('caffeina.services', ['firebase'])
                     deferred.reject('Inexistent type');
                 }
             });
-
             return deferred.promise;
         };
 
-        dmlService.getCalendar1 = function (y, m) {
-            var d = $q.defer()
+        dmlService.delJobTasks = function (tasks) {
+            var taskRef = dmlService._tasksFBRef()
+                , deferred = $q.defer()
+                , promise = deferred.promise
                 ;
-
-            var rez = [];
-            rez.push(y);
-            rez.push(m);
-
-            d.resolve(rez);
-
-            return d.promise;
-        };
-
-
-        dmlService.promises = [];
-
-
-        dmlService.getCalendar = function (year, month) {
-            var startAt = moment(year + '-' + month + '-01').format('YYYY-MM-DD')
-                , endAt = moment(year + '-' + month + '-01').add('months', 1).add('days', -1).format('YYYY-MM-DD')
-                , taskRef = dmlService._tasksFBRef()
-                , jobRef = $firebase(dmlService._jobsFBRef())
-                , promises = []
-                ;
-
-
-            var doQuery = function (task) {
-                var d = $q.defer();
-                jobRef.$child(task.jobId).$on('loaded', function (jobSnapshoot) {
-                    task.jobObject = jobSnapshoot;
-                    d.resolve(task);
-                }, function (error) {
-                    d.reject(error);
+            _.each(tasks, function (taskId) {
+                promise = promise.then(function () {
+                    return dmlService._del(taskRef, taskId);
                 });
-                promises.push(d.promise);
-            };
-
-            $firebase(taskRef.startAt(startAt).endAt(endAt)).$on('loaded', function (tasksSnapshoot) {
-                _.each(_.values(tasksSnapshoot), (function (task) {
-                    if (task) doQuery(task);
-                }));
             });
-
-
-            $q.all(promises).then(function (result) {
-                console.log('results' + result);
-                return result;
-            });
-//                console.log('service');
-//                console.log(result);
-
-
-        };
-
-        dmlService.getOut = function (y, m) {
-            var deferred = $q.defer()
-                ;
-            deferred.resolve(dmlService.getCalendar(y, m));
+            deferred.resolve(tasks.length);
             return deferred.promise;
         };
 
+        dmlService.delJob = function (jobId) {
+            var jobRef = dmlService._jobsFBRef()
+                ;
+            jobRef.child(jobId).once('value', function (jobSnapshoot) {
+                var job = jobSnapshoot.val()
+                    , tasks
+                    ;
+                if (job) {
+                    tasks = job.tasks.toString().split(',');
+                    dmlService.delJobTasks(tasks).then(function () {
+                        return dmlService._del(jobRef, jobId);
+                    });
+                }
+            });
+        };
 
         dmlService.setJob = function (job) {
             var jobRef = dmlService._jobsFBRef()
-                , jobIdFB
                 ;
-
             if (dmlService._isLogged()) {
                 if (!(job.contact)) {
                     job.contact = {name: 'unknown'};
@@ -372,7 +330,6 @@ angular.module('caffeina.services', ['firebase'])
                 dmlService.getContact(job.contact).then(function (contactId) {
                     var newJob = {}
                         ;
-
                     newJob.contactId = contactId;
                     newJob.type = job.type;
                     newJob.typeId = job.typeId;
@@ -381,22 +338,55 @@ angular.module('caffeina.services', ['firebase'])
                     newJob.date = job.date;
 
                     if (job.details) newJob.details = job.details;
+                    if (job.isTasksGenerated) newJob.isTasksGenerated = job.isTasksGenerated;
+                    if (job.tasks) newJob.tasks = job.tasks; // memorez lista de task-uri pt eventualitatea ca se face update pe un job cu taskuri deja generate
+
                     if (job.id) {
                         return dmlService._upd(jobRef, newJob, job.id, job.type);
                     } else {
                         return dmlService._add(jobRef, newJob, job.type);
                     }
                 }).then(function (jobId) {
-                        jobIdFB = jobId;
+                        var newTask = {}
+                            , taskRef = dmlService._tasksFBRef()
+                            , taskId
+                            ;
                         if (job.isBooked) {
                             if (job.isTasksGenerated) {
-                                // fac update, eventual pe task-ul principal
+                                // nu fac nimic pe task-uri
                             } else {
+                                // tb sters task-ul vechi...
                                 // generez task-uri
-                                return dmlService.jobGenerateTasks(jobId, job.typeId, job.date, job.location);
+                                if (job.tasks) {
+                                    taskId = job.tasks.toString().split(',')[0];
+                                    return dmlService._del(taskRef, taskId).then(function () {
+                                        return dmlService.jobGenerateTasks(jobId, job.typeId, job.date, job.location);
+                                    });
+                                } else {
+                                    return dmlService.jobGenerateTasks(jobId, job.typeId, job.date, job.location);
+                                }
                             }
                         } else {
-                            // aici are un singur task si fac add/update
+
+                            newTask.jobId = jobId;
+                            newTask.name = job.type;
+                            newTask.isMain = true;
+                            newTask.date = job.date;
+                            if (job.location) newTask.location = job.location;
+
+                            if (job.tasks) {
+                                // iau primul task; oricum ar tb sa fie exact unul
+                                // daca exista ii fac update daca nu il adaug
+                                taskId = job.tasks.toString().split(',')[0];
+                                return dmlService._upd(taskRef, newTask, taskId, newTask.date).then(function (taskId) {
+                                    jobRef.child(jobId).update({tasks: taskId});
+                                });
+                            } else {
+                                //new task
+                                return dmlService._add(taskRef, newTask, newTask.date).then(function (taskId) {
+                                    jobRef.child(jobId).update({tasks: taskId});
+                                });
+                            }
                         }
                     }
                 ).then(function (ceva) {
@@ -407,105 +397,55 @@ angular.module('caffeina.services', ['firebase'])
             }
             else {
                 //fixme:
-                console.log('setLead error: user not loged in');
+                console.log('setJob error: user not loged in');
             }
-        }
-        ;
+        };
 
-        dmlService.setLead = function (lead) {
-            var leadRef = dmlService._leadsFBRef()
-                , newLead = {}
+        dmlService.getTaskJob = function (task) {
+            var deferred = $q.defer()
+                , jobRef = dmlService._jobsFBRef()
+                , contactRef = dmlService._contactFBRef()
                 ;
-            if (dmlService._isLogged()) {
-                if (!(lead.contact)) {
-                    lead.contact = {name: 'unknown'}
-                }
-                dmlService.getContact(lead.contact).then(function (contactId) {
-                        newLead.contactId = contactId;
-                        newLead.date = lead.date;
-                        newLead.type = lead.type;
-                        if (lead.details) newLead.details = lead.details;
-                        if (lead.id) {
-                            return dmlService._upd(leadRef, newLead, lead.id, lead.date);
-                        } else {
-                            return dmlService._add(leadRef, newLead, lead.date);
+            jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
+                task.jobObject = jobSnapshoot.val();
+                task.jobObject.id = task.jobId;
+                contactRef.child(task.jobObject.contactId).once('value', function (contactSnapshoot) {
+                    task.jobObject.contactObject = contactSnapshoot.val();
+                    task.jobObject.contactObject.id = task.jobObject.contactId;
+                    deferred.resolve(task);
+                });
+            });
+            return deferred.promise;
+        };
+
+        dmlService.getTasks = function (year, month) {
+            var startAt = moment(year + '-' + month + '-1', 'YYYY-MM-DD').format('YYYY-MM-DD')
+                , endAt = moment(year + '-' + month + '-1', 'YYYY-MM-DD').add('months', 1).add('days', -1).format('YYYY-MM-DD')
+                , taskRef = dmlService._tasksFBRef()
+                , promises = []
+                , deferred = $q.defer()
+                ;
+
+            taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
+                var tasks = []
+                    ;
+                _.each(_.pairs(tasksSnapshoot.val()), function (element) {
+                    element[1].id = element[0];
+                    tasks.push(element[1]);
+                });
+                _.each(tasks, function (task) {
+                    if (task) {
+                        if (!(task.isDeleted)) {
+                            promises.push(dmlService.getTaskJob(task));
                         }
                     }
-                ).then(function (leadId) {
-                        //fixme: succes
-                    }, function (error) {
-                        //fixme: error
-                    })
-            }
-            else {
-                //fixme:
-                console.log('setLead error: user not loged in');
-            }
+                });
+                deferred.resolve(promises);
+            });
+            return $q.all([deferred.promise]).then(function () {
+                return $q.all(promises);
+            });
         };
-
-        dmlService.delLead = function (leadId) {
-            var leadRef = dmlService._leadsFBRef()
-                ;
-            if (dmlService._isLogged()) {
-                dmlService._del(leadRef, (leadId || 0));
-            } else {
-                //fixme: erori
-                console.log('setLead error: user not loged in');
-            }
-        };
-
         return dmlService;
-    }
-
-
-
-
-    ])
-
-    .factory('dmll', ['dmlservice', '$firebase', '$q', function (dmlservice, $firebase, $q) {
-
-        return {
-//
-
-            getTasks: function (year, month) {
-                var startAt = moment(year + '-' + month + '-01').format('YYYY-MM-DD')
-                    , endAt = moment(year + '-' + month + '-01').add('months', 1).add('days', -1).format('YYYY-MM-DD')
-                    , taskRef = dmlservice._tasksFBRef()
-                    , jobRef = dmlservice._jobsFBRef()
-                    , promises = []
-                    , v = $q.defer()
-                    ;
-
-
-                var doQuery = function (task) {
-                    var d = $q.defer();
-                    jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
-                        task.jobObject = jobSnapshoot.val();
-                        d.resolve(task);
-                    }, function (error) {
-                        d.reject(error);
-                    });
-                    return d.promise;
-                };
-
-
-                taskRef.startAt(startAt).endAt(endAt).once('value', function (tasksSnapshoot) {
-                    _.each(_.values(tasksSnapshoot.val()), (function (task) {
-                        if (task) {
-                            promises.push(doQuery(task));
-                        }
-                        v.resolve(promises);
-                    }));
-                });
-
-                return $q.all([v.promise]).then(function () {
-                    return $q.all(promises);
-                });
-
-            }
-        }
-
     }])
-
-
 ;
