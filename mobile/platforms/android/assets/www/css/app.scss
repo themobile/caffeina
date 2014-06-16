@@ -1,0 +1,303 @@
+$font-size-base: 14px;
+$dark: #41272F;
+$light: #f6f2f2;
+$base-color: $dark;
+$base-background-color: $light;
+$input-color: $dark;
+$toggle-on-bg-color: $dark;
+$toggle-on-border-color: none;
+$input-color-placeholder: transparentize($dark, 0.5);
+$menu-bg: darken($light, 3);
+$checkbox-off-border-default: $dark;
+$checkbox-on-bg-default: $dark;
+$checkbox-off-bg-color: $light;
+$checkbox-check-color: $light;
+
+$calm: $dark;
+$positive: $dark;
+
+$font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+//$font-size-base: 13px !default;
+//$font-size-large: 20px !default;
+//$font-size-small: 11px !default;
+//$font-size-verysmall: 7px !default;
+
+//import default scss
+@import "../fonts/fonts.scss";
+@import "../scss/ionic.scss";
+
+@import "datepicker/datepicker.css";
+
+.pane, .view {
+  background-size: cover;
+}
+
+//.action-sheet-backdrop {
+//  background-color: rgba(246,242,242,0);
+//
+//  &.active {
+//    background-color: rgba(246,242,242,0.5);
+//  }
+//}
+
+.action-sheet-group {
+  background-color: darken($light, 3);
+}
+
+.action-sheet-title {
+  color: transparentize($base-color, 0.5);
+}
+
+//menu
+.menu {
+  background: darken($light, 3);
+
+  .item {
+    border: none;
+    background-color: $menu-bg;
+  }
+
+  .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
+    border: none;
+    background-color: $menu-bg;
+  }
+}
+
+.item-divider {
+  background-color: $light;
+  min-height: 20px;
+}
+
+legend {
+  border: none;
+  margin-bottom: none;
+  line-height: 2;
+  padding-left: 9px;
+
+}
+
+.logo-login {
+  background: url("../img/logo-login-12.png") no-repeat top center;
+  background-size: contain;
+  max-width: 50%;
+  margin: 10% auto 0;
+  display: block;
+  height: 200px;
+}
+
+.loginForm {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 10% 10%;
+}
+
+.autologin {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.bar.bar-positive {
+  background-color: none;
+  border-color: $light;
+  border: none;
+  background-image: none;
+}
+
+.card {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+
+  .subtitle {
+    font-size: 0.7em;
+    line-height: 1.3em;
+    padding: 1em 0;
+    color: grey;
+  }
+
+}
+
+.button-login {
+  border-radius: 50%;
+  background: none;
+  width: 6em;
+  height: 6em;
+  border: none;
+  margin: 0 auto;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  transition: color 0.2s;
+
+}
+
+.button-login:hover, .button-login:active, .button-login:focus {
+  color: #e5883e;
+}
+
+.mmm {
+  background: $dark;
+  height: 100%;
+  width: 100%;
+}
+
+[date-picker] .switch {
+  font-size: $font-size-large;
+  font-weight: 300;
+
+  span.an {
+    font-size: 16px;
+    line-height: 40px;
+
+  }
+}
+
+.buttonBarRight {
+  right: 0;
+  position: absolute;
+
+  button {
+    width: 50px;
+  }
+}
+
+.checkboxlogin {
+  width: 150px;
+  margin: 0 auto;
+  font-size: 0.8em;
+}
+
+.ngProgressLite {
+  pointer-events: none;
+}
+
+.ngProgressLiteBar {
+  background: transparentize($dark, 0.8);
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: 4px;
+}
+
+.ngProgressLite .ngProgressLiteBarShadow {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  //  box-shadow: 0 0 10px lighten($dark,3), 0 0 5px lighten($dark,3);
+  opacity: 0.4;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+  //  height: auto;
+}
+
+.platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
+  padding-top: 0;
+}
+
+#isConnected {
+  background: $dark;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+
+  > span {
+    margin: 50% auto 0 auto;
+    width: 100%;
+    padding: 0 20px;
+    position: absolute;
+    text-align: center;
+    color: white;
+
+    h3 {
+      color: white;
+    }
+  }
+
+}
+
+.ellip {
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+form {
+
+  font-size:14px;
+
+  .row {
+    padding: 0;
+  }
+
+  .col {
+    padding: 0;
+  }
+
+  .item-toggle {
+//    padding: 6px 0 5px 8px;
+    font-size:14px;
+    margin:5px 0;
+
+  }
+
+  .item-select {
+    margin-top:0;
+    height:51px;
+    select {
+      padding: 9px 5px;
+    }
+
+  }
+
+
+  .item-input input  {
+    flex:1 0 auto;
+    padding-right:0;
+    line-height:34px;
+
+  }
+
+  .item.item-input input {
+    padding-right:0 !important;
+    line-height:34px;
+  }
+
+
+  input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly] {
+    color:lightgrey;
+    background-color:$light;
+  }
+
+
+  label.item {
+    margin: 5px 2px !important;
+
+  }
+  .item {
+    border-width: 0;
+    border-bottom-width: 1px;
+    font-size:14;
+  }
+
+  textarea {
+    background-color:$light;
+    display:table;
+  }
+}

@@ -1,0 +1,27 @@
+ion-view(title='',ng-init='init()',ng-controller='home')
+    ion-content(padding='true',scroll='false')
+        ion-slide-box(show-pager="false", delegate-handle="calendar_slider")
+            ion-slide
+                ion-content(padding='false',scroll='false')
+                    //ion-refresher(pulling-text="Pull to go today",on-refresh="goToday()")
+                    calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
+            ion-slide
+                ion-content(padding='false',scroll='true')
+                    h5.padding-horizontal {{currentMonth | date}} month events
+                    h6.padding-horizontal(ng-if='events.length==0') no events for this month
+                    h6.padding-horizontal(ng-if='events.length!=0') selected day marked in red
+                    ion-list
+
+                        //list events, those in the clicked day are marked with isCurrent
+                        ion-item(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='viewTask(event.id)')
+
+                            h4 {{event.jobObject.type}} | {{event.name}}
+                            p {{event.date}}
+
+            ion-slide
+                ion-content.padding(padding='true')
+                    div
+                        | Date: {{selectedEvent.date}}
+                        | <br/> Title: {{selectedEvent.type}}
+                        | <br/> Contact: {{selectedEvent.contact.name}}
+

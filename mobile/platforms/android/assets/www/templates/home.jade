@@ -1,0 +1,8 @@
+ion-view(ng-init='init()',ng-controller='home')
+    ion-content(padding='false',scroll='false')
+        //ion-refresher(pulling-text="Pull to go today",on-refresh="goToday()")
+        calendar.eventCalendar(ng-class='{"fade-in-not-out":notfirsttime}',view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
+        ion-list
+            ion-item.slide-right-left(ng-repeat='event in monthEvents')
+                h4(ng-click='goto(event.keia)') {{event.title}}
+                p {{event.date}}

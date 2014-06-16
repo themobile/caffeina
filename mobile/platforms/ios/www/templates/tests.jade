@@ -1,0 +1,22 @@
+ion-view(title='tests')
+    ion-content(padding='false', ng-controller='tests')
+        //button.button(ng-click="addLead()") Add lead
+        //input.input(ng-model="idLead")
+        //button.button(ng-click="updateLead()") Update lead
+        //button.button(ng-click="removeLead()") Remove lead
+        //br
+        button.button(ng-click="setTemplate()") Add Main Templates
+        br
+        button.button(ng-click="addJob()") add a job
+        button.button(ng-click="updJob()") upd a job
+        button.button(ng-click="delJob()") del a job
+        br
+        input.input(ng-model="year")
+        input.input(ng-model="month")
+        button.button(ng-click="getTasks(3)") list tasks
+
+
+        ul(ng-repeat='event in events')
+            li {{event.date}} {{event.jobId}}({{event.jobObject.type}}) {{event.id}}({{event.name}}), {{event.jobObject.contactObject.name}} - {{event.jobObject.tasks}}
+
+        button.button(ng-click="addDeviceContact()") add device contact (simulator)

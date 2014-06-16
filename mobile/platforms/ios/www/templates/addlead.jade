@@ -1,0 +1,56 @@
+ion-nav-bar(ng-controller='addlead',ng-init='init()')
+    ion-nav-buttons(side='left')
+        button.button.button-clear.pull-left(ng-click='cancel()') cancel
+    ion-nav-buttons(side='right')
+        button.button.button-clear.pull-right save
+
+ion-view
+    ion-content(padding='true',has-bouncing='true',scroll="true")
+        form.list(name="addLead")
+            legend inquiry details
+            div.row
+                .col
+                    label.item.item-input
+                        i.positive.icon.ion-ios7-calendar.placeholder-icon
+                        //span.input-label date
+                        input(id="exampleInput",type='date',ng-model='newLead.date',placeholder="yyyy-MM-dd", required)
+
+                .col
+                    label.item.item-input
+                        i.positive.icon.ion-ios7-clock.placeholder-icon
+                        input(name='newLead.time',type='time',ng-model='newLead.time',ng-disabled='newLead.allDay')
+
+
+            div.row
+                .col
+                    ion-toggle(name='newLead.allDay',ng-model='newLead.allDay', toggle-class='toggle-calm') All day?
+
+                .col
+                    label.item.item-input.item-select
+                        //span.input-label type
+                        i.positive.icon.ion-ios7-information.placeholder-icon
+                        select(name='newLead.type',placeholder='what',ng-model="newLead.type")
+                            option wedding
+                            option baptizing
+                            option(ng-selected='1') session
+                            option product
+                            option event
+
+
+            label.item.item-input
+                i.positive.icon.ion-ios7-location.placeholder-icon
+                input#Autocomplete.ellip(name='newLead.location',type='text',placeholder='where',ng-model="newLead.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
+
+            label.item.item-input
+                textarea(name='newLead.info',placeholder='notes',rows='3',ng-model='newLead.info')
+            div.item-divider
+            legend contact info
+            label.item.item-input
+                i.positive.icon.ion-ios7-person.placeholder-icon
+                input(name='newLead.contact.name',type='text',placeholder='name',ng-model='newLead.contact.name')
+            label.item.item-input
+                i.positive.icon.ion-ios7-email.placeholder-icon
+                input(name='newLead.contact.email',type='email',placeholder='email',ng-model='newLead.contact.email')
+            label.item.item-input
+                i.icon.positive.ion-ios7-telephone.placeholder-icon
+                input(name='newLead.contact.phone',type='tel',placeholder='phone number',ng-model='newLead.contact.phone')

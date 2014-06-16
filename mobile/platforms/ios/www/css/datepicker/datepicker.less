@@ -1,0 +1,193 @@
+@import "variables";
+@import "mixins";
+
+[date-range] [date-picker] {
+  .after.before {
+    .buttonBackground(@btnInfoBackground, spin(@btnInfoBackgroundHighlight, 20));
+  }
+}
+
+calendar-event {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  span {
+    display: block;
+    background-color: orange;
+    height: 4px;
+    width: 4px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    bottom: 10%;
+    left: 50%;
+    position: absolute;
+    margin-left: -2px;
+  }
+
+}
+
+[date-picker] {
+  .user-select(none);
+  position: absolute;
+  height: 100%;
+  /* GENERAL */
+
+  padding: 0 5px;
+
+  span {
+    display: block;
+    cursor: pointer;
+    &:hover {
+      //				background: @grayLighter;
+    }
+    &.disabled, &.disabled:hover {
+      background: none;
+      color: @grayLight;
+      cursor: default;
+    }
+
+  }
+
+  .activated {
+    background-color: rgba(255, 0, 0, 0.07);
+  }
+
+  .now {
+    background: @dark;
+  }
+
+  .disabled {
+    background: none;
+    color: #999999 !important;
+    cursor: default;
+  }
+
+  /* SPECIFIC */
+
+  [ng-switch-when="date"] span:hover {
+    //    background: @grayLighter;
+    cursor: pointer;
+  }
+}
+
+
+[ng-switch-when="date"], [ng-switch-when="year"], [ng-switch-when="month"] {
+  text-align: center;
+
+  .calendarHeader {
+    height: 15%;
+
+    button {
+
+    }
+  }
+
+  .calendarDays {
+    height: 10%;
+  }
+
+  .calendarTitle {
+    //    flex:1 0 auto;
+    font-size: 12px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    -webkit-flex-flow: column nowrap;
+    -moz-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    justify-content: center;
+    align-items: center;
+    -webkit-align-items: center;
+
+    span.an {
+      flex: 0 1 auto;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 24px;
+
+    }
+  }
+
+  .calendarDetails {
+    height: 75%;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    -webkit-flex-flow: column wrap;
+    -moz-flex-flow: column wrap;
+    flex-flow: column wrap;
+    //    -webkit-justify-content: center;
+    //    -moz-justify-content: center;
+    //    justify-content: center;
+
+    .row {
+      border-top: 1px solid rgba(0, 0, 0, 0.11);
+      //      border-top: none;
+      -webkit-flex: 1 0 auto;
+      -moz-flex: 1 0 auto;
+      flex: 1 0 auto;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: flex;
+      -webkit-flex-flow: row nowrap;
+      -moz-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+      -webkit-justify-content: center;
+      -moz-justify-content: center;
+      justify-content: center;
+    }
+
+    .col {
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: flex;
+      padding: 0;
+      position: relative;
+
+      align-items: center;
+      -webkit-align-items: center;
+      -webkit-flex-flow: row nowrap;
+      -moz-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+      -webkit-justify-content: center;
+      -moz-justify-content: center;
+      justify-content: center;
+    }
+
+    .day {
+      border-top: none;
+      -webkit-flex: 1 0 auto;
+      -moz-flex: 1 0 auto;
+      flex: 1 0 auto;
+      -webkit-justify-content: center;
+      -moz-justify-content: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+
+    .year, .month {
+      > div {
+        width:100%;
+      }
+    }
+  }
+
+  button.button-full {
+    height: 100%;
+  }
+
+}
+

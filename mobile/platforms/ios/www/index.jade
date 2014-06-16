@@ -1,0 +1,148 @@
+doctype html5
+html
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width')
+    title Caffeina
+
+
+    //
+       caffeina css
+    link(href='css/app.css', rel='stylesheet')
+    link(href='css/datepicker/datepicker.css', rel='stylesheet')
+
+
+    //
+          'starter' is the name of this angular module (js/app.js)
+    //body(ng-app='caffeina', animation='slide-left-right-ios7')
+    body(animation='slide-left-right-ios7')
+
+        ion-side-menus
+            //
+                 Center content
+            ion-side-menu-content
+
+
+                // if state is ADD then navbar is custom, otherwise is standard
+                ion-nav-bar(ng-controller='MenuController',ng-show='!isInAdd')
+                    ion-nav-buttons(side='left')
+                        button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
+                    ion-nav-buttons(side='right')
+                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty.padding-right(ng-cloak,ng-click="add()")
+                        button.button.button-large.button-clear.icon.ion-ios7-search.padding-left(ng-cloak)
+
+
+                // views
+                ion-nav-view
+
+
+            //
+               Left menu
+            ion-side-menu(side='left',ng-controller='MenuController')
+                .list
+                    a.item.item-icon-left(href='#/home' ,nav-clear ,menu-close )
+                        i.icon.ion-home
+                        | Home
+
+                    a.item.item-icon-left(href='#/tests' ,nav-clear ,menu-close )
+                        i.icon.ion-chatbubble-working
+                        | Tests
+
+                    a.item.item-icon-left(href='#/chat' ,nav-clear ,menu-close )
+                        i.icon.ion-chatbubble-working
+                        | Chat
+
+                    a.item.item-icon-left(href='#/sortable' ,nav-clear ,menu-close )
+                        i.icon.ion-alert-circled
+                        | Sortable
+
+                    a.item.item-icon-left(href="#/login",ng-if="!user.id",menu-close,nav-clear)
+                        i.icon.ion-email
+                        | Login
+                    a.item.item-icon-left(href='#/',ng-click='logout()', ng-if="user.id",nav-clear ,menu-close )
+                        i.icon.ion-log-out
+                        | Logout
+
+                    p.item(ng-show="user.id") Welcome {{user.displayName}}
+
+
+        //div#isconnected(ng-show='!isConnected',ng-controller='isconnected')
+        //    span
+        //        | <h3>caffeina says:</h3>
+        //        | <p>you're offline! <br/>get some connection, dude!</p>
+        //        button.button Refresh
+
+
+
+
+
+
+        //
+            angular
+        script(src='lib/js/ionic.bundle.js')
+        //script(src='lib/js/angular-ui/angular-ui-router.min.js')
+        //script(src='lib/js/angular/angular-animate.min.js')
+        //script(src='lib/js/angular/angular-sanitize.min.js')
+        //script(src='lib/js/angular/angular-resource.min.js')
+        script(src='lib/js/angular/angular-cookies.min.js')
+        script(src='lib/js/angular/angularLocalStorage.js')
+        //script(src='lib/js/angular-ui/angular-ui-router.min.js')
+        script(src='lib/js/ngprogress/ngprogress-lite.min.js')
+        script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
+
+
+
+        //ionic/angularjs scripts
+        script(src='lib/js/ionic.min.js')
+        //script(src="http://code.ionicframework.com/1.0.0-beta.6/js/ionic.bundle.js")
+
+
+        //
+                    angularfire
+        script(src='lib/js/firebase/firebase.js')
+        script(src='lib/js/firebase/firebase-simple-login.js')
+        script(src='lib/js/firebase/angularfire.js')
+
+
+
+
+        //
+            utilities
+        script(src='lib/js/moment/moment.min.js')
+        script(src='lib/js/underscore/underscore.js')
+        script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwYA_6LbdHODE-aKsZSAS3n9yWIByJZzc&libraries=places&sensor=false')
+        //
+
+        //
+            calendar
+        script(src='lib/js/datepicker/datepicker.js')
+        //script(src='lib/js/datepicker/input.js')
+        script(src='lib/js/datepicker/calendar.js')
+        //
+
+
+        //required by famous-angular
+        //script(src='lib/js/require/require.js')
+        //script(src='lib/js/famous-angular/famous-angular.js')
+
+        //
+             caffeina's scripts
+        script(src='js/app.js')
+        script(src='js/config.js')
+        script(src='js/controllers.js')
+        script(src='js/controller.auth.js')
+        script(src='js/controller.tests.js')
+        script(src='js/controller.add.js')
+        script(src='js/controller.home.js')
+        script(src='js/filters.js')
+        script(src='js/services.js')
+        script(src='js/service.firebase.js')
+        script(src='js/service.auth.js')
+
+
+
+
+
+        //
+            cordova script (this will be a 404 during development)
+        script(src='cordova.js')
