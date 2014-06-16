@@ -1,6 +1,8 @@
 $font-size-base: 14px;
-$dark: #41272F;
-$light: #f6f2f2;
+$dark: #695757;
+//$light: #f6f2f2;
+$light: #fff;
+$reddish:#9C3B3F;
 $base-color: $dark;
 $base-background-color: $light;
 $input-color: $dark;
@@ -12,28 +14,54 @@ $checkbox-off-border-default: $dark;
 $checkbox-on-bg-default: $dark;
 $checkbox-off-bg-color: $light;
 $checkbox-check-color: $light;
-
+$item-font-size: 14px !default;
+$item-padding: 13px !default;
 $calm: $dark;
 $positive: $dark;
-
+$bar-default-border:#fff;
+$bar-default-active-border:none;
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
-
+$item-avatar-border-radius: 50%;
 //import default scss
 @import "../fonts/fonts.scss";
 @import "../scss/ionic.scss";
 
-@import "datepicker/datepicker.css";
+@import "datepicker/datepicker.scss";
 
 .pane, .view {
   background-size: cover;
 }
 
 
-strong {
-  font-weight: 700;
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  color:transparentize($dark,0.5);
+
+}
+
+h4, .h4, h5, .h5, h6, .h6 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.nopadding {
+  padding:0;
+}
+
+.centered {
+  text-align:center;
 }
 
 
+.strong {
+  font-weight: 700;
+}
+
+.small {
+  font-size:$font-size-small !important;
+  margin-bottom:0;
+}
 
 .action-sheet-group {
   background-color: darken($light, 3);
@@ -149,6 +177,13 @@ legend {
     line-height: 40px;
 
   }
+}
+
+
+.topTitleExplanation {
+  margin: 22px 0 0;
+  font-size: 12px;
+  line-height: 10px;
 }
 
 .buttonBarRight {
@@ -299,9 +334,30 @@ form {
   font-weight: 700;
 
   h4, p {
-    color: red;
+    color: $reddish;
   }
 }
+
+
+a.item {
+  border:none;
+}
+
+
+.listTasks {
+    padding: 8px 0;
+
+
+  > a.item {
+    padding-top:8px;
+    padding-bottom:8px;
+  }
+}
+
+
+
+
+
 
 
 
@@ -436,3 +492,4 @@ form {
 .slide-in-down2-add-active {
   @include animation-name(slideInFromTop);
 }
+

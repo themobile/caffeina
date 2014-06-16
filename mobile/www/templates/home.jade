@@ -1,4 +1,4 @@
-ion-view(ng-init='init()',ng-controller='home')
+ion-view(title='',ng-init='init()',ng-controller='home')
     ion-content(padding='true',scroll='false')
         ion-slide-box(show-pager="false", delegate-handle="calendar_slider")
             ion-slide
@@ -7,16 +7,35 @@ ion-view(ng-init='init()',ng-controller='home')
                     calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
             ion-slide
                 ion-content(padding='false',scroll='true')
-                    ion-list.padding
+                    p.topTitleExplanation.padding-horizontal.centered(ng-if='events.length==0') no events for this month
+                    p.topTitleExplanation.padding-horizontal.centered(ng-if='events.length!=0') selected day marked in reddish color
+                    h2.padding-horizontal.centered {{currentMonth | date | lowercase}}
+                    ion-list
                         //list events, those in the clicked day are marked with isCurrent
-                        ion-item(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='viewTask(event.key)')
-                            h4 {{event.type}} | {{event.title}}
-                            p {{event.date}}
+                        ion-item.listTasks(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='viewTask(event.id)')
+                            a.item.item-icon-left(href="")
+                                i.icon.ion-email
+
+                                p.small {{event.date | date: 'd MMM yyyy, h:mm'}}
+                                h4 {{event.jobObject.type}} | {{event.name}}
+                                h4 <strong>with:</strong> {{event.jobObject.contactObject.name}}
 
             ion-slide
-                ion-content(padding='true')
-                    div
-                        | Date: {{selectedEvent.date}}
-                        | <br/> Title: {{selectedEvent.type}}
-                        | <br/> Contact: {{selectedEvent.contact.name}}
+                ion-content(padding='false', scroll='true')
+                    p.topTitleExplanation.padding-horizontal.centered(ng-if='!selectedEvent.date') no event selected
+                    p.topTitleExplanation.padding-horizontal.centered {{selectedEvent.jobObject.type}}
+                    h2.padding-horizontal.centered {{selectedEvent.name}}
+                    div(ng-if='selectedEvent.date')
 
+
+                        div.row
+                            div.col.col-20.strong when:
+                            div.col.col-80 {{selectedEvent.date | date: 'd MMM yyyy, h:mm'}}
+                        div.row
+                            div.col.col-20.strong who:
+                            div.col.col-80 {{selectedEvent.jobObject.contactObject.name}}
+                        div.row
+                            div.col.col-20.strong where:
+                            div.col.col-40 {{selectedEvent.location}}
+                            div.col.col-40
+                                button.button-clear.ion-ios7-location Navigate

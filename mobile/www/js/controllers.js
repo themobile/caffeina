@@ -10,8 +10,9 @@ angular.module('caffeina.controllers', [])
             , 'userService'
             , 'storage'
             , '$state'
+            , 'dmlservice'
             , '$ionicActionSheet'
-            , function ($rootScope, $scope, $ionicSideMenuDelegate, userService, storage, $state, $ionicActionSheet) {
+            , function ($rootScope, $scope, $ionicSideMenuDelegate, userService, storage, $state, dmlservice,$ionicActionSheet) {
 
 //            $scope.isInAdd = true;
 
@@ -70,10 +71,10 @@ angular.module('caffeina.controllers', [])
             }
         }])
 
-    .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', '$firebase', function ($scope, $ionicSideMenuDelegate, userService, $firebase) {
+    .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', 'dmlservice','$firebase', function ($scope, $ionicSideMenuDelegate, userService, dmlservice,$firebase) {
 
         var userEmail = userService.getUser().username;
-        var ref = new Firebase('https://caffeina.firebaseio.com/messages/' + userEmail.replace(/\./g, ''));
+        var ref = new dmlservice._userMessagesFBRef();
 
         $scope.messages = $firebase(ref);
         $scope.mesaj = '';

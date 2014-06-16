@@ -18,8 +18,8 @@ angular.module('caffeina.services')
                 }).then(function () {
                     var ref = dmlservice._userRootFBRef()
                         ;
-                    ref.child('templates').once('value', function (snapsoot) {
-                        var tmpl = snapsoot.val()
+                    ref.child('templates').once('value', function (snapshoot) {
+                        var tmpl = snapshoot.val()
                             ;
                         if (!(tmpl)) {
                             return dmlservice.setInitTemplate();

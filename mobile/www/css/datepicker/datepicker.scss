@@ -1,11 +1,12 @@
-@import "variables";
-@import "mixins";
+//@import "variables";
+//@import "mixins";
 
 [date-range] [date-picker] {
   .after.before {
-    .buttonBackground(@btnInfoBackground, spin(@btnInfoBackgroundHighlight, 20));
+//    .buttonBackground(btnInfoBackground, tint(btnInfoBackgroundHighlight, 20%));
   }
 }
+
 
 calendar-event {
   display: block;
@@ -15,9 +16,11 @@ calendar-event {
   left: 0;
   right: 0;
 
+
+
   span {
     display: block;
-    background-color: #9C3B3F;
+    background-color: $reddish;
     height: 4px;
     width: 50%;
     border-radius: 4px;
@@ -32,9 +35,6 @@ calendar-event {
 }
 
 [date-picker] {
-  .user-select(none);
-  position: absolute;
-  height: 100%;
   /* GENERAL */
 
   padding: 0 5px;
@@ -43,13 +43,17 @@ calendar-event {
     display: block;
     cursor: pointer;
     &:hover {
-      //				background: @grayLighter;
+      //				background: grayLighter;
     }
     &.disabled, &.disabled:hover {
       background: none;
-      color: @grayLight;
+      color: grayLight;
       cursor: default;
     }
+
+  }
+
+  .hasEvent {
 
   }
 
@@ -58,7 +62,7 @@ calendar-event {
   }
 
   .now {
-    background: fade(@dark,10%);
+    background: fade(dark,10%);
   }
 
   .disabled {
@@ -70,7 +74,7 @@ calendar-event {
   /* SPECIFIC */
 
   [ng-switch-when="date"] span:hover {
-    //    background: @grayLighter;
+    //    background: grayLighter;
     cursor: pointer;
   }
 }
@@ -128,7 +132,7 @@ calendar-event {
       font-size: 36px;
       font-weight: 700;
       line-height: 24px;
-      color: fade(@dark,50%);
+      color: transparentize($dark,0.5);
       margin-bottom:25px;
     }
   }

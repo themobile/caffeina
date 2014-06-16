@@ -59,10 +59,11 @@ angular.module('caffeina.controllers')
         };
 
         $scope.addJob = function () {
+            var types=['wedding','baptizing','family session']
             var job = {
-                date: moment("2014-01-01 10:00").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD HH:mm:ss.SSS"),
+                date: moment("2014-06-01 10:00").add('day', parseInt(Math.random() * 28)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
-                type: "wedding",
+                type: types[Math.floor(Math.random()*types.length)],
                 typeId: 1,
                 isBooked: true,
                 isTasksGenerated: false,
@@ -97,5 +98,11 @@ angular.module('caffeina.controllers')
                 console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
             });
         };
+
+
+        $scope.addDeviceContact = function() {
+            navigator.contacts.create({"displayName": "Caffeina Test User"});
+        }
+
 
     }]);

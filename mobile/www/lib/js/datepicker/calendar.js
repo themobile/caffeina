@@ -45,15 +45,19 @@ Module.provider('CalendarEvents', function () {
 Module.directive('calendarEvent', function () {
     return {
         restrict: 'E',
-        scope: {
-            event: '='
-        },
+//        scope: {
+//            event: '='
+//        },
+        scope:true,
         templateUrl: 'templates/datepicker/event.html',
         link: function (scope, elem, attrs) {
-//            console.log(event);
-//            elem.bind('click',function(event){
-//                console.log('clicked');
-//            })
+
+            //find out event types for each day in order to construct class for event color on calendar
+            //attrs.event comes with double quoting (??!)
+            var dat=moment(attrs.event.replace(/"/g,"")).format('YYYY-MM-DD');
+            var eventType= _.pluck(_.pluck(scope.getEvents(dat),'jobObject'),'type');
+                console.log('date:'+dat+' type: '+eventType[0]);
+            scope.eventType=eventType[0];
         }
 
     }

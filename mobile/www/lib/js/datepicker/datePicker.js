@@ -178,7 +178,7 @@ Module.directive('datePicker', [
                 /** @namespace attrs.minView, attrs.maxView */
                 scope.views = scope.views.slice(
                     scope.views.indexOf(attrs.maxView || 'year'),
-                    scope.views.indexOf(attrs.minView || 'minutes') + 1
+                        scope.views.indexOf(attrs.minView || 'minutes') + 1
                 );
 
                 if (scope.views.length === 1 || scope.views.indexOf(scope.view) === -1) {
@@ -208,30 +208,46 @@ Module.directive('datePicker', [
                     update();
                 })
 
-//
-                //change months on swipeup
-                $ionicGesture.on('swipeup', function (event) {
+
+                //gotoday on dragright
+                $ionicGesture.on('doubletap', function (event) {
                     event.gesture.preventDefault();
-                    scope.next();
-                    scope.$apply(function(){
+                    scope.date.setFullYear(moment().year());
+                    scope.date.setMonth(moment().month());
+                    scope.view = 'date';
+
+                    update();
+                    scope.$apply(function () {
                         $animate.addClass(element, 'slide-in-up2', function () {
                             $animate.removeClass(element, 'slide-in-up2');
                         });
                     });
 
+                }, element);
 
+
+//
+                //change months on swipeup
+                $ionicGesture.on('swipeup', function (event) {
+                    event.gesture.preventDefault();
+                    scope.next();
+
+                    scope.$apply(function () {
+                        $animate.addClass(element, 'slide-in-up2', function () {
+                            $animate.removeClass(element, 'slide-in-up2');
+                        });
+                    });
                 }, element);
 
                 //change months on swipedown
                 $ionicGesture.on('swipedown', function (event) {
                     event.gesture.preventDefault();
                     scope.prev();
-                    scope.$apply(function(){
+                    scope.$apply(function () {
                         $animate.addClass(element, 'slide-in-down2', function () {
                             $animate.removeClass(element, 'slide-in-down2');
                         });
                     });
-
                 }, element);
 
 
@@ -292,7 +308,7 @@ Module.directive('datePicker', [
                         case 'date':
                             scope.weekdays = scope.weekdays || getDaysOfWeek();
                             scope.weeks = getVisibleWeeks(date);
-                            scope.$emit('calendar:changeMonth', moment(date).format('MMMM'));
+                            scope.$emit('calendar:changeMonth', date);
 
                             break;
                         case 'hours':
@@ -403,6 +419,9 @@ Module.directive('datePicker', [
 ////                        update();
 //                    });
                 }
+
+
+
 
                 /**
                  * Forwarders to the event service interface.

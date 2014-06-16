@@ -19,4 +19,4 @@ ion-view(title='tests')
         ul(ng-repeat='event in events')
             li {{event.date}} {{event.jobId}}({{event.jobObject.type}}) {{event.id}}({{event.name}}), {{event.jobObject.contactObject.name}} - {{event.jobObject.tasks}}
 
-        button(ng-click="") force
+        button.button(ng-click="addDeviceContact()") add device contact (simulator)

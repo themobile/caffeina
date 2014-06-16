@@ -135,6 +135,16 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/users/' + btoa(user.user.email) + '/tasks/');
         };
 
+
+        dmlService._specificTaskFBRef = function (key) {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/tasks/' + key);
+        };
+
+
+        dmlService._userMessagesFBRef = function () {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/messages/');
+        };
+
         dmlService._getRootTemplate = function () {
             var deferred = $q.defer()
                 , rootFBRef = dmlService._rootFBRef()
@@ -409,6 +419,10 @@ angular.module('caffeina.services', ['firebase'])
             jobRef.child(task.jobId).once('value', function (jobSnapshoot) {
                 task.jobObject = jobSnapshoot.val();
                 task.jobObject.id = task.jobId;
+                // converts date
+                task.date=new Date(task.date);
+
+                //reads contacts
                 contactRef.child(task.jobObject.contactId).once('value', function (contactSnapshoot) {
                     task.jobObject.contactObject = contactSnapshoot.val();
                     task.jobObject.contactObject.id = task.jobObject.contactId;
