@@ -13,9 +13,6 @@ angular.module('caffeina.controllers')
             , function ($rootScope, $scope, $state, dmlservice) {
 
 
-
-
-
             $scope.init=function(){
 
                 $scope.newJob={
