@@ -5629,7 +5629,7 @@ input[type="range"] {
     max-width: 65%;
     border: none;
     background: transparent;
-    color: #333;
+    color: #695757;
     text-indent: .01px;
     text-overflow: '';
     white-space: nowrap;
@@ -7608,6 +7608,10 @@ calendar-event {
 .pane, .view {
   background-size: cover; }
 
+body {
+  font-weight: 300;
+  color: #695757; }
+
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 0px;
   margin-bottom: 10px;
@@ -7799,8 +7803,7 @@ form {
     font-size: 14px;
     margin: 5px 0; }
   form .item-select {
-    margin-top: 0;
-    height: 51px; }
+    margin-top: 0; }
     form .item-select select {
       padding: 9px 5px; }
   form .item-input input {
@@ -7814,7 +7817,7 @@ form {
     color: lightgrey;
     background-color: white; }
   form label.item {
-    margin: 5px 2px !important; }
+    margin: 3px 2px !important; }
   form .item {
     border-width: 0;
     border-bottom-width: 1px;

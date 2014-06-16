@@ -33,6 +33,12 @@ $item-avatar-border-radius: 50%;
 }
 
 
+body {
+  font-weight:300;
+  color:$dark;
+}
+
+
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 0px;
   margin-bottom: 10px;
@@ -293,7 +299,7 @@ form {
 
   .item-select {
     margin-top: 0;
-    height: 51px;
+//    height: 51px;
     select {
       padding: 9px 5px;
     }
@@ -318,7 +324,7 @@ form {
   }
 
   label.item {
-    margin: 5px 2px !important;
+    margin: 3px 2px !important;
 
   }
   .item {
