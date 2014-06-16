@@ -151,8 +151,8 @@ angular.module('caffeina.services', ['firebase'])
                 , arrayRet = []
                 ;
 
-            rootFBRef.child('templates').once('value', function (templateSnapsoot) {
-                var templateObj = templateSnapsoot.val()
+            rootFBRef.child('templates').once('value', function (templateSnapshot) {
+                var templateObj = templateSnapshot.val()
                     ;
                 _.each(templateObj, function (template) {
                     if (template.name) {
@@ -160,18 +160,11 @@ angular.module('caffeina.services', ['firebase'])
                             ;
                         _.each(template.tasks, function (task) {
                             if (task.name) {
-                                tasks.push({
-                                    name: task.name,
-                                    shift: task.shift,
-                                    isMain: task.isMain,
-                                    alert: task.alert
-                                });
+                                tasks.push(task);
                             }
                         });
-                        arrayRet.push({
-                            name: template.name,
-                            tasks: tasks
-                        });
+                        template.tasks = tasks;
+                        arrayRet.push(template);
                     }
                 });
                 deferred.resolve(arrayRet);
@@ -200,7 +193,7 @@ angular.module('caffeina.services', ['firebase'])
             }).then(function () {
                 _.each(templates, function (template) {
                     promise = promise.then(function () {
-                        return dmlService._add(templFBRef, {name: template.name}, null).then(function (tmplId) {
+                        return dmlService._add(templFBRef, {name: template.name, color: template.color, icon: template.icon}, null).then(function (tmplId) {
                             var deferred2 = $q.defer()
                                 , promise2 = deferred2.promise
                                 ;
@@ -420,7 +413,7 @@ angular.module('caffeina.services', ['firebase'])
                 task.jobObject = jobSnapshoot.val();
                 task.jobObject.id = task.jobId;
                 // converts date
-                task.date=new Date(task.date);
+                task.date = new Date(task.date);
 
                 //reads contacts
                 contactRef.child(task.jobObject.contactId).once('value', function (contactSnapshoot) {
