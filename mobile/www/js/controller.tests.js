@@ -101,7 +101,8 @@ angular.module('caffeina.controllers')
 
 
         $scope.addDeviceContact = function() {
-            navigator.contacts.create({"displayName": "Caffeina Test User"});
+//            navigator.contacts.create({"displayName": "Caffeina Test User"});
+            console.log(dmlservice.readUserTemplates());
         }
 
 

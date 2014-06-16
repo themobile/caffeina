@@ -472,6 +472,10 @@ angular.module('caffeina.services', ['firebase'])
             });
         };
 
+        dmlService.readUserTemplates=function(){
+            return dmlService.userTemplates;
+        };
+
 
         return dmlService;
     }])
