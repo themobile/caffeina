@@ -2859,7 +2859,7 @@ h1, h2, h3, h4, h5, h6,
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
   .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
-    font-weight: normal;
+    font-weight: 300;
     line-height: 1; }
 
 h1, .h1,
@@ -7718,6 +7718,9 @@ legend {
   [date-picker] .switch span.an {
     font-size: 16px;
     line-height: 40px; }
+
+label, input, button, select, textarea {
+  font-weight: 300; }
 
 .topTitleExplanation {
   margin: 22px 0 0;
