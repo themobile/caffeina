@@ -3,75 +3,61 @@ angular.module('caffeina.controllers', [])
 
 // A simple controller that shows a tapped item's data
     .controller('MenuController',
-        [
-            '$rootScope'
-            , '$scope'
-            , '$ionicSideMenuDelegate'
-            , 'userService'
-            , 'storage'
-            , '$state'
-            , 'dmlservice'
-            , '$ionicActionSheet'
-            , function ($rootScope, $scope, $ionicSideMenuDelegate, userService, storage, $state, dmlservice,$ionicActionSheet) {
+    [
+        '$rootScope'
+        , '$scope'
+        , '$ionicSideMenuDelegate'
+        , 'userService'
+        , 'storage'
+        , '$state'
+        , 'dmlservice'
+        , '$ionicActionSheet'
+        , function ($rootScope, $scope, $ionicSideMenuDelegate, userService, storage, $state, dmlservice, $ionicActionSheet) {
 
 //            $scope.isInAdd = true;
 
-            $scope.toggleLeft = function () {
-                $ionicSideMenuDelegate.toggleLeft();
-            };
+        $scope.toggleLeft = function () {
+            $ionicSideMenuDelegate.toggleLeft();
+        };
 
-            $scope.$on('$firebaseSimpleLogin:login', function (event, user) {
-                $scope.user = userService.getUser();
-            });
+        $scope.$on('$firebaseSimpleLogin:login', function (event, user) {
+            $scope.user = userService.getUser();
+        });
 
 
-            $scope.$on('$firebaseSimpleLogin:logout', function (event) {
-                $scope.user = {};
-            });
+        $scope.$on('$firebaseSimpleLogin:logout', function (event) {
+            $scope.user = {};
+        });
 
-            $scope.logout = function () {
-                userService.logout();
-                storage.set('rememberMe', null);
-                storage.remove('caffeina_user');
-                $state.go('login')
+        $scope.logout = function () {
+            userService.logout();
+            storage.set('rememberMe', null);
+            storage.remove('caffeina_user');
+            $state.go('login')
+        }
+
+
+        // set isInAdd if state is addlead
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+                (toState.name == 'addlead') ? $scope.isInAdd = true : $scope.isInAdd = false;
+            })
+
+
+        $scope.cancel = function () {
+            if ($rootScope.$previousState.name) {
+                $state.go($rootScope.$previousState);
+            } else {
+                $state.go('home');
             }
+        }
 
+        $scope.add = function () {
+            $state.transitionTo('addlead');
+        }
+    }])
 
-
-            // set isInAdd if state is addlead
-            $rootScope.$on('$stateChangeStart',
-                function (event, toState, toParams, fromState, fromParams) {
-                    (toState.name == 'addlead') ? $scope.isInAdd = true : $scope.isInAdd = false;
-                })
-
-
-            $scope.cancel = function () {
-                if ($rootScope.$previousState.name) {
-                    $state.go($rootScope.$previousState);
-                } else {
-                    $state.go('home');
-                }
-            }
-
-            $scope.add = function () {
-                $ionicActionSheet.show({
-                    buttons: [
-                        {text: 'thing <strong>to do</strong>'},
-                        {text: 'inquiry'},
-                        {text: 'job'}
-                    ],
-                    titleText: 'what do you want to add?',
-                    buttonClicked: function (index) {
-                        if (index == 1) {
-                            $state.transitionTo('addlead');
-                            return true;
-                        }
-                    }
-                })
-            }
-        }])
-
-    .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', 'dmlservice','$firebase', function ($scope, $ionicSideMenuDelegate, userService, dmlservice,$firebase) {
+    .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', 'dmlservice', '$firebase', function ($scope, $ionicSideMenuDelegate, userService, dmlservice, $firebase) {
 
         var userEmail = userService.getUser().username;
         var ref = new dmlservice._userMessagesFBRef();
