@@ -4,7 +4,7 @@ ion-view(title='',ng-init='init()',ng-controller='home')
             ion-slide
                 ion-content(padding='false',scroll='false')
                     //ion-refresher(pulling-text="Pull to go today",on-refresh="goToday()")
-                    calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="true")
+                    calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="false")
             ion-slide
                 ion-content(padding='false',scroll='true')
                     p.topTitleExplanation.padding-horizontal.centered(ng-if='events.length==0') no events for this month

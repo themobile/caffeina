@@ -22,9 +22,9 @@ angular.module('caffeina.controllers')
         $scope.events = [];
 
         $scope.datePickerControl = {};
-        $scope.isFirstLoaded=true;
+        $scope.isFirstLoaded = true;
 
-        $scope.currentMonth='';
+        $scope.currentMonth = '';
         //drives the view current event
         $scope.selectedEvent = {};
 
@@ -50,33 +50,43 @@ angular.module('caffeina.controllers')
             ngProgressLite.start();
 
 
-            $scope.selectedEvent=_.find($scope.events, function(event){
+            $scope.selectedEvent = _.find($scope.events, function (event) {
                 return event.id == id;
 
             });
 
             _.map($scope.events, function (num) {
                 //change selectedEvent if id or date
-                if (num.id==$scope.selectedEvent.id || moment(num.date).isSame($scope.selectedEvent.date)) {
+                if (num.id == $scope.selectedEvent.id || moment(num.date).isSame($scope.selectedEvent.date)) {
                     return num.isCurrent = true;
                 } else {
                     return num.isCurrent = false;
                 }
             });
 
-                ngProgressLite.done();
-                $ionicSlideBoxDelegate.$getByHandle('calendar_slider').slide(2);
+            ngProgressLite.done();
+            $ionicSlideBoxDelegate.$getByHandle('calendar_slider').slide(2);
         }
 
         //load monthly data based on date
-        $scope.loadData = function (year,month) {
+        $scope.loadData = function (year, month) {
             ngProgressLite.start();
 
 //            var startMoment = moment();
-            dmlservice.getTasks(year,month).then(function (res) {
-                $scope.events = res;
-                CalendarEvents.setEvents($scope.events);
-                ngProgressLite.done();
+            dmlservice.getTasks(year, month).then(function (res) {
+
+                if (dmlservice.userTemplates.length) {
+                    $scope.events = _.sortBy(res, 'date');
+                    CalendarEvents.setEvents($scope.events);
+                    ngProgressLite.done();
+                } else {
+                    dmlservice.getUserTemplates().then(function () {
+                        $scope.events = _.sortBy(res, 'date');
+                        CalendarEvents.setEvents($scope.events);
+                        ngProgressLite.done();
+                    });
+                }
+
 
             }).then(function () {
 //                console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
@@ -88,7 +98,7 @@ angular.module('caffeina.controllers')
         // on firebase login
         $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
             if ($scope.isFirstLoaded) {
-                $scope.loadData(moment().format('YYYY'),moment().format('MM'));
+                $scope.loadData(moment().format('YYYY'), moment().format('MM'));
             }
         });
 
@@ -103,16 +113,16 @@ angular.module('caffeina.controllers')
         $scope.$on('calendar:changeMonth', function (event, date) {
 
             //set current month
-            $scope.currentMonth=moment(date).format('MMMM, YYYY');
+            $scope.currentMonth = moment(date).format('MMMM, YYYY');
 
             //empty list of events
             $scope.monthEvents = [];
             //load data from firebase for current month
             if (userService.getUser()) {
-                $scope.loadData(moment(date).format('YYYY'),moment(date).format('MM'));
+                $scope.loadData(moment(date).format('YYYY'), moment(date).format('MM'));
                 $scope.monthEventsLoaded = true;
             }
-            $scope.selectedEvent={};
+            $scope.selectedEvent = {};
 
         });
 
@@ -125,7 +135,7 @@ angular.module('caffeina.controllers')
 
         // calendar loaded data
         $scope.$on('calendar:events', function (model, view) {
-            $scope.isFirstLoaded=false;
+            $scope.isFirstLoaded = false;
         });
 
         // Click on event: search and display list of day events underlined in whole month

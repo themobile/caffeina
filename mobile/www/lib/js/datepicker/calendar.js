@@ -42,28 +42,49 @@ Module.provider('CalendarEvents', function () {
 });
 
 
-Module.directive('calendarEvent', function () {
+Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
     return {
         restrict: 'E',
-//        scope: {
-//            event: '='
-//        },
-        scope:true,
+
+        scope: true,
         templateUrl: 'templates/datepicker/event.html',
         link: function (scope, elem, attrs) {
 
+
+            //to check if array values are the same
+            Array.prototype.AllValuesSame = function () {
+
+                if (this.length > 0) {
+                    for (var i = 1; i < this.length; i++) {
+                        if (this[i] !== this[0])
+                            return false;
+                    }
+                }
+                return true;
+            }
+
+
             //find out event types for each day in order to construct class for event color on calendar
             //attrs.event comes with double quoting (??!)
-            var dat=moment(attrs.event.replace(/"/g,"")).format('YYYY-MM-DD');
-            var eventType= _.pluck(_.pluck(scope.getEvents(dat),'jobObject'),'type');
-                console.log('date:'+dat+' type: '+eventType[0]);
-            scope.eventType=eventType[0];
+            var date = moment(attrs.event.replace(/"/g, "")).format('YYYY-MM-DD');
+            var eventTypesInDay = _.pluck(_.pluck(scope.getEvents(date), 'jobObject'), 'type');
+            var templates = dmlservice.userTemplates;
+            var bkColor = '';
+            if (eventTypesInDay.AllValuesSame()) {
+                bkColor = _.findWhere(templates, {name: eventTypesInDay[0]}).color;
+                scope.eventStyle = {
+                    'background-color': bkColor
+                };
+            } else {
+                scope.eventStyle = {'background-color':'yellow'};
+            }
+
         }
 
     }
-});
+}]);
 
-Module.directive('calendar', ['$animate','$timeout',function ($animate,$timeout) {
+Module.directive('calendar', ['$animate', '$timeout', function ($animate, $timeout) {
     return {
         restrict: 'E',
         scope: true,
@@ -76,12 +97,9 @@ Module.directive('calendar', ['$animate','$timeout',function ($animate,$timeout)
                 , 'min-view="', (attrs.minView || 'date'), '"></div>'
             ].join('');
         },
-        link: function (scope,element,attrs) {
+        link: function (scope, element, attrs) {
             scope.views = ['year', 'month', 'date'];
             scope.view = 'date';
-
-
-
         }
     };
 }]);
