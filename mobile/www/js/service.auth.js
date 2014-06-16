@@ -13,19 +13,21 @@ angular.module('caffeina.services')
 //                    email: attr.email,
 //                    password: attr.password
             }).then(function (response) {
-                    var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-                    return userDetails.update({details: user.user});
-                }).then(function () {
-                    var ref = dmlservice._userRootFBRef()
+                var userDetails = firebaseRef('/users/' + btoa(user.user.email));
+                return userDetails.update({details: user.user});
+            }).then(function () {
+                var ref = dmlservice._userRootFBRef()
+                    ;
+                ref.child('templates').once('value', function (snapshoot) {
+                    var tmpl = snapshoot.val()
                         ;
-                    ref.child('templates').once('value', function (snapshoot) {
-                        var tmpl = snapshoot.val()
-                            ;
-                        if (!(tmpl)) {
-                            return dmlservice.setInitTemplate();
-                        }
-                    });
+                    if (!(tmpl)) {
+                        return dmlservice.setInitTemplate();
+                    }
                 });
+            }).then(function () {
+                return dmlservice.getUserTemplates();
+            });
             return user;
         };
 

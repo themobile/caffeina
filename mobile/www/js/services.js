@@ -453,6 +453,26 @@ angular.module('caffeina.services', ['firebase'])
                 return $q.all(promises);
             });
         };
+
+        dmlService.userTemplates = [];
+
+        dmlService.getUserTemplates = function () {
+            var templateRef = dmlService._templateFBRef()
+//                , deferred = $q.defer()
+                ;
+            templateRef.once('value', function (templateSnapshot) {
+                _.each(_.pairs(templateSnapshot.val()), function (element) {
+                    dmlService.userTemplates.push({
+                        name: element[1].name,
+                        id: element[0],
+                        icon: element[1].icon,
+                        color: element[1].color
+                    });
+                })
+            });
+        };
+
+
         return dmlService;
     }])
 ;
