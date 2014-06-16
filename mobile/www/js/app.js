@@ -92,10 +92,10 @@ angular.module('caffeina',
             userService.logout();
             $state.go('login');
         } else {
-//            userService.login(provider, {
-//                access_token: token,
-//                rememberMe: rememberMe
-//            });
+            userService.login(provider, {
+                access_token: token,
+                rememberMe: rememberMe
+            });
             $state.go('home');
         }
     })

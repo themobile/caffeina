@@ -8,7 +8,8 @@ angular.module('caffeina.services')
         userServiceObject.login = function (type, attr) {
 
             user.$login(type, {
-                rememberMe: attr.rememberMe,
+//                rememberMe: attr.rememberMe,
+                rememberMe: false,
                 access_token: attr.access_token
 //                    email: attr.email,
 //                    password: attr.password

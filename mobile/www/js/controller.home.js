@@ -22,7 +22,7 @@ angular.module('caffeina.controllers')
         $scope.events = [];
 
         $scope.datePickerControl = {};
-
+        $scope.isFirstLoaded=true;
 
         $scope.currentMonth='';
         //drives the view current event
@@ -72,14 +72,14 @@ angular.module('caffeina.controllers')
         $scope.loadData = function (year,month) {
             ngProgressLite.start();
 
-            var startMoment = moment();
+//            var startMoment = moment();
             dmlservice.getTasks(year,month).then(function (res) {
-                $scope.events = _.sortBy(res, 'date');
+                $scope.events = res;
                 CalendarEvents.setEvents($scope.events);
                 ngProgressLite.done();
 
             }).then(function () {
-                console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
+//                console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
             });
 
         };
@@ -87,7 +87,7 @@ angular.module('caffeina.controllers')
 
         // on firebase login
         $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
-            if (!$scope.monthEventsLoaded) {
+            if ($scope.isFirstLoaded) {
                 $scope.loadData(moment().format('YYYY'),moment().format('MM'));
             }
         });
@@ -125,7 +125,7 @@ angular.module('caffeina.controllers')
 
         // calendar loaded data
         $scope.$on('calendar:events', function (model, view) {
-            console.log('setdate');
+            $scope.isFirstLoaded=false;
         });
 
         // Click on event: search and display list of day events underlined in whole month

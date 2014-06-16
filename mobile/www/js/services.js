@@ -461,6 +461,8 @@ angular.module('caffeina.services', ['firebase'])
 //                , deferred = $q.defer()
                 ;
             templateRef.once('value', function (templateSnapshot) {
+                if (dmlService.userTemplates.length) dmlService.userTemplates=[];
+
                 _.each(_.pairs(templateSnapshot.val()), function (element) {
                     dmlService.userTemplates.push({
                         name: element[1].name,
@@ -472,9 +474,6 @@ angular.module('caffeina.services', ['firebase'])
             });
         };
 
-        dmlService.readUserTemplates=function(){
-            return dmlService.userTemplates;
-        };
 
 
         return dmlService;
