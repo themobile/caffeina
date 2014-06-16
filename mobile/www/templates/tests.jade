@@ -1,5 +1,5 @@
 ion-view(title='tests')
-    ion-content(padding='false', ng-controller='tests')
+    ion-content(padding='true', ng-controller='tests')
         //button.button(ng-click="addLead()") Add lead
         //input.input(ng-model="idLead")
         //button.button(ng-click="updateLead()") Update lead
@@ -18,5 +18,3 @@ ion-view(title='tests')
 
         ul(ng-repeat='event in events')
             li {{event.date}} {{event.jobId}}({{event.jobObject.type}}) {{event.id}}({{event.name}}), {{event.jobObject.contactObject.name}} - {{event.jobObject.tasks}}
-
-        button.button(ng-click="addDeviceContact()") add device contact (simulator)
