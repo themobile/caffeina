@@ -45,18 +45,9 @@ angular.module('caffeina',
                 templateUrl: 'templates/home.html'
             })
 
-            .state('task', {
-                url: '/task/:taskId',
-                templateUrl: 'templates/task_details.html',
-//                controller:function($stateParams){
-//                    $stateParams.taskId;
-//                }
-            })
-
-            .state('addlead', {
-                url: '/addlead',
-                templateUrl: 'templates/addlead.html'
-
+            .state('addjob', {
+                url: '/addjob',
+                templateUrl: 'templates/addjob.html'
             })
 
             .state('tests', {

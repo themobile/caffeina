@@ -4,17 +4,13 @@
 angular.module('caffeina.controllers')
 
 
-    .controller('addlead',
+    .controller('addjob',
         [
             '$rootScope'
             , '$scope'
-            , 'userService'
-            , '$firebaseSimpleLogin'
-            , 'storage'
             , '$state'
-            , '$ionicLoading'
             , 'dmlservice'
-            , function ($rootScope, $scope, userService, $firebaseSimpleLogin, storage, $state, $ionicLoading, dmlservice) {
+            , function ($rootScope, $scope, $state, dmlservice) {
 
 
 
@@ -22,7 +18,7 @@ angular.module('caffeina.controllers')
 
             $scope.init=function(){
 
-                $scope.newLead={
+                $scope.newJob={
                     date:new Date(2014,02,02),
                     contact:{
                         name:'daniel',
@@ -35,13 +31,8 @@ angular.module('caffeina.controllers')
             }
 
             $scope.cancel=function(){
-//                if ($rootScope.$previousState.name){
-//                $state.go($rootScope.$previousState);
-//                } else {
-                    $state.transitionTo('home');
-//                }
+                    $state.go('home');
             }
 
-//
 
         }]);

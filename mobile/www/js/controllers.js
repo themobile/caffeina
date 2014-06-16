@@ -38,10 +38,10 @@ angular.module('caffeina.controllers', [])
 
 
         // set isInAdd if state is addlead
-        $rootScope.$on('$stateChangeStart',
-            function (event, toState, toParams, fromState, fromParams) {
-                (toState.name == 'addlead') ? $scope.isInAdd = true : $scope.isInAdd = false;
-            })
+//        $rootScope.$on('$stateChangeStart',
+//            function (event, toState, toParams, fromState, fromParams) {
+//                (toState.name == 'addlead') ? $scope.isInAdd = true : $scope.isInAdd = false;
+//            })
 
 
         $scope.cancel = function () {
@@ -53,7 +53,7 @@ angular.module('caffeina.controllers', [])
         }
 
         $scope.add = function () {
-            $state.transitionTo('addlead');
+            $state.go('addjob');
         }
     }])
 
