@@ -145,6 +145,10 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/users/' + btoa(user.user.email) + '/messages/');
         };
 
+        dmlService._settingRef = function () {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/settings/');
+        };
+
         dmlService._getRootTemplate = function () {
             var deferred = $q.defer()
                 , rootFBRef = dmlService._rootFBRef()
@@ -438,6 +442,7 @@ angular.module('caffeina.services', ['firebase'])
                     ;
                 _.each(_.pairs(tasksSnapshoot.val()), function (element) {
                     element[1].id = element[0];
+//                    element[1].date = moment(element[1].date).format("YYYY-MM-DDTHH:mm:ss.sssZ");
                     tasks.push(element[1]);
                 });
                 _.each(tasks, function (task) {
@@ -461,7 +466,7 @@ angular.module('caffeina.services', ['firebase'])
                 , deferred = $q.defer()
                 ;
             templateRef.once('value', function (templateSnapshot) {
-                if (dmlService.userTemplates.length) dmlService.userTemplates=[];
+                if (dmlService.userTemplates.length) dmlService.userTemplates = [];
                 _.each(_.pairs(templateSnapshot.val()), function (element) {
                     dmlService.userTemplates.push({
                         name: element[1].name,
@@ -469,13 +474,66 @@ angular.module('caffeina.services', ['firebase'])
                         icon: element[1].icon,
                         color: element[1].color
                     });
-                })
+                });
                 deferred.resolve();
             });
             return $q.all([deferred.promise]);
         };
 
+        dmlService.setKey = function (key, value) {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.child(key).set(value, function () {
+                deferred.resolve(0);
+            });
+            return deferred.promise;
+        };
 
+        dmlService.getKey = function (key) {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.child(key).once('value', function (dataSnapshot) {
+                var ret = dataSnapshot.val()
+                    ;
+                if (!(ret)) ret = "";
+                deferred.resolve(ret);
+            });
+            return deferred.promise;
+        };
+
+        dmlService.delKey = function (key) {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.child(key).remove(function () {
+                deferred.resolve(0);
+            });
+            return deferred.promise;
+        };
+
+        dmlService.getAllKeys = function () {
+
+        };
+
+        dmlService.setInitKeys = function (keys) {
+            var deferred = $q.defer()
+                , promise = deferred.promise
+                ;
+            _.each(keys, function (key) {
+                promise = promise.then(function () {
+                    return dmlService.getKey(key.key).then(function (value) {
+                        if (!(value)) {
+                            value = key.value;
+                        }
+                        return dmlService.setKey(key.key, value);
+                    });
+                });
+            });
+            deferred.resolve(0);
+            return deferred.promise;
+        };
 
         return dmlService;
     }])

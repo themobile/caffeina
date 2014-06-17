@@ -28,6 +28,12 @@ angular.module('caffeina.services')
                 });
             }).then(function () {
                 return dmlservice.getUserTemplates();
+            }).then(function () {
+                return dmlservice.setInitKeys([
+                    {key: "template", value: "1"},
+                    {key: "color", value: "#000000"},
+                    {key: "email", value: "Da"}
+                ]);
             });
             return user;
         };
