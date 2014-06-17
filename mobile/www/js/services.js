@@ -482,7 +482,6 @@ angular.module('caffeina.services', ['firebase'])
                         icon: element[1].icon,
                         color: element[1].color
                     });
-                });
                 deferred.resolve();
             });
             return $q.all([deferred.promise]);
