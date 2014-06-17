@@ -7528,32 +7528,23 @@ calendar-event {
     -moz-justify-content: center;
     justify-content: center; }
   [ng-switch-when="date"] .calendarHeader, [ng-switch-when="year"] .calendarHeader, [ng-switch-when="month"] .calendarHeader {
-    height: 20%; }
+    height: 15%;
+    color: #9c3b3f; }
   [ng-switch-when="date"] .calendarDays, [ng-switch-when="year"] .calendarDays, [ng-switch-when="month"] .calendarDays {
     height: 5%;
     min-height: 30px; }
   [ng-switch-when="date"] .calendarTitle, [ng-switch-when="year"] .calendarTitle, [ng-switch-when="month"] .calendarTitle {
-    font-size: 12px;
+    font-size: 20px;
     display: -webkit-flex;
     display: -moz-flex;
     display: flex;
     -webkit-flex-flow: column nowrap;
     -moz-flex-flow: column nowrap;
     flex-flow: column nowrap;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    justify-content: center;
-    align-items: center;
-    -webkit-align-items: center; }
-    [ng-switch-when="date"] .calendarTitle span.an, [ng-switch-when="year"] .calendarTitle span.an, [ng-switch-when="month"] .calendarTitle span.an {
-      flex: 0 1 auto;
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 24px;
-      color: rgba(105, 87, 87, 0.5);
-      margin-bottom: 25px; }
+    text-align: left;
+    padding-left: 5px; }
   [ng-switch-when="date"] .calendarDetails, [ng-switch-when="year"] .calendarDetails, [ng-switch-when="month"] .calendarDetails {
-    height: 75%;
+    height: 80%;
     display: flex;
     display: -webkit-flex;
     display: -moz-flex;
@@ -7602,8 +7593,21 @@ calendar-event {
       align-items: center; }
     [ng-switch-when="date"] .calendarDetails .year > div, [ng-switch-when="date"] .calendarDetails .month > div, [ng-switch-when="year"] .calendarDetails .year > div, [ng-switch-when="year"] .calendarDetails .month > div, [ng-switch-when="month"] .calendarDetails .year > div, [ng-switch-when="month"] .calendarDetails .month > div {
       width: 100%; }
+    [ng-switch-when="date"] .calendarDetails .firstInsideCol, [ng-switch-when="year"] .calendarDetails .firstInsideCol, [ng-switch-when="month"] .calendarDetails .firstInsideCol {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 0;
+      bottom: 0; }
+    [ng-switch-when="date"] .calendarDetails .secondInsideCol, [ng-switch-when="year"] .calendarDetails .secondInsideCol, [ng-switch-when="month"] .calendarDetails .secondInsideCol {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 50%;
+      margin-top: -10px; }
   [ng-switch-when="date"] button.button-full, [ng-switch-when="year"] button.button-full, [ng-switch-when="month"] button.button-full {
-    height: 100%; }
+    height: 100%;
+    color: #9c3b3f; }
 
 .pane, .view {
   background-size: cover; }
@@ -7620,6 +7624,21 @@ h1, .h1, h2, .h2, h3, .h3 {
 h4, .h4, h5, .h5, h6, .h6 {
   margin-top: 10px;
   margin-bottom: 5px; }
+
+.iconLikeFirstLetters {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+  line-height: 25px;
+  box-sizing: content-box; }
+  .iconLikeFirstLetters > .small {
+    width: 10px;
+    height: 10px;
+    line-height: 10px; }
 
 .nopadding {
   padding: 0; }
@@ -7647,7 +7666,7 @@ h4, .h4, h5, .h5, h6, .h6 {
     background-color: #f7f7f7; }
   .menu .item.active, .menu .item.activated, .menu .item-complex.active .item-content, .menu .item-complex.activated .item-content, .menu .item .item-content.active, .menu .item .item-content.activated {
     border: none;
-    background-color: #f7f7f7; }
+    background-color: rgba(255, 0, 0, 0.07); }
 
 .item-divider {
   background-color: white;
@@ -7746,7 +7765,7 @@ label, input, button, select, textarea {
   pointer-events: none; }
 
 .ngProgressLiteBar {
-  background: rgba(105, 87, 87, 0.2);
+  background: rgba(105, 87, 87, 0.5);
   position: fixed;
   z-index: 100;
   top: 0;
@@ -8023,3 +8042,39 @@ a.item {
   -webkit-animation-name: slideInFromTop;
   -moz-animation-name: slideInFromTop;
   animation-name: slideInFromTop; }
+
+.bar .title {
+  font-weight: 300; }
+
+.row_empty_for_balance {
+  height: 5%;
+  min-height: 30px; }
+
+.screenHeader {
+  height: 15%;
+  color: #9c3b3f; }
+
+.screenTitle {
+  font-size: 20px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+  -moz-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  text-align: left;
+  padding-left: 5px;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center; }
+
+.screenDetails {
+  height: 80%; }
+
+.item.active,
+.item.activated,
+.item-complex.active .item-content,
+.item-complex.activated .item-content,
+.item .item-content.active,
+.item .item-content.activated {
+  background-color: rgba(255, 0, 0, 0.07); }

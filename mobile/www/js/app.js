@@ -8,13 +8,13 @@
 angular.module('caffeina',
     [
         'ionic',
+        'datePicker',
         'caffeina.services',
         'caffeina.controllers',
         'caffeina.filters',
         'angularLocalStorage',
         'ngCookies',
         'firebase',
-        'datePicker',
         'calevents',
         'ngProgressLite',
         'ngAutocomplete'
@@ -60,7 +60,7 @@ angular.module('caffeina',
 
     })
 
-    .run(function ($rootScope, $state, userService, storage, Firebase) {
+    .run(function ($rootScope, $state, userService, storage, Firebase, $ionicLoading) {
         var rememberMe , provider, token, caffeina_user, presenceRef;
 
         rememberMe = storage.get('rememberMe');
@@ -88,15 +88,28 @@ angular.module('caffeina',
             token = caffeina_user.accessToken;
         }
 
+
+
         if (rememberMe != true) {
             userService.logout();
             $state.go('login');
         } else {
+
+            //if autologin
+            $ionicLoading.show({
+                template: 'Be patient grassharper!'
+            });
             userService.login(provider, {
                 access_token: token,
                 rememberMe: rememberMe
+            })
+                .then(function(){
+                    $ionicLoading.hide();
+                    $state.go('home');
+
             });
-            $state.go('home');
+
+
         }
     })
 ;

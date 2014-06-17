@@ -1,40 +1,62 @@
-ion-view(title='',ng-init='init()',ng-controller='home')
-    ion-content(padding='true',scroll='false')
-        ion-slide-box(show-pager="false", delegate-handle="calendar_slider")
+ion-view(title='agenda',ng-init='init()',ng-controller='home')
+    ion-content.padding-horizontal(padding='false',scroll='false')
+        ion-slide-box(show-pager="false", delegate-handle='calendar_slider')
+
+            //calendar slide
             ion-slide
                 ion-content(padding='false',scroll='false')
-                    //ion-refresher(pulling-text="Pull to go today",on-refresh="goToday()")
                     calendar.eventCalendar(view='date',max-view="year",min-view="date", event-service="CalendarEvents",data-prevent-default="false")
+
+            //events for current month slide
             ion-slide
                 ion-content(padding='false',scroll='true')
-                    p.topTitleExplanation.padding-horizontal.centered(ng-if='events.length==0') no events for this month
-                    p.topTitleExplanation.padding-horizontal.centered(ng-if='events.length!=0') selected day marked in reddish color
-                    h2.padding-horizontal.centered {{currentMonth | date | lowercase}}
-                    ion-list
+                    div.row.screenHeader
+                        div.col.screenTitle {{currentMonth |date:"yyyy | MMMM" | lowercase }}
+                            //b.small *{{events.length}} events
+
+                    div.row.row_empty_for_balance
+                        div.col(ng-if='events.length==0') no events for this month
+                        div.col(ng-if='events.length!=0') {{events.length}} events this month
+                    ion-list.screenDetail(style="height:80%")
                         //list events, those in the clicked day are marked with isCurrent
                         ion-item.listTasks(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='viewTask(event.id)')
                             a.item.item-icon-left(href="")
-                                i.icon.ion-email
+                                i.icon
+                                    p.iconLikeFirstLetters(ng-style="{'background':event.color, 'color':'white','border-color':event.color}") {{event.jobObject.type | firstletters}}
 
-                                p.small {{event.date | date: 'd MMM yyyy, h:mm'}}
-                                h4 {{event.jobObject.type}} | {{event.name}}
-                                h4 <strong>with:</strong> {{event.jobObject.contactObject.name}}
+                                p.small {{event.date | date: 'd MMM yyyy, h:mm'}} | {{event.jobObject.type}}
+                                h4  <strong> {{event.name}} </strong> with {{event.jobObject.contactObject.name}}
+
+
+
+                    // solution for two columns
+                    //div.row(ng-repeat='i in range()')
+                    //    div.col-50(ng-repeat='event in events.slice(i,i+2)')
+                    //        a.item(href="",ng-click='viewTask(event.id)')
+                    //            i.icon
+                    //                p.iconLikeFirstLetters.small(ng-style="{'background':event.color, 'color':'white','border-color':event.color}") {{event.jobObject.type | firstletters}}
+                    //            p.small {{event.date | date: 'd MMM yyyy, h:mm'}} | {{event.jobObject.type}}
+                    //            h4  <strong> {{event.name}} </strong> with {{event.jobObject.contactObject.name}}
+
+
+            //selected event slide description
 
             ion-slide
                 ion-content(padding='false', scroll='true')
-                    p.topTitleExplanation.padding-horizontal.centered(ng-if='!selectedEvent.date') no event selected
-                    p.topTitleExplanation.padding-horizontal.centered {{selectedEvent.jobObject.type}}
-                    h2.padding-horizontal.centered {{selectedEvent.name}}
+                    div.row.screenHeader
+                        //i.iconLikeFirstLetters(ng-style="{'color':selectedEvent.color, 'border-color':selectedEvent.color}") {{selectedEvent.jobObject.type | firstletters}}
+                        div.col.screenTitle(ng-if='selectedEvent.name') {{selectedEvent.date |date:"yyyy | MMMM dd" | lowercase }} &#8212 {{selectedEvent.date | date: "HH:mm"}}
+                        div.col.screenTitle(ng-if='!selectedEvent.name'){{currentMonth |date:"yyyy | MMMM" | lowercase }}
+                    div.row.row_empty_for_balance
+                        div.col(ng-if='!selectedEvent.date') no event selected
+                        div.col(ng-if='selectedEvent.date') {{selectedEvent.jobObject.type}} | {{selectedEvent.name}}
+
                     div(ng-if='selectedEvent.date')
 
 
-                        div.row
-                            div.col.col-20.strong when:
-                            div.col.col-80 {{selectedEvent.date | date: 'd MMM yyyy, h:mm'}}
                         div.row
                             div.col.col-20.strong who:
                             div.col.col-80 {{selectedEvent.jobObject.contactObject.name}}
                         div.row
                             div.col.col-20.strong where:
-                            div.col.col-40 {{selectedEvent.location}}
-                            div.col.col-40
+                            div.col.col-80 {{selectedEvent.location}}

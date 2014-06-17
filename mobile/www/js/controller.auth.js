@@ -26,7 +26,14 @@ angular.module('caffeina.controllers')
             $scope.attr = {};
         }
         $scope.login = function (provider) {
-            userService.login(provider, $scope.attr);
+            $ionicLoading.show({
+                template: 'Be patient grassharper!'
+            });
+            userService.login(provider, $scope.attr)
+                .then(function(){
+                    $ionicLoading.hide();
+                    $state.go('home');
+                });
         }
 
 

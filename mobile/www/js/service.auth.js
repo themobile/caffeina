@@ -1,35 +1,39 @@
 angular.module('caffeina.services')
 
-    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', function ($firebaseSimpleLogin, firebaseRef, dmlservice) {
+    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', '$q', function ($firebaseSimpleLogin, firebaseRef, dmlservice, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())
-            , userServiceObject = {}
-            ;
+            , userServiceObject = {};
+        ;
 
         userServiceObject.login = function (type, attr) {
-
+            var deferred = $q.defer();
             user.$login(type, {
-//                rememberMe: attr.rememberMe,
                 rememberMe: false,
                 access_token: attr.access_token
-//                    email: attr.email,
-//                    password: attr.password
-            }).then(function (response) {
-                var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-                return userDetails.update({details: user.user});
-            }).then(function () {
-                var ref = dmlservice._userRootFBRef()
-                    ;
-                ref.child('templates').once('value', function (snapshoot) {
-                    var tmpl = snapshoot.val()
+            })
+                .then(function (response) {
+                    var userDetails = firebaseRef('/users/' + btoa(user.user.email));
+                    userDetails.update({details: user.user});
+
+                })
+                .then(function () {
+                    var ref = dmlservice._userRootFBRef()
                         ;
-                    if (!(tmpl)) {
-                        return dmlservice.setInitTemplate();
-                    }
-                });
-            }).then(function () {
-                return dmlservice.getUserTemplates();
-            });
-            return user;
+                    ref.child('templates').once('value', function (snapshoot) {
+                        var tmpl = snapshoot.val()
+                            ;
+                        if (!(tmpl)) {
+                            dmlservice.setInitTemplate();
+                        }
+                    });
+                })
+                .then(function () {
+                    dmlservice.getUserTemplates();
+                    deferred.resolve('aaa');
+                })
+            ;
+
+            return deferred.promise;
         };
 
         userServiceObject.logout = function () {

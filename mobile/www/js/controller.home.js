@@ -25,21 +25,24 @@ angular.module('caffeina.controllers')
         $scope.isFirstLoaded = true;
 
         $scope.currentMonth = '';
+
         //drives the view current event
         $scope.selectedEvent = {};
 
+
+
+        //solution for two columns inside ng-repeat. LEAVE IT HERE FOR LATER
+        $scope.range = function () {
+            var range = [];
+            for (var i = 0; i < $scope.events.length; i = i + 2)
+                range.push(i);
+            return range;
+        };
+
+
+        $scope.templates = [];
         $scope.init = function () {
 
-        }
-
-        //event broadcasted to datepicker directive to go today
-        $scope.goToday = function () {
-            //timeout to change month after refresh
-            $timeout(function () {
-                $scope.$broadcast('scroll.refreshComplete');
-            }, 000).then(function () {
-                $scope.$broadcast('gotoday');
-            });
         };
 
 
@@ -72,25 +75,37 @@ angular.module('caffeina.controllers')
         $scope.loadData = function (year, month) {
             ngProgressLite.start();
 
-//            var startMoment = moment();
-            dmlservice.getTasks(year, month).then(function (res) {
+            //empty list of events
+            //FIXME not working (when bad connection changing months don't trigger right away empty)
+            $scope.monthEvents = [];
+            $scope.selectedEvent = {};
 
+
+            var loadBulkTasks = function (res) {
+                $scope.templates = dmlservice.userTemplates;
+                $scope.events = _.map(_.sortBy(res, 'date'), function (event) {
+                    var tmp = _.where($scope.templates, {'name': event.jobObject.type})[0];
+                    event.color = tmp.color;
+                    event.icon = tmp.icon;
+//                    event.date=new Date(event.date);
+                    return event;
+                });
+                CalendarEvents.setEvents($scope.events);
+                ngProgressLite.done();
+
+            };
+
+
+            dmlservice.getTasks(year, month).then(function (res) {
                 if (dmlservice.userTemplates.length) {
-                    $scope.events = _.sortBy(res, 'date');
-                    CalendarEvents.setEvents($scope.events);
-                    ngProgressLite.done();
+                    loadBulkTasks(res);
                 } else {
                     dmlservice.getUserTemplates().then(function () {
-                        $scope.events = _.sortBy(res, 'date');
-                        CalendarEvents.setEvents($scope.events);
-                        ngProgressLite.done();
+                        loadBulkTasks(res);
                     });
                 }
+            })
 
-
-            }).then(function () {
-//                console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
-            });
 
         };
 
@@ -113,22 +128,20 @@ angular.module('caffeina.controllers')
         $scope.$on('calendar:changeMonth', function (event, date) {
 
             //set current month
-            $scope.currentMonth = moment(date).format('MMMM, YYYY');
+            $scope.currentMonth = new Date(date);
 
-            //empty list of events
-            $scope.monthEvents = [];
+
+
             //load data from firebase for current month
             if (userService.getUser()) {
                 $scope.loadData(moment(date).format('YYYY'), moment(date).format('MM'));
-                $scope.monthEventsLoaded = true;
             }
-            $scope.selectedEvent = {};
 
         });
 
         //empty event list on view change event emitted from directive
         $scope.$on('viewchanged', function () {
-            $scope.monthEvents = [];
+//            $scope.monthEvents = [];
 
         });
 
@@ -160,7 +173,6 @@ angular.module('caffeina.controllers')
                 // push in local events for the selected day
                 $ionicSlideBoxDelegate.$getByHandle('calendar_slider').next();
             }
-
 
         });
 

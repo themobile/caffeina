@@ -5,10 +5,10 @@
 //    ion-nav-buttons(side='right')
 //        button.button.button-clear.pull-right save
 
-ion-view
+ion-view(title='add things',ng-controller="addjob",ng-init='init()')
     ion-content(padding='true',has-bouncing='false',scroll="true")
         form.list(name="addjob")
-            legend inquiry details
+            legend details
             div.row
                 .col
                     label.item.item-input
@@ -30,13 +30,10 @@ ion-view
                     label.item.item-input.item-select
                         //span.input-label type
                         i.positive.icon.ion-ios7-information.placeholder-icon
-                        select(name='newJob.type',placeholder='what',ng-model="newJob.type")
-                            option wedding
-                            option baptizing
-                            option(ng-selected='1') session
-                            option product
-                            option event
-
+                        select(name='newJob.type',placeholder='what',
+                            ng-options="template.name for template in userTemplates track by template.id",
+                            ng-model="newJob.type")
+                                option(value="") -- type --
 
             label.item.item-input
                 i.positive.icon.ion-ios7-location.placeholder-icon
@@ -45,7 +42,7 @@ ion-view
             label.item.item-input
                 textarea(name='newJob.info',placeholder='notes',rows='3',ng-model='newJob.info')
             div.item-divider
-            legend contact info
+            legend contact
             label.item.item-input
                 i.positive.icon.ion-ios7-person.placeholder-icon
                 input(name='newJob.contact.name',type='text',placeholder='name',ng-model='newJob.contact.name')

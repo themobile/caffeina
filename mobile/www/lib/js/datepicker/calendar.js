@@ -21,7 +21,8 @@ Module.provider('CalendarEvents', function () {
                     calendarEvents = {};
                     for (var i = 0; i < events.length; i++) {
                         //
-                        var date = new Date(events[i].date).toDateString();
+//                        var date = new Date(events[i].date).toDateString();
+                        var date = events[i].date.toDateString();
                         if (!(date in calendarEvents)) {
                             calendarEvents[date] = [];
                         }
@@ -47,13 +48,13 @@ Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
         restrict: 'E',
 
         scope: true,
+
         templateUrl: 'templates/datepicker/event.html',
         link: function (scope, elem, attrs) {
 
 
             //to check if array values are the same
             Array.prototype.AllValuesSame = function () {
-
                 if (this.length > 0) {
                     for (var i = 1; i < this.length; i++) {
                         if (this[i] !== this[0])
@@ -63,11 +64,13 @@ Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
                 return true;
             }
 
-
             //find out event types for each day in order to construct class for event color on calendar
             //attrs.event comes with double quoting (??!)
+
             var date = moment(attrs.event.replace(/"/g, "")).format('YYYY-MM-DD');
-            var eventTypesInDay = _.pluck(_.pluck(scope.getEvents(date), 'jobObject'), 'type');
+            var eventTypesInDay = _.map(scope.getEvents(date), function(event){
+                return event.jobObject.type;
+            });
             var templates = dmlservice.userTemplates;
             var bkColor = '';
             if (eventTypesInDay.AllValuesSame()) {
@@ -76,7 +79,7 @@ Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
                     'background-color': bkColor
                 };
             } else {
-                scope.eventStyle = {'background-color':'yellow'};
+                scope.eventStyle = {'background-color':'#C2C1A1'};
             }
 
         }

@@ -4,11 +4,11 @@ div(ng-switch='view')
     //day view
     div(ng-switch-when='date')
         div.row.calendarHeader
-            div.col.col-10.vertcenter.nopadding
+            div.calendarTitle.col.col-60.vertcenter.nopadding(ng-click='setView(\'month\')') {{date|date:"yyyy | MMMM" | lowercase}}
+                //span.an.fade-in-not-out
+            div.col.col-20.vertcenter.nopadding
                 button.button-clear.button-full.ion-arrow-left-b(ng-click='prev()')
-            div.calendarTitle.col.col-80.vertcenter.nopadding(ng-click='setView(\'month\')'){{date|date:"yyyy"}}
-                span.an.fade-in-not-out {{date|date:"MMMM"|lowercase}}
-            div.col.col-10.vertcenter.nopadding
+            div.col.col-20.vertcenter.nopadding
                 button.button-clear.button-full.ion-arrow-right-b.nopadding(ng-click='next()')
 
         div.row.calendarDays
@@ -18,7 +18,8 @@ div(ng-switch='view')
         div.calendarDetails
             div.row(ng-repeat='week in weeks')
                 div.col(ng-repeat='day in week')
-                    span.day(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
+                    //span.day(ng-class="{'now':isNow(day),'active':isSameDay(day),'disabled':(day.getMonth()!=date.getMonth()),'after':isAfter(day),'before':isBefore(day)}", ng-bind="day.getDate()")
+                    span.day(ng-class="{'now':isNow(day),'disabled':(day.getMonth()!=date.getMonth())}", ng-bind="day.getDate()")
                     calendar-event(event="{{day}}",ng-if="hasEvent(day)", ng-class="{hasEvent:hasEvent(day)}" ,ng-click="clickevents(day)")
             //div.row(ng-show='weeks.length==5')
             //    div.col(ng-repeat='a in [0,1,2,3,4,5,6]')
@@ -40,8 +41,8 @@ div(ng-switch='view')
         div.calendarDetails
             div.row(ng-repeat="group in yearsgroups")
                 div.col.year(ng-repeat='year in group')
-                    div(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)', ng-bind='year.getFullYear()')
-
+                    div.firstInsideCol(ng-class='{\'active\':isSameYear(year),\'now\':isNow(year)}', ng-click='setDate(year)')
+                        div.secondInsideCol(ng-bind='year.getFullYear()')
 
 
 
@@ -63,4 +64,5 @@ div(ng-switch='view')
             div.row(ng-repeat="group in monthsgroups")
 
                 div.col.month(ng-repeat='month in group')
-                    span( ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)', ng-bind='month|date:\'MMM\'')
+                    span.firstInsideCol( ng-class='{\'active\':isSameMonth(month),\'after\':isAfter(month),\'before\':isBefore(month),\'now\':isNow(month)}', ng-click='setDate(month)')
+                        span.secondInsideCol(ng-bind='month|date:\'MMM\'')

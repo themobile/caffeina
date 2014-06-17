@@ -1,8 +1,15 @@
+//colors
+$c1: #41272E;
+$c2: #695757;
+$c3: #9C3B3F;
+$c5: #D7C0C0;
+
+
 $font-size-base: 14px;
 $dark: #695757;
 //$light: #f6f2f2;
 $light: #fff;
-$reddish:#9C3B3F;
+$reddish: #9C3B3F;
 $base-color: $dark;
 $base-background-color: $light;
 $input-color: $dark;
@@ -18,8 +25,8 @@ $item-font-size: 14px !default;
 $item-padding: 13px !default;
 $calm: $dark;
 $positive: $dark;
-$bar-default-border:#fff;
-$bar-default-active-border:none;
+$bar-default-border: #fff;
+$bar-default-active-border: none;
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 $item-avatar-border-radius: 50%;
 //import default scss
@@ -32,17 +39,15 @@ $item-avatar-border-radius: 50%;
   background-size: cover;
 }
 
-
 body {
-  font-weight:300;
-  color:$dark;
+  font-weight: 300;
+  color: $dark;
 }
-
 
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 0px;
   margin-bottom: 10px;
-  color:transparentize($dark,0.5);
+  color: transparentize($dark, 0.5);
 
 }
 
@@ -51,22 +56,40 @@ h4, .h4, h5, .h5, h6, .h6 {
   margin-bottom: 5px;
 }
 
+.iconLikeFirstLetters {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+  line-height: 25px;
+  box-sizing: content-box;
+
+  > .small {
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+
+  }
+}
+
 .nopadding {
-  padding:0;
+  padding: 0;
 }
 
 .centered {
-  text-align:center;
+  text-align: center;
 }
-
 
 .strong {
   font-weight: 700;
 }
 
 .small {
-  font-size:$font-size-small !important;
-  margin-bottom:0;
+  font-size: $font-size-small !important;
+  margin-bottom: 0;
 }
 
 .action-sheet-group {
@@ -88,7 +111,7 @@ h4, .h4, h5, .h5, h6, .h6 {
 
   .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
     border: none;
-    background-color: $menu-bg;
+   background-color: rgba(255, 0, 0, 0.07);
   }
 }
 
@@ -185,9 +208,8 @@ legend {
   }
 }
 
-
 label, input, button, select, textarea {
-  font-weight:300;
+  font-weight: 300;
 }
 
 .topTitleExplanation {
@@ -216,7 +238,7 @@ label, input, button, select, textarea {
 }
 
 .ngProgressLiteBar {
-  background: transparentize($dark, 0.8);
+  background: transparentize($dark, 0.5);
   position: fixed;
   z-index: 100;
   top: 0;
@@ -299,7 +321,7 @@ form {
 
   .item-select {
     margin-top: 0;
-//    height: 51px;
+    //    height: 51px;
     select {
       padding: 9px 5px;
     }
@@ -348,69 +370,81 @@ form {
   }
 }
 
-
 a.item {
-  border:none;
+  border: none;
 }
-
 
 .listTasks {
-    padding: 8px 0;
-
+  padding: 8px 0;
 
   > a.item {
-    padding-top:8px;
-    padding-bottom:8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 // Slide In From Bottom
 // -------------------------------
 
 @-webkit-keyframes slideInFromBottom {
-  from { -webkit-transform: translate3d(0,100%, 0); }
-  to { -webkit-transform: translate3d(0, 0, 0); }
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
 }
+
 @-moz-keyframes slideInFromBottom {
-  from { -moz-transform: translateY(100%); }
-  to { -moz-transform: translateY(0); }
+  from {
+    -moz-transform: translateY(100%);
+  }
+  to {
+    -moz-transform: translateY(0);
+  }
 }
+
 @keyframes slideInFromBottom {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
-
-
 
 // Slide Out To Top
 // -------------------------------
 
 @-webkit-keyframes slideOutToUp {
-  from { -webkit-transform:  translate3d(0, 0, 0); }
-  to { -webkit-transform: translate3d(0,-100%, 0); }
-}
-@-moz-keyframes slideOutToUp {
-  from { -moz-transform: translateY(0); }
-  to { -moz-transform: translateY(-100%); }
-}
-@keyframes slideOutToUp {
-  from { transform: translateY(0); }
-  to { transform: translateY(-100%); }
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, -100%, 0);
+  }
 }
 
+@-moz-keyframes slideOutToUp {
+  from {
+    -moz-transform: translateY(0);
+  }
+  to {
+    -moz-transform: translateY(-100%);
+  }
+}
+
+@keyframes slideOutToUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
 
 .slide-in-up2 {
-  @include translate3d(0,100%,0);
+  @include translate3d(0, 100%, 0);
   &.ng-add, > .ng-add {
     @include animation-name(slideInFromBottom);
     @include animation-duration($transition-duration);
@@ -426,59 +460,78 @@ a.item {
 }
 
 .slide-in-up2-add {
-  @include translate3d(0,0%,0);
+  @include translate3d(0, 0%, 0);
   @include animation-duration($transition-duration);
   @include animation-timing-function(ease-in-out);
   @include animation-fill-mode(both);
 }
+
 .slide-in-up2-add-active {
   @include animation-name(slideInFromBottom);
 }
-
-
-
 
 // Slide In From top
 // -------------------------------
 
 @-webkit-keyframes slideInFromTop {
-  from { -webkit-transform: translate3d(0,-100%, 0); }
-  to { -webkit-transform: translate3d(0, 0, 0); }
+  from {
+    -webkit-transform: translate3d(0, -100%, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
 }
+
 @-moz-keyframes slideInFromTop {
-  from { -moz-transform: translateY(-100%); }
-  to { -moz-transform: translateY(0); }
+  from {
+    -moz-transform: translateY(-100%);
+  }
+  to {
+    -moz-transform: translateY(0);
+  }
 }
+
 @keyframes slideInFromTop {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
-
-
-
 
 // Slide Out To Bottom
 // -------------------------------
 
 @-webkit-keyframes slideOutToBottom {
-  from { -webkit-transform: translate3d(0, 0, 0); }
-  to { -webkit-transform: translate3d(0,100%, 0); }
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 100%, 0);
+  }
 }
+
 @-moz-keyframes slideOutToBottom {
-  from { -moz-transform: translateY(0); }
-  to { -moz-transform: translateY(100%); }
+  from {
+    -moz-transform: translateY(0);
+  }
+  to {
+    -moz-transform: translateY(100%);
+  }
 }
+
 @keyframes slideOutToBottom {
-  from { transform: translateY(0); }
-  to { transform: translateY(100%); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
-
-
-
-
 
 .slide-in-down2 {
-  @include translate3d(0,100%,0);
+  @include translate3d(0, 100%, 0);
   &.ng-add, > .ng-add {
     @include animation-name(slideInFromTop);
     @include animation-duration($transition-duration);
@@ -494,12 +547,56 @@ a.item {
 }
 
 .slide-in-down2-add {
-  @include translate3d(0,0%,0);
+  @include translate3d(0, 0%, 0);
   @include animation-duration($transition-duration);
   @include animation-timing-function(ease-in-out);
   @include animation-fill-mode(both);
 }
+
 .slide-in-down2-add-active {
   @include animation-name(slideInFromTop);
 }
 
+.bar .title {
+  font-weight: 300;
+}
+
+.row_empty_for_balance {
+  height: 5%;
+  min-height: 30px;
+}
+
+.screenHeader {
+  height: 15%;
+  color:$c3;
+}
+
+.screenTitle {
+  font-size: 20px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+  -moz-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  text-align: left;
+  padding-left: 5px;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+}
+
+.screenDetails {
+  height: 80%;
+
+}
+
+
+.item.active,
+.item.activated,
+.item-complex.active .item-content,
+.item-complex.activated .item-content,
+.item .item-content.active,
+.item .item-content.activated {
+  background-color: rgba(255, 0, 0, 0.07);
+}

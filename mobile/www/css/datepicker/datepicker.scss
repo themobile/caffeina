@@ -3,10 +3,9 @@
 
 [date-range] [date-picker] {
   .after.before {
-//    .buttonBackground(btnInfoBackground, tint(btnInfoBackgroundHighlight, 20%));
+    //    .buttonBackground(btnInfoBackground, tint(btnInfoBackgroundHighlight, 20%));
   }
 }
-
 
 calendar-event {
   display: block;
@@ -15,8 +14,6 @@ calendar-event {
   bottom: 0;
   left: 0;
   right: 0;
-
-
 
   span {
     display: block;
@@ -62,7 +59,7 @@ calendar-event {
   }
 
   .now {
-    background: fade(dark,10%);
+    background: fade(dark, 10%);
   }
 
   .disabled {
@@ -79,10 +76,8 @@ calendar-event {
   }
 }
 
-
 [ng-switch-when="date"], [ng-switch-when="year"], [ng-switch-when="month"] {
   text-align: center;
-
 
   .vertcenter {
     display: -webkit-flex;
@@ -93,17 +88,15 @@ calendar-event {
     flex-flow: column nowrap;
     -webkit-justify-content: center;
     -moz-justify-content: center;
-    justify-content:center;
+    justify-content: center;
 
   }
 
-
   .calendarHeader {
-    height: 20%;
+    height: 15%;
+    color:$c3;
 
-    button {
 
-    }
   }
 
   .calendarDays {
@@ -114,31 +107,19 @@ calendar-event {
 
   .calendarTitle {
     //    flex:1 0 auto;
-    font-size: 12px;
+    font-size: 20px;
     display: -webkit-flex;
     display: -moz-flex;
     display: flex;
     -webkit-flex-flow: column nowrap;
     -moz-flex-flow: column nowrap;
     flex-flow: column nowrap;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    justify-content: center;
-    align-items: center;
-    -webkit-align-items: center;
-
-    span.an {
-      flex: 0 1 auto;
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 24px;
-      color: transparentize($dark,0.5);
-      margin-bottom:25px;
-    }
+    text-align:left;
+    padding-left:5px;
   }
 
   .calendarDetails {
-    height: 75%;
+    height: 80%;
     display: flex;
     display: -webkit-flex;
     display: -moz-flex;
@@ -198,17 +179,33 @@ calendar-event {
       align-items: center;
     }
 
-
-
     .year, .month {
       > div {
-        width:100%;
+        width: 100%;
       }
     }
+
+    .firstInsideCol {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 0;
+      bottom:0;
+    }
+
+    .secondInsideCol {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 50%;
+      margin-top: -10px;
+    }
+
   }
 
   button.button-full {
     height: 100%;
+    color:$c3;
   }
 
 }
