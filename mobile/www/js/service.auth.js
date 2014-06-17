@@ -1,12 +1,12 @@
 angular.module('caffeina.services')
 
-    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', function ($firebaseSimpleLogin, firebaseRef, dmlservice) {
+    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice','$q', function ($firebaseSimpleLogin, firebaseRef, dmlservice,$q) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , userServiceObject = {}
             ;
 
         userServiceObject.login = function (type, attr) {
-
+            var deferred=$q.defer();
             user.$login(type, {
 //                rememberMe: attr.rememberMe,
                 rememberMe: false,
@@ -29,13 +29,15 @@ angular.module('caffeina.services')
             }).then(function () {
                 return dmlservice.getUserTemplates();
             }).then(function () {
+                deferred.resolve();
                 return dmlservice.setInitKeys([
                     {key: "template", value: "1"},
                     {key: "color", value: "#000000"},
                     {key: "email", value: "Da"}
                 ]);
+
             });
-            return user;
+            return deferred.promise;
         };
 
         userServiceObject.logout = function () {

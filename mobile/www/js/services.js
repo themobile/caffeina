@@ -476,12 +476,7 @@ angular.module('caffeina.services', ['firebase'])
                         });
                     }
                 });
-                    dmlService.userTemplates.push({
-                        name: element[1].name,
-                        id: element[0],
-                        icon: element[1].icon,
-                        color: element[1].color
-                    });
+
                 deferred.resolve();
             });
             return $q.all([deferred.promise]);
