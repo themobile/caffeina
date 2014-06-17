@@ -135,15 +135,18 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/users/' + btoa(user.user.email) + '/tasks/');
         };
 
-
-        dmlService._specificTaskFBRef = function (key) {
-            return firebaseRef('/users/' + btoa(user.user.email) + '/tasks/' + key);
-        };
-
-
         dmlService._userMessagesFBRef = function () {
             return firebaseRef('/users/' + btoa(user.user.email) + '/messages/');
         };
+
+        dmlService._settingRef = function () {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/settings/');
+        };
+
+        dmlService._fileRef = function () {
+            return firebaseRef('/files/');
+        };
+
 
         dmlService._getRootTemplate = function () {
             var deferred = $q.defer()
@@ -438,6 +441,7 @@ angular.module('caffeina.services', ['firebase'])
                     ;
                 _.each(_.pairs(tasksSnapshoot.val()), function (element) {
                     element[1].id = element[0];
+//                    element[1].date = moment(element[1].date).format("YYYY-MM-DDTHH:mm:ss.sssZ");
                     tasks.push(element[1]);
                 });
                 _.each(tasks, function (task) {
@@ -461,7 +465,7 @@ angular.module('caffeina.services', ['firebase'])
                 , deferred = $q.defer()
                 ;
             templateRef.once('value', function (templateSnapshot) {
-                if (dmlService.userTemplates.length) dmlService.userTemplates=[];
+                if (dmlService.userTemplates.length) dmlService.userTemplates = [];
                 _.each(_.pairs(templateSnapshot.val()), function (element) {
                     if (element[1].name) {
                         dmlService.userTemplates.push({
@@ -472,12 +476,127 @@ angular.module('caffeina.services', ['firebase'])
                         });
                     }
                 });
+                    dmlService.userTemplates.push({
+                        name: element[1].name,
+                        id: element[0],
+                        icon: element[1].icon,
+                        color: element[1].color
+                    });
+                });
                 deferred.resolve();
             });
             return $q.all([deferred.promise]);
         };
 
+        dmlService.setKey = function (key, value) {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.child(key).set(value, function () {
+                deferred.resolve(0);
+            });
+            return deferred.promise;
+        };
 
+        dmlService.getKey = function (key) {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.child(key).once('value', function (dataSnapshot) {
+                var ret = dataSnapshot.val()
+                    ;
+                if (!(ret)) ret = "";
+                deferred.resolve(ret);
+            });
+            return deferred.promise;
+        };
+
+        dmlService.delKey = function (key) {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.child(key).remove(function () {
+                deferred.resolve(0);
+            });
+            return deferred.promise;
+        };
+
+        dmlService.getAllKeys = function () {
+            var sRef = dmlService._settingRef()
+                , deferred = $q.defer()
+                ;
+            sRef.once('value', function (dataSnapshot) {
+                deferred.resolve(dataSnapshot.val());
+            });
+            return deferred.promise;
+        };
+
+        dmlService.setInitKeys = function (keys) {
+            var deferred = $q.defer()
+                , promise = deferred.promise
+                ;
+            _.each(keys, function (key) {
+                promise = promise.then(function () {
+                    return dmlService.getKey(key.key).then(function (value) {
+                        if (!(value)) {
+                            value = key.value;
+                        }
+                        return dmlService.setKey(key.key, value);
+                    });
+                });
+            });
+            deferred.resolve(0);
+            return deferred.promise;
+        };
+
+        dmlService.setFile = function (file) {
+            var fileRef = dmlService._fileRef()
+                , deferred = $q.defer()
+                , startAt, endAt
+                ;
+
+            file = (file || {});
+            if (!(file.name)) file.name = "poza";
+            startAt = file.name;
+            endAt = file.name;
+
+            fileRef.startAt(startAt).endAt(endAt).once('value', function (fileSnapshot) {
+                var theFile = fileSnapshot.val()
+                    , fileId
+                    ;
+                if (theFile) {
+                    fileId = _.pairs(theFile)[0][0];
+                    return dmlService._upd(fileRef, file, fileId, file.name).then(function (fileId) {
+                        deferred.resolve(fileId);
+                    });
+                } else {
+                    return dmlService._add(fileRef, file, file.name).then(function (fileId) {
+                        deferred.resolve(fileId);
+                    });
+                }
+            });
+
+            return deferred.promise;
+        };
+
+        dmlService.getFiles = function () {
+            var fileRef = dmlService._fileRef()
+                , deferred = $q.defer()
+                ;
+            fileRef.once('value', function (fileSnapshot) {
+                var files = _.pairs(fileSnapshot.val())
+                    , filesRet = []
+                    ;
+                _.each(files, function (file) {
+                    if (file[0] != 'counter') {
+                        file[1].id = file[0];
+                        filesRet.push(file[1]);
+                    }
+                });
+                deferred.resolve(filesRet);
+            });
+            return deferred.promise;
+        };
 
         return dmlService;
     }])

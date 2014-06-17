@@ -59,11 +59,11 @@ angular.module('caffeina.controllers')
         };
 
         $scope.addJob = function () {
-            var types=['wedding','baptizing','family session']
+            var types = ['wedding', 'baptizing', 'family session']
             var job = {
                 date: moment("2014-06-01 10:00").add('day', parseInt(Math.random() * 28)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
-                type: types[Math.floor(Math.random()*types.length)],
+                type: types[Math.floor(Math.random() * types.length)],
                 typeId: 1,
                 isBooked: true,
                 isTasksGenerated: false,
@@ -78,7 +78,9 @@ angular.module('caffeina.controllers')
         };
 
         $scope.year = "2014";
-        $scope.month = "3";
+        $scope.month = "6";
+        $scope.key = "default template";
+        $scope.value = "1";
 
 
         $scope.promises = [];
@@ -88,6 +90,7 @@ angular.module('caffeina.controllers')
         $scope.$watch('events', function (nv, ov) {
             console.log('events');
         });
+
 
         $scope.getTasks = function () {
             var startMoment = moment()
@@ -100,9 +103,65 @@ angular.module('caffeina.controllers')
         };
 
 
-        $scope.addDeviceContact = function() {
+        $scope.addDeviceContact = function () {
 //            navigator.contacts.create({"displayName": "Caffeina Test User"});
             console.log(dmlservice.userTemplates);
+        };
+
+        $scope.setKey = function () {
+            var k = $scope.key
+                , v = $scope.value
+                ;
+            dmlservice.setKey(k, v).then(function (value) {
+                v = value;
+                console.log(k + ": " + v);
+            });
+        };
+
+        $scope.getKey = function () {
+            var k = $scope.key
+                , v
+                ;
+            dmlservice.getKey(k).then(function (value) {
+                v = value;
+                console.log(k + ": " + v);
+            });
+        };
+
+        $scope.delKey = function () {
+            var k = $scope.key
+                , v
+                ;
+            dmlservice.delKey(k).then(function (value) {
+                v = value;
+                console.log(k + ": " + v);
+            });
+        };
+
+        $scope.getKeys = function () {
+            var startMoment = moment()
+                ;
+            dmlservice.getAllKeys().then(function (res) {
+                console.log('ha');
+            }).then(function () {
+                console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
+            });
+        };
+
+        $scope.setFile = function () {
+            dmlservice.setFile({
+                name: "tanganika",
+                link: "www.google.ro",
+                fileUrl: "www.google.ro"
+            }).then(function (fileId) {
+                console.log("file id: " + fileId.toString());
+            })
+        };
+
+        $scope.getFiles = function () {
+            dmlservice.getFiles().then(function (data) {
+                console.log(data);
+            });
         }
 
 

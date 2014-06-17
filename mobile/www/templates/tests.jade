@@ -20,4 +20,16 @@ ion-view(title='tests')
             li {{event.date}} {{event.jobId}}({{event.jobObject.type}}) {{event.id}}({{event.name}}), {{event.jobObject.contactObject.name}} - {{event.jobObject.tasks}}
 
 
-        button(ng-click='addDeviceContact()') Add device contact
+        button.button(ng-click='addDeviceContact()') Add device contact
+
+        br
+        input.input(ng-model="key")
+        input.input(ng-model="value")
+        button.button(ng-click='setKey()') Set Key
+        button.button(ng-click='getKey()') Get Key
+        button.button(ng-click='delKey()') Del Key
+        button.button(ng-click='getKeys()') Get All Keys
+
+        br
+        button.button(ng-click='setFile()') set file
+        button.button(ng-click='getFiles()') get file

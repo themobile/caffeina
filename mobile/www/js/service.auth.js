@@ -1,39 +1,41 @@
 angular.module('caffeina.services')
 
-    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', '$q', function ($firebaseSimpleLogin, firebaseRef, dmlservice, $q) {
+    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', function ($firebaseSimpleLogin, firebaseRef, dmlservice) {
         var user = $firebaseSimpleLogin(firebaseRef())
-            , userServiceObject = {};
-        ;
-
-        userServiceObject.login = function (type, attr) {
-            var deferred = $q.defer();
-            user.$login(type, {
-                rememberMe: false,
-                access_token: attr.access_token
-            })
-                .then(function (response) {
-                    var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-                    userDetails.update({details: user.user});
-
-                })
-                .then(function () {
-                    var ref = dmlservice._userRootFBRef()
-                        ;
-                    ref.child('templates').once('value', function (snapshoot) {
-                        var tmpl = snapshoot.val()
-                            ;
-                        if (!(tmpl)) {
-                            dmlservice.setInitTemplate();
-                        }
-                    });
-                })
-                .then(function () {
-                    dmlservice.getUserTemplates();
-                    deferred.resolve('aaa');
-                })
+            , userServiceObject = {}
             ;
 
-            return deferred.promise;
+        userServiceObject.login = function (type, attr) {
+
+            user.$login(type, {
+//                rememberMe: attr.rememberMe,
+                rememberMe: false,
+                access_token: attr.access_token
+//                    email: attr.email,
+//                    password: attr.password
+            }).then(function (response) {
+                var userDetails = firebaseRef('/users/' + btoa(user.user.email));
+                return userDetails.update({details: user.user});
+            }).then(function () {
+                var ref = dmlservice._userRootFBRef()
+                    ;
+                ref.child('templates').once('value', function (snapshoot) {
+                    var tmpl = snapshoot.val()
+                        ;
+                    if (!(tmpl)) {
+                        return dmlservice.setInitTemplate();
+                    }
+                });
+            }).then(function () {
+                return dmlservice.getUserTemplates();
+            }).then(function () {
+                return dmlservice.setInitKeys([
+                    {key: "template", value: "1"},
+                    {key: "color", value: "#000000"},
+                    {key: "email", value: "Da"}
+                ]);
+            });
+            return user;
         };
 
         userServiceObject.logout = function () {
