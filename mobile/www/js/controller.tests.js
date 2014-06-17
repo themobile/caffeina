@@ -91,6 +91,7 @@ angular.module('caffeina.controllers')
             console.log('events');
         });
 
+
         $scope.getTasks = function () {
             var startMoment = moment()
                 ;
@@ -136,5 +137,32 @@ angular.module('caffeina.controllers')
                 console.log(k + ": " + v);
             });
         };
+
+        $scope.getKeys = function () {
+            var startMoment = moment()
+                ;
+            dmlservice.getAllKeys().then(function (res) {
+                console.log('ha');
+            }).then(function () {
+                console.log('duration3: ' + moment().diff(startMoment, 'milliseconds').toString() + ' ms');
+            });
+        };
+
+        $scope.setFile = function () {
+            dmlservice.setFile({
+                name: "tanganika",
+                link: "www.google.ro",
+                fileUrl: "www.google.ro"
+            }).then(function (fileId) {
+                console.log("file id: " + fileId.toString());
+            })
+        };
+
+        $scope.getFiles = function () {
+            dmlservice.getFiles().then(function (data) {
+                console.log(data);
+            });
+        }
+
 
     }]);
