@@ -8078,3 +8078,11 @@ a.item {
 .item .item-content.active,
 .item .item-content.activated {
   background-color: rgba(255, 0, 0, 0.07); }
+
+.height0 {
+  height: 0;
+  display: block;
+  position: absolute;
+  right: 0;
+  margin-top: -20px;
+  text-align: right; }
