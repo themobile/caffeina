@@ -313,17 +313,17 @@ form {
   }
 
   .item-toggle {
-    //    padding: 6px 0 5px 8px;
-    font-size: 14px;
-    margin: 5px 0;
+    height: 46px;
+    padding: 13px 0 0px 8px;
+    margin:3px 2px;
 
   }
 
   .item-select {
-    margin-top: 0;
-    //    height: 51px;
+    height: 46px;
+    padding: 6px 0 5px 8px;
     select {
-      padding: 9px 5px;
+//      padding: 9px 5px;
     }
 
   }
@@ -607,7 +607,7 @@ a.item {
   height: 0;
   display: block;
   position: absolute;
-  right: 0;
+  right: 5px;
   margin-top: -20px;
   text-align: right;
 }

@@ -7819,12 +7819,12 @@ form {
   form .col {
     padding: 0; }
   form .item-toggle {
-    font-size: 14px;
-    margin: 5px 0; }
+    height: 46px;
+    padding: 13px 0 0px 8px;
+    margin: 3px 2px; }
   form .item-select {
-    margin-top: 0; }
-    form .item-select select {
-      padding: 9px 5px; }
+    height: 46px;
+    padding: 6px 0 5px 8px; }
   form .item-input input {
     flex: 1 0 auto;
     padding-right: 0;
@@ -8083,6 +8083,6 @@ a.item {
   height: 0;
   display: block;
   position: absolute;
-  right: 0;
+  right: 5;
   margin-top: -20px;
   text-align: right; }

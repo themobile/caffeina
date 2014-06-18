@@ -14,12 +14,12 @@ ion-view(title='add things',ng-controller="addjob",ng-init='init()')
                     label.item.item-input
                         i.positive.icon.ion-ios7-calendar.placeholder-icon
                         //span.input-label date
-                        input(id="exampleInput",type='date',ng-model='newJob.date',placeholder="yyyy-MM-dd", required)
+                        input(name="newJob.date",type='date',ng-model='newJob.date',value='{{newJob.date}}',placeholder="dd/MM/yy", required)
 
                 .col
                     label.item.item-input
                         i.positive.icon.ion-ios7-clock.placeholder-icon
-                        input(name='newJob.time',type='time',ng-model='newJob.time',ng-disabled='newJob.allDay')
+                        input(name='newJob.time',type='time',ng-model='newJob.time',value='{{newJob.time}}',ng-disabled='newJob.allDay')
 
 
             div.row
@@ -30,17 +30,44 @@ ion-view(title='add things',ng-controller="addjob",ng-init='init()')
                     label.item.item-input.item-select
                         //span.input-label type
                         i.positive.icon.ion-ios7-information.placeholder-icon
-                        select(name='newJob.type',placeholder='what',
+                        select(name='newJob.type',
                             ng-options="template.name for template in userTemplates track by template.id",
                             ng-model="newJob.type")
-                                option(value="") -- type --
+                                option(value="") - type -
+
+            div.row
+                .col
+                    label.item.item-input
+                        i.positive.icon.ion-ios7-pricetag.placeholder-icon
+                        //span.input-label date
+                        input(name="newJob.price",
+                            pattern='^\\$?(([1-9](\\d*|\\d{0,2}(,\\d{3})*))|0)(\\.\\d{1,2})?EUR',
+                            type='text',ng-model='newJob.price',value='{{newJob.price}}',placeholder="price", required)
+                .col
+                    label.item.item-input.item-select
+                        //span.input-label type
+                        i.positive.icon.ion-ios7-information.placeholder-icon
+                        select(name='newJob.alarm',
+                        ng-model="newJob.alarm")
+                            option(value="") - alarm -
+                            option 1h
+                            option 2h
+                            option 4h
+                            option 12h
+                            option 24h
+                            option 1 day
+                            option 2 days
+
+
 
             label.item.item-input
                 i.positive.icon.ion-ios7-location.placeholder-icon
                 input#Autocomplete.ellip(name='newJob.location',type='text',placeholder='where',ng-model="newJob.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
 
+
             label.item.item-input
                 textarea(name='newJob.info',placeholder='notes',rows='3',ng-model='newJob.info')
+
             div.item-divider
             legend contact
             label.item.item-input

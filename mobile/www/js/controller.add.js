@@ -10,19 +10,20 @@ angular.module('caffeina.controllers')
         , '$scope'
         , '$state'
         , 'dmlservice'
-        , function ($rootScope, $scope, $state, dmlservice) {
+        , '$filter'
+        , function ($rootScope, $scope, $state, dmlservice,$filter) {
 
         $scope.init = function () {
-
             $scope.newJob = {
-                date: new Date(2014, 02, 02),
+                date: $filter("date")(Date.now(), 'yyyy-MM-dd'),
+                time: '10:00',
                 contact: {
                     name: 'daniel',
                     phone: '',
                     email: ''
                 },
                 type: 'session',
-                id1: 5
+                price:''
             };
 
             $scope.userTemplates = dmlservice.userTemplates;

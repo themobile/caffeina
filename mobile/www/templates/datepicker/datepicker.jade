@@ -30,13 +30,11 @@ div(ng-switch='view')
     div(ng-switch-when='year')
 
         div.row.calendarHeader
-            div.col.col-10.vertcenter.nopadding
+            div.calendarTitle.col.col-60.vertcenter.nopadding {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
+            div.col.col-20.vertcenter.nopadding
                 button.button-clear.button-full.ion-arrow-left-b(ng-click="prev(10)")
-            div.calendarTitle.col.col-80.vertcenter.nopadding choose year
-                span.an.fade-in-not-out {{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}
-            div.col.col-10.vertcenter.nopadding
+            div.col.col-20.vertcenter.nopadding
                 button.button-clear.button-full.ion-arrow-right-b(ng-click='next(10)')
-
 
         div.calendarDetails
             div.row(ng-repeat="group in yearsgroups")
@@ -51,11 +49,10 @@ div(ng-switch='view')
     div(ng-switch-when='month')
 
         div.row.calendarHeader
-            div.col.col-10.vertcenter.nopadding
+            div.calendarTitle.col.col-60.vertcenter.nopadding(ng-click='setView(\'year\')') {{ date|date:"yyyy"|lowercase }}
+            div.col.col-20.vertcenter.nopadding
                 button.button-clear.button-full.ion-arrow-left-b(ng-click="prev()")
-            div.calendarTitle.col.col-80.vertcenter.nopadding(ng-click='setView(\'year\')') choose month
-                span.an.fade-in-not-out {{ date|date:"yyyy"|lowercase }}
-            div.col.col-10.vertcenter.nopadding
+            div.col.col-20.vertcenter.nopadding
                 button.button-clear.button-full.ion-arrow-right-b(ng-click="next()")
 
 
