@@ -395,10 +395,10 @@ angular.module('caffeina.services', ['firebase'])
                             if (job.tasks) {
                                 taskId = job.tasks.toString().split(',')[0];
                                 return dmlService._del(taskRef, taskId).then(function () {
-                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.location);
+                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.details.location);
                                 });
                             } else {
-                                return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.location);
+                                return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.details.location);
                             }
                         }
                     } else {
@@ -407,7 +407,7 @@ angular.module('caffeina.services', ['firebase'])
                         newTask.name = job.type.name;
                         newTask.isMain = true;
                         newTask.date = job.date;
-                        if (job.details) if (job.details.location) newTask.location = job.location;
+                        if (job.details) if (job.details.location) newTask.location = job.details.location;
 
                         if (job.tasks) {
                             // iau primul task; oricum ar tb sa fie exact unul
