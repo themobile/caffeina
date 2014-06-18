@@ -27,7 +27,8 @@ angular.module('caffeina.controllers')
                 },
                 type: 'session',
                 price: '',
-                isBooked:false
+                isBooked:false,
+                isTasksGenerated: false
             };
 
             $scope.userTemplates = dmlservice.userTemplates;
@@ -45,8 +46,8 @@ angular.module('caffeina.controllers')
 
 
         $scope.$on('newJob:save', function () {
-
-            $scope.newJob.typeName= $scope.newJob.type.name;
+//            $scope.newJob.date=moment($scope.newJob.date).format("YYYY-MM-DD HH:mm:ss.SSS");
+//            $scope.newJob.date=$scope.newJob.date
             dmlservice.setJob($scope.newJob);
 
         });
