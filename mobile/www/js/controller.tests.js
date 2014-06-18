@@ -160,6 +160,8 @@ angular.module('caffeina.controllers')
 
         $scope.getFiles = function () {
             dmlservice.getFiles().then(function (data) {
+                return dmlservice.getInventory();
+            }).then(function (data) {
                 console.log(data);
             });
         };

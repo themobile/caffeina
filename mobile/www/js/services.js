@@ -623,6 +623,25 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
+        dmlService.getInventory  = function () {
+            var inventoryRef = dmlService._inventoryRef()
+                , deferred = $q.defer()
+                ;
+            inventoryRef.once('value', function (inventorySnapshot) {
+                var items = _.pairs(inventorySnapshot.val())
+                    , itemsRet = []
+                    ;
+                _.each(items, function (item) {
+                    if (item[0] != 'counter') {
+                        item[1].id = item[0];
+                        itemsRet.push(item[1]);
+                    }
+                });
+                deferred.resolve(itemsRet);
+            });
+            return deferred.promise;
+        };
+
         dmlService.setInventory = function (inventory) {
             var inventoryRef = dmlService._inventoryRef()
                 , deferred = $q.defer()
