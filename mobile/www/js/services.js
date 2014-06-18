@@ -155,19 +155,19 @@ angular.module('caffeina.services', ['firebase'])
                 ;
 
             rootFBRef.child('templates').once('value', function (templateSnapshot) {
-                var templateObj = templateSnapshot.val()
+                var templateObj = _.pairs(templateSnapshot.val())
                     ;
                 _.each(templateObj, function (template) {
-                    if (template.name) {
+                    if (template[1].name) {
                         var tasks = []
                             ;
-                        _.each(template.tasks, function (task) {
-                            if (task.name) {
-                                tasks.push(task);
+                        _.each(_.pairs(template[1].tasks), function (task) {
+                            if (task[1].name) {
+                                tasks.push(task[1]);
                             }
                         });
-                        template.tasks = tasks;
-                        arrayRet.push(template);
+                        template[1].tasks = tasks;
+                        arrayRet.push(template[1]);
                     }
                 });
                 deferred.resolve(arrayRet);
@@ -196,7 +196,7 @@ angular.module('caffeina.services', ['firebase'])
             }).then(function () {
                 _.each(templates, function (template) {
                     promise = promise.then(function () {
-                        return dmlService._add(templFBRef, {name: template.name, color: template.color, icon: template.icon}, null).then(function (tmplId) {
+                        return dmlService._add(templFBRef, {name: template.name, color: template.color}, null).then(function (tmplId) {
                             var deferred2 = $q.defer()
                                 , promise2 = deferred2.promise
                                 ;
@@ -471,12 +471,10 @@ angular.module('caffeina.services', ['firebase'])
                         dmlService.userTemplates.push({
                             name: element[1].name,
                             id: element[0],
-                            icon: element[1].icon,
                             color: element[1].color
                         });
                     }
                 });
-
                 deferred.resolve();
             });
             return $q.all([deferred.promise]);
