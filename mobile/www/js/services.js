@@ -363,85 +363,78 @@ angular.module('caffeina.services', ['firebase'])
 
         dmlService.setJob = function (job) {
             var jobRef = dmlService._jobsFBRef()
+                , deferred = $q.defer()
+                , jobId = job.id
                 ;
             if (dmlService._isLogged()) {
-                if (!(job.contact)) {
+                if (!((job.contact || {}))) {
                     job.contact = {name: 'unknown'};
                 }
                 dmlService.getContact(job.contact).then(function (contactId) {
-                    var newJob = {}
-                        ;
-                    newJob.contactId = contactId;
-
-                    newJob.type = job.type.name;
-                    newJob.typeId = job.type.id;
-
-                    newJob.isBooked = job.isBooked;
-                    newJob.notes = job.notes;
-                    newJob.date = job.date;
-
-                    if (job.details) newJob.details = job.details;
-                    if (job.isTasksGenerated) newJob.isTasksGenerated = job.isTasksGenerated;
-                    if (job.tasks) newJob.tasks = job.tasks; // memorez lista de task-uri pt eventualitatea ca se face update pe un job cu taskuri deja generate
-
-                    if (job.id) {
-                        return dmlService._upd(jobRef, newJob, job.id, newJob.type);
+                    jobId = job.id;
+                    delete job["contact"];
+                    job.contactId = contactId;
+                    if (jobId) {
+                        delete job["id"];
+                        return dmlService._upd(jobRef, job, jobId, job.type.name);
                     } else {
-                        return dmlService._add(jobRef, newJob, newJob.type);
+                        return dmlService._add(jobRef, job, job.type.name);
                     }
-                }).then(function (jobId) {
-                        var newTask = {}
-                            , taskRef = dmlService._tasksFBRef()
-                            , taskId
-                            ;
-                        if (job.isBooked) {
-                            if (job.isTasksGenerated) {
-                                // nu fac nimic pe task-uri
-                            } else {
-                                // tb sters task-ul vechi...
-                                // generez task-uri
-                                if (job.tasks) {
-                                    taskId = job.tasks.toString().split(',')[0];
-                                    return dmlService._del(taskRef, taskId).then(function () {
-                                        return dmlService.jobGenerateTasks(jobId, job.typeId, job.date, job.location);
-                                    });
-                                } else {
-                                    return dmlService.jobGenerateTasks(jobId, job.typeId, job.date, job.location);
-                                }
-                            }
+                }).then(function (jobIdSaved) {
+                    jobId = jobIdSaved;
+                    var newTask = {}
+                        , taskRef = dmlService._tasksFBRef()
+                        , taskId
+                        ;
+                    if (job.isBooked) {
+                        if (job.isTasksGenerated) {
+                            // nu fac nimic pe task-uri
                         } else {
-
-                            newTask.jobId = jobId;
-                            newTask.name = job.type;
-                            newTask.isMain = true;
-                            newTask.date = job.date;
-                            if (job.location) newTask.location = job.location;
-
+                            // tb sters task-ul vechi...
+                            // generez task-uri
                             if (job.tasks) {
-                                // iau primul task; oricum ar tb sa fie exact unul
-                                // daca exista ii fac update daca nu il adaug
                                 taskId = job.tasks.toString().split(',')[0];
-                                return dmlService._upd(taskRef, newTask, taskId, newTask.date).then(function (taskId) {
-                                    jobRef.child(jobId).update({tasks: taskId});
+                                return dmlService._del(taskRef, taskId).then(function () {
+                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.location);
                                 });
                             } else {
-                                //new task
-                                return dmlService._add(taskRef, newTask, newTask.date).then(function (taskId) {
-                                    jobRef.child(jobId).update({tasks: taskId});
-                                });
+                                return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.location);
                             }
                         }
+                    } else {
+
+                        newTask.jobId = jobId;
+                        newTask.name = job.type.name;
+                        newTask.isMain = true;
+                        newTask.date = job.date;
+                        if (job.details) if (job.details.location) newTask.location = job.location;
+
+                        if (job.tasks) {
+                            // iau primul task; oricum ar tb sa fie exact unul
+                            // daca exista ii fac update daca nu il adaug
+                            taskId = job.tasks.toString().split(',')[0];
+                            return dmlService._upd(taskRef, newTask, taskId, newTask.date).then(function (taskId) {
+                                jobRef.child(jobId).update({tasks: taskId});
+                            });
+                        } else {
+                            //new task
+                            return dmlService._add(taskRef, newTask, newTask.date).then(function (taskId) {
+                                jobRef.child(jobId).update({tasks: taskId});
+                            });
+                        }
                     }
-                ).then(function (ceva) {
-                        console.log('end');
-                        console.log(moment().format('mm:ss.sss'));
-                        console.log(ceva);
-                    });
+                }).then(function () {
+                    deferred.resolve(jobId);
+                }).then(function () {
+                    console.log('end');
+                    console.log(moment().format('mm:ss.sss'));
+                });
             }
             else {
                 //fixme:
                 console.log('setJob error: user not loged in');
             }
+            return deferred.promise;
         };
 
         dmlService.getTaskJob = function (task) {

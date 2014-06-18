@@ -43,11 +43,10 @@ angular.module('caffeina.controllers')
                 id: 1,
                 date: moment("2014-01-01 10:00").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
-                tasks: "60,61,62,63,64,65",
-                type: "wedding",
-                typeId: 1,
+                tasks: "1",
+                type: {name: "wedding", id: 1},
                 isBooked: true,
-                isTasksGenerated: true,
+                isTasksGenerated: false,
                 location: "str noua bucuresti2",
                 notes: "comentariuiu",
                 contact: {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"}
@@ -59,7 +58,7 @@ angular.module('caffeina.controllers')
         };
 
         $scope.addJob = function () {
-            var types = ['wedding', 'baptizing', 'family session']
+            var types = ['wedding', 'baptizing', 'family session'];
             var job = {
                 date: moment("2014-06-01 10:00").add('day', parseInt(Math.random() * 28)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
@@ -70,7 +69,7 @@ angular.module('caffeina.controllers')
                 location: "str noua bucuresti",
                 notes: "comentariuiu",
                 contact: {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"},
-                details:{} // aici punem suplimentar
+                details: {} // aici punem suplimentar
 //                contact: {id:1}
             };
 //            console.log('start');
