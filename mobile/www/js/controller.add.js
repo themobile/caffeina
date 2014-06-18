@@ -30,25 +30,17 @@ angular.module('caffeina.controllers')
                 isBooked:false,
                 isTasksGenerated: false
             };
-
             $scope.userTemplates = dmlservice.userTemplates;
+            $scope.alarms = dmlservice.userSettings.alerts;
 
-            $scope.alarms = [
-                {id: 1, name: '1h'},
-                {id: 2, name: '2h'},
-                {id: 3, name: '4h'},
-                {id: 4, name: '12h'},
-                {id: 5, name: '24h'},
-                {id: 6, name: '1 day'},
-                {id: 7, name: '2 day'}
-            ];
         };
 
 
         $scope.$on('newJob:save', function () {
 //            $scope.newJob.date=moment($scope.newJob.date).format("YYYY-MM-DD HH:mm:ss.SSS");
-//            $scope.newJob.date=$scope.newJob.date
-            dmlservice.setJob($scope.newJob);
+            dmlservice.setJob($scope.newJob).then(function(jobId){
+                $state.go('home');
+            });
 
         });
 

@@ -1,5 +1,14 @@
 {
-    "color" : "#000000",
-    "email" : "yes",
-    "template" : "1"
+    "alerts": [
+            {"id": 1, "name": "1h"},
+            {"id": 2, "name": "2h"},
+            {"id": 3, "name": "4h"},
+            {"id": 4, "name": "12h"},
+            {"id": 5, "name": "24h"},
+            {"id": 6, "name": "1 day"},
+            {"id": 7, "name": "2 day"}
+    ],
+    "color": "#000000",
+    "email": "yes",
+    "template": "1"
 }
