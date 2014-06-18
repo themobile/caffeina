@@ -385,9 +385,9 @@ angular.module('caffeina.services', ['firebase'])
                     if (job.tasks) newJob.tasks = job.tasks; // memorez lista de task-uri pt eventualitatea ca se face update pe un job cu taskuri deja generate
 
                     if (job.id) {
-                        return dmlService._upd(jobRef, newJob, job.id, job.type);
+                        return dmlService._upd(jobRef, newJob, job.id, newJob.type);
                     } else {
-                        return dmlService._add(jobRef, newJob, job.type);
+                        return dmlService._add(jobRef, newJob, newJob.type);
                     }
                 }).then(function (jobId) {
                         var newTask = {}
