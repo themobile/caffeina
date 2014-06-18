@@ -74,7 +74,7 @@ Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
             var templates = dmlservice.userTemplates;
             var bkColor = '';
             if (eventTypesInDay.AllValuesSame()) {
-                bkColor = _.findWhere(templates, {name: eventTypesInDay[0]}).color;
+                bkColor = _.findWhere(templates, {name: eventTypesInDay[0].name}).color;
                 scope.eventStyle = {
                     'background-color': bkColor
                 };
