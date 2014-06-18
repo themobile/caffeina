@@ -33,7 +33,7 @@
 
 ## 0.1.2
 
-- ADD `package.json` and `Gruntfile.js` to automate linting with Grunt and eslint
+- ADD `root-settings.json` and `Gruntfile.js` to automate linting with Grunt and eslint
 - ADD `.travis.yml` for continuous integration with Travis-CI
 - Improved documentation
 

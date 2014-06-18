@@ -1,6 +1,4 @@
 angular.module('caffeina.services', ['firebase'])
-
-
     .factory('dmlservice', ['$firebase', '$firebaseSimpleLogin', 'firebaseRef', '$q', function ($firebase, $firebaseSimpleLogin, firebaseRef, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , dmlService = {}
@@ -110,6 +108,14 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/templates/');
         };
 
+        dmlService._fileRef = function () {
+            return firebaseRef('/files/');
+        };
+
+        dmlService._rootSettingsFBRef = function () {
+            return firebaseRef('/settings/');
+        };
+
         dmlService._userRootFBRef = function () {
             return firebaseRef('/users/' + btoa(user.user.email) + '/');
         };
@@ -143,10 +149,15 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/users/' + btoa(user.user.email) + '/settings/');
         };
 
-        dmlService._fileRef = function () {
-            return firebaseRef('/files/');
+        dmlService._getRootSettings = function () {
+            var deferred = $q.defer()
+                , rootRef = dmlService._rootSettingsFBRef()
+                ;
+            rootRef.once('value', function (dataSnapshot) {
+                deferred.resolve(dataSnapshot.val());
+            });
+            return deferred.promise;
         };
-
 
         dmlService._getRootTemplate = function () {
             var deferred = $q.defer()
@@ -213,6 +224,30 @@ angular.module('caffeina.services', ['firebase'])
                 });
             });
             deferred.resolve(cnt);
+            return deferred.promise;
+        };
+
+        dmlService.setInitKeys = function () {
+            var deferred = $q.defer()
+                , promise = deferred.promise
+                , rootRef = dmlService._rootSettingsFBRef()
+                , userSettingsRef = dmlService._settingRef()
+                ;
+            promise = promise.then(function () {
+                return dmlService._getRootSettings();
+            }).then(function (settings) {
+                _.each(_.pairs(settings), function (key) {
+                    promise = promise.then(function () {
+                        return dmlService.getKey(key[0]).then(function (value) {
+                            if (!(value)) {
+                                value = key[1];
+                            }
+                            return dmlService.setKey(key[0], value);
+                        });
+                    });
+                })
+            });
+            deferred.resolve(0);
             return deferred.promise;
         };
 
@@ -459,6 +494,7 @@ angular.module('caffeina.services', ['firebase'])
         };
 
         dmlService.userTemplates = [];
+        dmlService.userSettings = {};
 
         dmlService.getUserTemplates = function () {
             var templateRef = dmlService._templateFBRef()
@@ -513,31 +549,21 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
-        dmlService.getAllKeys = function () {
+        dmlService.getUserSettings = function () {
             var sRef = dmlService._settingRef()
                 , deferred = $q.defer()
                 ;
             sRef.once('value', function (dataSnapshot) {
-                deferred.resolve(dataSnapshot.val());
+                dmlService.userSettings = dataSnapshot.val();
+                deferred.resolve(0);
             });
             return deferred.promise;
         };
 
-        dmlService.setInitKeys = function (keys) {
+        dmlService.getAllKeys = function () {
             var deferred = $q.defer()
-                , promise = deferred.promise
                 ;
-            _.each(keys, function (key) {
-                promise = promise.then(function () {
-                    return dmlService.getKey(key.key).then(function (value) {
-                        if (!(value)) {
-                            value = key.value;
-                        }
-                        return dmlService.setKey(key.key, value);
-                    });
-                });
-            });
-            deferred.resolve(0);
+            deferred.resolve(dmlService.userSettings);
             return deferred.promise;
         };
 

@@ -1,12 +1,12 @@
 angular.module('caffeina.services')
 
-    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice','$q', function ($firebaseSimpleLogin, firebaseRef, dmlservice,$q) {
+    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', '$q', function ($firebaseSimpleLogin, firebaseRef, dmlservice, $q) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , userServiceObject = {}
             ;
 
         userServiceObject.login = function (type, attr) {
-            var deferred=$q.defer();
+            var deferred = $q.defer();
             user.$login(type, {
                 rememberMe: attr.rememberMe,
 //                rememberMe: false,
@@ -20,22 +20,18 @@ angular.module('caffeina.services')
                 var ref = dmlservice._userRootFBRef()
                     ;
                 ref.child('templates').once('value', function (snapshoot) {
-                    var tmpl = snapshoot.val()
-                        ;
-                    if (!(tmpl)) {
+                    if (!(snapshoot.val())) {
                         return dmlservice.setInitTemplate();
                     }
                 });
             }).then(function () {
                 return dmlservice.getUserTemplates();
             }).then(function () {
+                return dmlservice.setInitKeys();
+            }).then(function () {
+                return  dmlservice.getUserSettings();
+            }).then(function () {
                 deferred.resolve();
-                return dmlservice.setInitKeys([
-                    {key: "template", value: "1"},
-                    {key: "color", value: "#000000"},
-                    {key: "email", value: "Da"}
-                ]);
-
             });
             return deferred.promise;
         };
