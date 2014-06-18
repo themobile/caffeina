@@ -162,7 +162,16 @@ angular.module('caffeina.controllers')
             dmlservice.getFiles().then(function (data) {
                 console.log(data);
             });
-        }
+        };
 
+        $scope.setInventory = function () {
+            dmlservice.setInventory({
+                name: "tanganika 2",
+                serial: "348973457345777777777777777777",
+                data: moment().format('YYYY-MM-DD HH:mm:ss.SSS')
+            }).then(function (inventoryId) {
+                console.log("file id: " + inventoryId.toString());
+            });
+        };
 
     }]);
