@@ -128,7 +128,6 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/users/' + btoa(user.user.email) + '/templates/' + templId + '/tasks/');
         };
 
-
         dmlService._contactFBRef = function () {
             return firebaseRef('/users/' + btoa(user.user.email) + '/contacts/');
         };
@@ -149,6 +148,12 @@ angular.module('caffeina.services', ['firebase'])
             return firebaseRef('/users/' + btoa(user.user.email) + '/settings/');
         };
 
+        dmlService._inventoryRef = function () {
+            return firebaseRef('/users/' + btoa(user.user.email) + '/inventory/');
+        };
+
+
+        // privs
         dmlService._getRootSettings = function () {
             var deferred = $q.defer()
                 , rootRef = dmlService._rootSettingsFBRef()
@@ -185,6 +190,7 @@ angular.module('caffeina.services', ['firebase'])
             });
             return deferred.promise;
         };
+
 
         // public
         dmlService.setInitTemplate = function () {
@@ -366,6 +372,7 @@ angular.module('caffeina.services', ['firebase'])
                 , deferred = $q.defer()
                 , jobId = job.id
                 ;
+
             if (dmlService._isLogged()) {
                 if (!((job.contact || {}))) {
                     job.contact = {name: 'unknown'};
@@ -395,10 +402,14 @@ angular.module('caffeina.services', ['firebase'])
                             if (job.tasks) {
                                 taskId = job.tasks.toString().split(',')[0];
                                 return dmlService._del(taskRef, taskId).then(function () {
-                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.details.location);
+                                    var jobLocation = "";
+                                    if (job.details) if (job.details.location) jobLocation = job.details.location;
+                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, jobLocation);
                                 });
                             } else {
-                                return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, job.details.location);
+                                var jobLocation = "";
+                                if (job.details) if (job.details.location) jobLocation = job.details.location;
+                                return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, jobLocation);
                             }
                         }
                     } else {
@@ -489,7 +500,6 @@ angular.module('caffeina.services', ['firebase'])
         };
 
         dmlService.userTemplates = [];
-        dmlService.userSettings = {};
 
         dmlService.getUserTemplates = function () {
             var templateRef = dmlService._templateFBRef()
@@ -543,6 +553,8 @@ angular.module('caffeina.services', ['firebase'])
             });
             return deferred.promise;
         };
+
+        dmlService.userSettings = {};
 
         dmlService.getUserSettings = function () {
             var sRef = dmlService._settingRef()
@@ -611,6 +623,32 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
+        dmlService.setInventory = function (inventory) {
+            var inventoryRef = dmlService._inventoryRef()
+                , deferred = $q.defer()
+                , startAt, endAt
+                ;
+            inventory = (inventory || {});
+            if (!(inventory.name)) inventory.name = "obiect de inventar";
+            startAt = inventory.name;
+            endAt = inventory.name;
+
+            inventoryRef.startAt(startAt).endAt(endAt).once('value', function (inventorySnapshot) {
+                var theInventory = inventorySnapshot.val()
+                    , inventoryId
+                    ;
+                if (theInventory) {
+                    inventoryId = _.pairs(theInventory)[0][0];
+                    return dmlService._upd(inventoryRef, inventory, inventoryId, inventory.name).then(function (inventoryId) {
+                        deferred.resolve(inventoryId);
+                    });
+                } else {
+                    return dmlService._add(inventoryRef, inventory, inventory.name).then(function (inventoryId) {
+                        deferred.resolve(inventoryId);
+                    });
+                }
+            });
+            return deferred.promise;
+        };
         return dmlService;
-    }])
-;
+    }]);
