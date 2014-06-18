@@ -372,8 +372,10 @@ angular.module('caffeina.services', ['firebase'])
                     var newJob = {}
                         ;
                     newJob.contactId = contactId;
-                    newJob.type = job.type;
-                    newJob.typeId = job.typeId;
+
+                    newJob.type = job.type.name;
+                    newJob.typeId = job.type.id;
+
                     newJob.isBooked = job.isBooked;
                     newJob.notes = job.notes;
                     newJob.date = job.date;
