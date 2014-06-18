@@ -24,11 +24,10 @@ angular.module('caffeina.controllers')
         $scope.datePickerControl = {};
         $scope.isFirstLoaded = true;
 
-        $scope.currentMonth = '';
+        $scope.currentMonthYear = '';
 
         //drives the view current event
         $scope.selectedEvent = {};
-
 
 
         //solution for two columns inside ng-repeat. LEAVE IT HERE FOR LATER
@@ -105,9 +104,20 @@ angular.module('caffeina.controllers')
                     });
                 }
             })
-
-
         };
+
+
+        $scope.$on('calendar:holddate', function (e, innerhtml) {
+            var selectedDay=parseInt(innerhtml);
+            var addDate;
+            //if it's a possible month day
+            if (selectedDay > 0 && selectedDay < 32) {
+                addDate=moment($scope.currentMonthYear).date(selectedDay).format('YYYY/MM/DD');
+
+//                $state.go('addjob/'+encodeURIComponent(addDate));
+                $state.go('addjob',{'date':encodeURIComponent(addDate)});
+            }
+        });
 
 
         // on firebase login
@@ -127,10 +137,8 @@ angular.module('caffeina.controllers')
         //change data on month change
         $scope.$on('calendar:changeMonth', function (event, date) {
 
-            //set current month
-            $scope.currentMonth = new Date(date);
-
-
+            //set current month and year
+            $scope.currentMonthYear = new Date(date);
 
             //load data from firebase for current month
             if (userService.getUser()) {

@@ -64,12 +64,13 @@ angular.module('caffeina.controllers')
                 date: moment("2014-06-01 10:00").add('day', parseInt(Math.random() * 28)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
                 type: types[Math.floor(Math.random() * types.length)],
-                typeId: 1,
+                typeId: 1, //id-ul template-ului
                 isBooked: true,
                 isTasksGenerated: false,
                 location: "str noua bucuresti",
                 notes: "comentariuiu",
-                contact: {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"}
+                contact: {"name": "Florian Cechi", "phone": "7829387232", "email": "asdada@gmail.com"},
+                details:{} // aici punem suplimentar
 //                contact: {id:1}
             };
 //            console.log('start');

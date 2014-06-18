@@ -25,11 +25,17 @@ head
                 // if state is ADD then navbar is custom, otherwise is standard
                 //ion-nav-bar(ng-controller='MenuController',ng-show='!isInAdd')
                 ion-nav-bar.ng-cloak(ng-controller='MenuController')
-                    ion-nav-buttons(side='left')
-                        button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
-                    ion-nav-buttons(side='right')
-                        button.button.button-large.button-clear.icon.ion-ios7-plus-empty.padding-right(ng-click="add()")
-                        button.button.button-large.button-clear.icon.ion-ios7-search.padding-left
+                    span(ng-if='!isInAdd')
+                        ion-nav-buttons(side='left')
+                            button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
+                        ion-nav-buttons(side='right')
+                            button.button.button-large.button-clear.icon.ion-ios7-plus-empty.padding-right(ng-click="add()")
+                            button.button.button-large.button-clear.icon.ion-ios7-search.padding-left
+                    span(ng-if='isInAdd')
+                        ion-nav-buttons(side='left')
+                            button.button.button-clear(ng-click="cancel()") cancel
+                        ion-nav-buttons(side='right')
+                            button.button.button-clear(ng-click="save()") save
 
 
                 // views

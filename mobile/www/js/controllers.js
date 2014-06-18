@@ -14,7 +14,7 @@ angular.module('caffeina.controllers', [])
         , '$ionicActionSheet'
         , function ($rootScope, $scope, $ionicSideMenuDelegate, userService, storage, $state, dmlservice, $ionicActionSheet) {
 
-//            $scope.isInAdd = true;
+        $scope.isInAdd = false;
 
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
@@ -37,24 +37,30 @@ angular.module('caffeina.controllers', [])
         }
 
 
-        // set isInAdd if state is addlead
-//        $rootScope.$on('$stateChangeStart',
-//            function (event, toState, toParams, fromState, fromParams) {
-//                (toState.name == 'addlead') ? $scope.isInAdd = true : $scope.isInAdd = false;
-//            })
+//        set isInAdd if state is addlead
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+                if (toState.name == 'addjob') {
+                    $scope.isInAdd = true;
+                    console.log($scope.isInAdd);
 
+                } else {
+                    $scope.isInAdd = false;
+                }
+            })
+
+
+        $scope.save=function(){
+            $rootScope.$broadcast('newJob:save');
+        };
 
         $scope.cancel = function () {
-            if ($rootScope.$previousState.name) {
-                $state.go($rootScope.$previousState);
-            } else {
-                $state.go('home');
-            }
-        }
+            $state.transitionTo('home');
+        };
 
         $scope.add = function () {
-            $state.go('addjob');
-        }
+            $state.transitionTo('addjob');
+        };
     }])
 
     .controller('about', ['$scope', '$ionicSideMenuDelegate', 'userService', 'dmlservice', '$firebase', function ($scope, $ionicSideMenuDelegate, userService, dmlservice, $firebase) {

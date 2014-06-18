@@ -226,6 +226,20 @@ Module.directive('datePicker', [
                 }, element);
 
 
+
+
+                //long hold on date emits add with that date selected
+                $ionicGesture.on('hold', function(event){
+                    event.gesture.preventDefault();
+                    var innerhtml=event.target.innerText;
+                    var innerclass=event.target.className;
+
+                    if (innerclass==='day ng-binding') {
+                        scope.$emit('calendar:holddate', innerhtml);
+                    }
+                },element);
+
+
 //
                 //change months on swipeup
                 $ionicGesture.on('swipeup', function (event) {
@@ -278,7 +292,7 @@ Module.directive('datePicker', [
                             case 'year':
                                 scope.model.setFullYear(date.getFullYear());
                         }
-                        scope.$emit('setDate', scope.model, scope.view);
+                        scope.$emit('calendar:setDate', scope.model, scope.view);
                     }
 
                     if (nextView) {

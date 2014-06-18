@@ -5,7 +5,7 @@
 //    ion-nav-buttons(side='right')
 //        button.button.button-clear.pull-right save
 
-ion-view(title='add things',ng-controller="addjob",ng-init='init()')
+ion-view(title='define new job',ng-controller="addjob",ng-init='init()')
     ion-content(padding='true',has-bouncing='false',scroll="true")
         form.list(name="addjob")
             legend details
@@ -32,7 +32,7 @@ ion-view(title='add things',ng-controller="addjob",ng-init='init()')
                         i.positive.icon.ion-ios7-information.placeholder-icon
                         select(name='newJob.type',
                             ng-options="template.name for template in userTemplates track by template.id",
-                            ng-model="newJob.type")
+                            ng-model="newJob.type", required)
                                 option(value="") - type -
 
             div.row
@@ -40,33 +40,35 @@ ion-view(title='add things',ng-controller="addjob",ng-init='init()')
                     label.item.item-input
                         i.positive.icon.ion-ios7-pricetag.placeholder-icon
                         //span.input-label date
-                        input(name="newJob.price",
+                        input(name="newJob.details.price",
                             pattern='^\\$?(([1-9](\\d*|\\d{0,2}(,\\d{3})*))|0)(\\.\\d{1,2})?EUR',
-                            type='text',ng-model='newJob.price',value='{{newJob.price}}',placeholder="price", required)
+                            type='number',ng-model='newJob.details.price',value='{{newJob.price}}',placeholder="price", required)
                 .col
                     label.item.item-input.item-select
                         //span.input-label type
                         i.positive.icon.ion-ios7-information.placeholder-icon
-                        select(name='newJob.alarm',
-                        ng-model="newJob.alarm")
-                            option(value="") - alarm -
-                            option 1h
-                            option 2h
-                            option 4h
-                            option 12h
-                            option 24h
-                            option 1 day
-                            option 2 days
+                        select(name='newJob.details.alarm',
+                            ng-options='alarm.name for alarm in alarms track by alarm.id',
+                            ng-model='newJob.details.alarm')
+                                option(value='') - alarm -
+
 
 
 
             label.item.item-input
                 i.positive.icon.ion-ios7-location.placeholder-icon
-                input#Autocomplete.ellip(name='newJob.location',type='text',placeholder='where',ng-model="newJob.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
+                input#Autocomplete.ellip(name='newJob.details.location',type='text',placeholder='where',ng-model="newJob.details.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
 
 
             label.item.item-input
-                textarea(name='newJob.info',placeholder='notes',rows='3',ng-model='newJob.info')
+                textarea(name='newJob.notes',placeholder='notes',rows='3',ng-model='newJob.notes')
+
+
+            div.row(ng-show='newJob.type.name=="wedding"')
+                div.item-divider
+                .col
+                    ion-toggle(name='newJob.isBooked',ng-model='newJob.isBooked', toggle-class='toggle-calm') Job is booked?
+                div.item-divider
 
             div.item-divider
             legend contact

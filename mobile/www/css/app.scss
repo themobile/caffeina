@@ -323,7 +323,7 @@ form {
     height: 46px;
     padding: 6px 0 5px 8px;
     select {
-//      padding: 9px 5px;
+      padding: 11px 0  13px 0;
     }
 
   }
@@ -556,6 +556,36 @@ a.item {
 .slide-in-down2-add-active {
   @include animation-name(slideInFromTop);
 }
+
+
+.ngProgressLite {
+  pointer-events: none;
+}
+
+.ngProgressLiteBar {
+  background: $c3;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: 2px;
+}
+
+.ngProgressLite .ngProgressLiteBarShadow {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 5px $c1, 0 0 5px $c1;
+  opacity: 0.5;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+
+
 
 .bar .title {
   font-weight: 300;
