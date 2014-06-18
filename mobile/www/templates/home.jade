@@ -11,7 +11,7 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
             ion-slide
                 ion-content(padding='false',scroll='true')
                     div.row.screenHeader
-                        div.col.screenTitle {{currentMonth |date:"yyyy | MMMM" | lowercase }}
+                        div.col.screenTitle {{currentMonthYear |date:"yyyy | MMMM" | lowercase }}
                             //b.small *{{events.length}} events
 
                     div.row.row_empty_for_balance
@@ -29,16 +29,6 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
 
 
 
-                    // solution for two columns
-                    //div.row(ng-repeat='i in range()')
-                    //    div.col-50(ng-repeat='event in events.slice(i,i+2)')
-                    //        a.item(href="",ng-click='viewTask(event.id)')
-                    //            i.icon
-                    //                p.iconLikeFirstLetters.small(ng-style="{'background':event.color, 'color':'white','border-color':event.color}") {{event.jobObject.type | firstletters}}
-                    //            p.small {{event.date | date: 'd MMM yyyy, h:mm'}} | {{event.jobObject.type}}
-                    //            h4  <strong> {{event.name}} </strong> with {{event.jobObject.contactObject.name}}
-
-
             //selected event slide description
 
             ion-slide
@@ -47,7 +37,7 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                         //i.iconLikeFirstLetters(ng-style="{'color':selectedEvent.color, 'border-color':selectedEvent.color}") {{selectedEvent.jobObject.type | firstletters}}
                         div.col.screenTitle(ng-if='selectedEvent.name') {{selectedEvent.date |date:"yyyy | MMMM dd" | lowercase }}
                             div.icon.ion-clock.height0 &nbsp{{selectedEvent.date | date: "HH:mm"}}
-                        div.col.screenTitle(ng-if='!selectedEvent.name'){{currentMonth |date:"yyyy | MMMM" | lowercase }}
+                        div.col.screenTitle(ng-if='!selectedEvent.name'){{currentMonthYear |date:"yyyy | MMMM" | lowercase }}
                     div.row.row_empty_for_balance
                         div.col(ng-if='!selectedEvent.date') no event selected
                         div.col(ng-if='selectedEvent.date') {{selectedEvent.jobObject.type}} | {{selectedEvent.name}}

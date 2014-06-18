@@ -6019,7 +6019,8 @@ progress {
     border-color: transparent;
     background: none;
     box-shadow: none;
-    color: #b2b2b2; }
+    color: #9c3b3f;
+    font-size: #b2b2b2; }
   .button-clear.button-icon {
     border-color: transparent;
     background: none; }
@@ -7825,6 +7826,8 @@ form {
   form .item-select {
     height: 46px;
     padding: 6px 0 5px 8px; }
+    form .item-select select {
+      padding: 11px 0  13px 0; }
   form .item-input input {
     flex: 1 0 auto;
     padding-right: 0;
@@ -8043,6 +8046,29 @@ a.item {
   -moz-animation-name: slideInFromTop;
   animation-name: slideInFromTop; }
 
+.ngProgressLite {
+  pointer-events: none; }
+
+.ngProgressLiteBar {
+  background: #9c3b3f;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: 2px; }
+
+.ngProgressLite .ngProgressLiteBarShadow {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 5px #41272e, 0 0 5px #41272e;
+  opacity: 0.5;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px); }
+
 .bar .title {
   font-weight: 300; }
 
@@ -8083,6 +8109,6 @@ a.item {
   height: 0;
   display: block;
   position: absolute;
-  right: 5;
+  right: 5px;
   margin-top: -20px;
   text-align: right; }

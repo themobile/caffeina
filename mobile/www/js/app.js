@@ -46,8 +46,11 @@ angular.module('caffeina',
             })
 
             .state('addjob', {
-                url: '/addjob',
+                url: '/addjob/:date',
                 templateUrl: 'templates/addjob.html'
+//                ,
+//                controller:'addjob'
+
             })
 
             .state('tests', {
