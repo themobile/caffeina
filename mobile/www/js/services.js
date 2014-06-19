@@ -25,17 +25,21 @@ angular.module('caffeina.services', ['firebase'])
 
             fbRef.child('counter').transaction(function (currValue) {
                 return (currValue || 0) + 1;
-            }, function (err, commited, identity) {
-                if (err) {
-                    deferred.reject('Counter error');
+            }, function (error, commited, identity) {
+                if (error) {
+                    deferred.reject('dmlservice/_add: ' + error);
                 } else {
                     if (commited) {
                         newId = identity.val();
-                        fbRef.child(newId).setWithPriority(objToAdd, objPriority, function () {
-                            deferred.resolve(newId);
+                        fbRef.child(newId).setWithPriority(objToAdd, objPriority, function (error) {
+                            if (error) {
+                                deferred.reject('dmlservice/_add: ' + error);
+                            } else {
+                                deferred.resolve(newId);
+                            }
                         });
                     } else {
-                        deferred.reject('Counter error (not commited)');
+                        deferred.reject('dmlservice/_add: not commited');
                     }
                 }
             });
@@ -51,22 +55,26 @@ angular.module('caffeina.services', ['firebase'])
                     ;
                 if (dataSnapshoot) {
                     if (dataSnapshoot.isDeleted) {
-                        deferred.reject('_upd error: object is deleted')
+                        deferred.reject('dmlservice/_upd: object is deleted')
                     } else {
                         objToUpd.createdAt = dataSnapshoot.createdAt ? dataSnapshoot.createdAt : now;
                         objToUpd.updatedAt = now;
                         objToUpd.version = (dataSnapshoot.version || 0) + 1;
                         objToUpd.isDeleted = false;
-                        fbRef.child(objId).setWithPriority(objToUpd, objPriority, function () {
-                            deferred.resolve(objId);
+                        fbRef.child(objId).setWithPriority(objToUpd, objPriority, function (error) {
+                            if (error) {
+                                deferred.reject('dmlservice/_upd: ' + error);
+                            } else {
+                                deferred.resolve(objId);
+                            }
                         });
                     }
                 } else {
                     dmlService._add(fbRef, objToUpd, objPriority).then(function (newId) {
                         deferred.resolve(newId);
                     }, function (error) {
-                        deferred.reject('_upd error: _add error');
-                    })
+                        deferred.reject({method: "dmlservice/_upd", error: error});
+                    });
                 }
             });
             return deferred.promise;
@@ -82,18 +90,22 @@ angular.module('caffeina.services', ['firebase'])
                     ;
                 if (dataSnapshoot) {
                     if (dataSnapshoot.isDeleted) {
-                        deferred.reject('_del error: object already deleted');
+                        deferred.reject('dmlservice/_del: object already deleted');
                     } else {
                         dataSnapshoot.createdAt = dataSnapshoot.createdAt ? dataSnapshoot.createdAt : now;
                         dataSnapshoot.updatedAt = now;
                         dataSnapshoot.version = -((dataSnapshoot.version || 0) + 1);
                         dataSnapshoot.isDeleted = true;
-                        fbRef.child(objId).setWithPriority(dataSnapshoot, objPriority, function () {
-                            deferred.resolve(objId);
+                        fbRef.child(objId).setWithPriority(dataSnapshoot, objPriority, function (error) {
+                            if (error) {
+                                deferred.reject('dmlservice/_del: ' + error);
+                            } else {
+                                deferred.resolve(objId);
+                            }
                         })
                     }
                 } else {
-                    deferred.reject('_del error: object not found');
+                    deferred.reject('dmlservice/_del error: object not found for delete');
                 }
             });
             return deferred.promise;
@@ -225,9 +237,13 @@ angular.module('caffeina.services', ['firebase'])
                             });
                             deferred2.resolve(0);
                             return promise2;
+                        }, function (error) {
+                            deferred.reject('dmlservice/setInitTemplate(0): ' + error);
                         });
                     });
                 });
+            }, function (error) {
+                deferred.reject('dmlservice/setInitTemplate(1): ' + error);
             });
             deferred.resolve(cnt);
             return deferred.promise;
@@ -252,6 +268,8 @@ angular.module('caffeina.services', ['firebase'])
                         });
                     });
                 })
+            }, function (error) {
+                deferred.reject('dmlservice/setInitKeys: ' + error);
             });
             deferred.resolve(0);
             return deferred.promise;
@@ -263,6 +281,7 @@ angular.module('caffeina.services', ['firebase'])
                 , contactRef = dmlService._contactFBRef()
                 , newContact = {}
                 ;
+            contact = contact || {};
             contactRef.child(contactId).once('value', function (contactSnapshoot) {
                 if (contactSnapshoot.val()) {
                     deferred.resolve(contactId);
@@ -273,6 +292,8 @@ angular.module('caffeina.services', ['firebase'])
                     if (contact.details) newContact.details = contact.details;
                     dmlService._add(contactRef, newContact, newContact.name).then(function (newId) {
                         deferred.resolve(newId);
+                    }, function (error) {
+                        deferred.reject('dmlservice/getContact: ' + error);
                     });
                 }
             });
@@ -326,12 +347,12 @@ angular.module('caffeina.services', ['firebase'])
                         var jobRef = dmlService._jobsFBRef()
                             ;
                         jobRef.child(jobId).update({isTasksGenerated: true, tasks: taskIds.join(',')});
+                    }, function (error) {
+                        deferred.reject('dmlservice/jobGenerateTasks: ' + error);
                     });
-
                     deferred.resolve(taskIds.length);
-
                 } else {
-                    deferred.reject('Inexistent type');
+                    deferred.reject('dmlservice/jobGenerateTasks: Inexistent type');
                 }
             });
             return deferred.promise;
@@ -341,13 +362,18 @@ angular.module('caffeina.services', ['firebase'])
             var taskRef = dmlService._tasksFBRef()
                 , deferred = $q.defer()
                 , promise = deferred.promise
+                , cnt = 0
                 ;
             _.each(tasks, function (taskId) {
                 promise = promise.then(function () {
                     return dmlService._del(taskRef, taskId);
+                }).then(function () {
+                    cnt++;
+                }, function (error) {
+                    deferred.reject('dmlservice/delJobTasks: ' + error);
                 });
             });
-            deferred.resolve(tasks.length);
+            deferred.resolve(cnt);
             return deferred.promise;
         };
 
@@ -362,6 +388,8 @@ angular.module('caffeina.services', ['firebase'])
                     tasks = job.tasks.toString().split(',');
                     dmlService.delJobTasks(tasks).then(function () {
                         return dmlService._del(jobRef, jobId);
+                    }, function (error) {
+                        deferred.reject('dmlservice/delJob: ' + error);
                     });
                 }
             });
@@ -437,14 +465,15 @@ angular.module('caffeina.services', ['firebase'])
                     }
                 }).then(function () {
                     deferred.resolve(jobId);
+                }, function (error) {
+                    deferred.reject('dmlservice/setJob: ' + error);
                 }).then(function () {
                     console.log('end');
                     console.log(moment().format('mm:ss.sss'));
                 });
             }
             else {
-                //fixme:
-                console.log('setJob error: user not loged in');
+                deferred.reject('dmlservice/setJob: not logged in')
             }
             return deferred.promise;
         };
@@ -497,11 +526,10 @@ angular.module('caffeina.services', ['firebase'])
             });
             return $q.all([deferred.promise]).then(function () {
                 return $q.all(promises);
+            }, function (error) {
+                deferred.reject('dmlservice/getTasks: ' + error);
             });
         };
-
-
-
 
 
         //stores userTemplates
@@ -531,8 +559,12 @@ angular.module('caffeina.services', ['firebase'])
             var sRef = dmlService._settingRef()
                 , deferred = $q.defer()
                 ;
-            sRef.child(key).set(value, function () {
-                deferred.resolve(0);
+            sRef.child(key).set(value, function (error) {
+                if (error) {
+                    deferred.reject('dmlservice/setKey:' + error);
+                } else {
+                    deferred.resolve(0);
+                }
             });
             return deferred.promise;
         };
@@ -599,10 +631,14 @@ angular.module('caffeina.services', ['firebase'])
                     fileId = _.pairs(theFile)[0][0];
                     return dmlService._upd(fileRef, file, fileId, file.name).then(function (fileId) {
                         deferred.resolve(fileId);
+                    }, function (error) {
+                        deferred.reject('dmlservice/setFile: ' + error);
                     });
                 } else {
                     return dmlService._add(fileRef, file, file.name).then(function (fileId) {
                         deferred.resolve(fileId);
+                    }, function (error) {
+                        deferred.reject('dmlservice/setFile: ' + error);
                     });
                 }
             });
@@ -666,10 +702,14 @@ angular.module('caffeina.services', ['firebase'])
                     inventoryId = _.pairs(theInventory)[0][0];
                     return dmlService._upd(inventoryRef, inventory, inventoryId, inventory.name).then(function (inventoryId) {
                         deferred.resolve(inventoryId);
+                    }, function (error) {
+                        deferred.reject('dmlservice/setInventory: ' + error);
                     });
                 } else {
                     return dmlService._add(inventoryRef, inventory, inventory.name).then(function (inventoryId) {
                         deferred.resolve(inventoryId);
+                    }, function (error) {
+                        deferred.reject('dmlservice/setInventory: ' + error);
                     });
                 }
             });

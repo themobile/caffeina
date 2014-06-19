@@ -92,7 +92,6 @@ angular.module('caffeina',
         }
 
 
-
         if (rememberMe != true) {
             userService.logout();
             $state.go('login');
@@ -100,16 +99,18 @@ angular.module('caffeina',
 
             //if autologin
             $ionicLoading.show({
-                template: 'Be patient grassharper!'
+                template: 'Be patient grasshopper!'
             });
             userService.login(provider, {
                 access_token: token,
                 rememberMe: rememberMe
-            })
-                .then(function(){
-                    $ionicLoading.hide();
-                    $state.go('home');
-
+            }).then(function () {
+                $ionicLoading.hide();
+                $state.go('home');
+            }, function (error) {
+                //fixme: de vazut ce sa faca in caz de eroare
+                console.log('EROARE LA APEL LOGIN');
+                console.log(JSON.stringify(error));
             });
 
 

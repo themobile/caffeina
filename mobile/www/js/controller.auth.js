@@ -27,17 +27,29 @@ angular.module('caffeina.controllers')
         }
         $scope.login = function (provider) {
             $ionicLoading.show({
-                template: 'Be patient grassharper!'
+                template: 'Be patient grasshopper!'
             });
-            userService.login(provider, $scope.attr)
-                .then(function(){
-                    $ionicLoading.hide();
-                    $state.go('home');
-                });
+            userService.login(provider, $scope.attr).then(function () {
+                $ionicLoading.hide();
+                $state.go('home');
+            }, function (error) {
+                $scope.myPopupShow(error);
+            });
+        };
+
+        $scope.myPopupShow = function (error) {
+            $ionicPopup.alert({
+                template: error,
+                title: 'Error',
+                scope: $scope,
+                buttons: [
+                    {text: 'Got it!'}
+                ]
+            });
         };
 
 
-        $rootScope.$on('$firebaseSimpleLogin:login', function (e,user) {
+        $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
             storage.set('rememberMe', $scope.rememberMe);
             storage.set('caffeina_user', user);
             storage.set('provider', user.provider);

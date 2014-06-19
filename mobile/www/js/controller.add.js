@@ -12,8 +12,7 @@ angular.module('caffeina.controllers')
         , 'dmlservice'
         , '$filter'
         , '$ionicPopup'
-        , function ($scope, $state, $stateParams, dmlservice, $filter,$ionicPopup) {
-
+        , function ($scope, $state, $stateParams, dmlservice, $filter, $ionicPopup) {
 
 
         $scope.init = function () {
@@ -28,7 +27,7 @@ angular.module('caffeina.controllers')
                 },
                 type: 'session',
                 price: '',
-                isBooked:false,
+                isBooked: false,
                 isTasksGenerated: false
             };
             $scope.userTemplates = dmlservice.userTemplates;
@@ -36,40 +35,22 @@ angular.module('caffeina.controllers')
 
         };
 
-
         $scope.$on('newJob:save', function () {
-            dmlservice.setJob($scope.newJob).then(function(jobId){
+            dmlservice.setJob($scope.newJob).then(function (jobId) {
                 $state.go('home');
+            }, function (error) {
+                $scope.myPopupShow(error);
             });
         });
 
-
-
-        var myPopup = $ionicPopup.show({
-            template:'This is an error',
-            title: 'Error',
-            scope:$scope,
-            buttons:[
-                {
-                    text: 'Got it!',
-                    onTap: function(e) {
-
-                    }
-                }
-            ]
-        });
-
-        //functions:
-            //show
-//                 myPopup.then(function(res){
-//
-//                 });
-
-
-            //close
-//                myPopup.close()
-
-
-
-
+        $scope.myPopupShow = function (error) {
+            $ionicPopup.alert({
+                template: error,
+                title: 'Error',
+                scope: $scope,
+                buttons: [
+                    {text: 'Got it!'}
+                ]
+            });
+        };
     }]);
