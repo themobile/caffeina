@@ -46,7 +46,7 @@ ion-view(title='define new job',ng-controller="addjob",ng-init='init()')
                 .col
                     label.item.item-input.item-select
                         //span.input-label type
-                        i.positive.icon.ion-ios7-information.placeholder-icon
+                        i.positive.icon.ion-ios7-alarm.placeholder-icon
                         select(name='newJob.details.alarm',
                             ng-options='alarm.name for alarm in alarms track by alarm.id',
                             ng-model='newJob.details.alarm')
@@ -64,7 +64,7 @@ ion-view(title='define new job',ng-controller="addjob",ng-init='init()')
                 textarea(name='newJob.notes',placeholder='notes',rows='3',ng-model='newJob.notes')
 
 
-            div.row(ng-show='newJob.type.name=="wedding"')
+            div.row(ng-show='newJob.type.name!="other"')
                 div.item-divider
                 .col
                     ion-toggle(name='newJob.isBooked',ng-model='newJob.isBooked', toggle-class='toggle-calm') Job is booked?

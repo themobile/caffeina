@@ -8069,6 +8069,10 @@ a.item {
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px); }
 
+.icon::before {
+  min-width: 10px;
+  text-align: center; }
+
 .bar .title {
   font-weight: 300; }
 

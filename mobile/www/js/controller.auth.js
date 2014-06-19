@@ -16,7 +16,7 @@ angular.module('caffeina.controllers')
         $scope.rememberMe = storage.get('rememberMe');
 
 
-        if ($scope.rememberMe & access_token) {
+        if ($scope.rememberMe && access_token) {
 
             $scope.attr = {
                 rememberMe: $scope.rememberMe,
@@ -34,14 +34,10 @@ angular.module('caffeina.controllers')
                     $ionicLoading.hide();
                     $state.go('home');
                 });
-        }
+        };
 
 
-        //TODO in settings to delete default provider
-
-        $rootScope.$on('$firebaseSimpleLogin:login', function (user) {
-            var user = userService.getUser();
-
+        $rootScope.$on('$firebaseSimpleLogin:login', function (e,user) {
             storage.set('rememberMe', $scope.rememberMe);
             storage.set('caffeina_user', user);
             storage.set('provider', user.provider);
