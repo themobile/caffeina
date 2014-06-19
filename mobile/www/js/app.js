@@ -111,7 +111,7 @@ angular.module('caffeina',
                 $ionicPopup.alert({
                     template: error,
                     title: 'Error',
-                    scope: $scope,
+                    scope: $rootScope,
                     buttons: [
                         {text: 'Got it!'}
                     ]
