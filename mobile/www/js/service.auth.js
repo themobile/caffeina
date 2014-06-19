@@ -31,7 +31,9 @@ angular.module('caffeina.services')
             }).then(function () {
                 return  dmlservice.getUserSettings();
             }).then(function () {
-                deferred.resolve();
+                deferred.resolve(0);
+            }, function (error) {
+                deferred.reject({method: "userService/login", error: error});
             });
             return deferred.promise;
         };

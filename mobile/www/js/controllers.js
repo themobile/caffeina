@@ -34,7 +34,7 @@ angular.module('caffeina.controllers', [])
             storage.set('rememberMe', null);
             storage.remove('caffeina_user');
             $state.go('login')
-        }
+        };
 
 
 //        set isInAdd if state is addlead
@@ -47,10 +47,10 @@ angular.module('caffeina.controllers', [])
                 } else {
                     $scope.isInAdd = false;
                 }
-            })
+            });
 
 
-        $scope.save=function(){
+        $scope.save = function () {
             $rootScope.$broadcast('newJob:save');
         };
 
@@ -78,7 +78,6 @@ angular.module('caffeina.controllers', [])
         };
 
     }])
-
 
     .controller('sortable', ['$scope', '$ionicSideMenuDelegate', function ($scope, $ionicSideMenuDelegate) {
 //        $scope.data = {
@@ -108,9 +107,7 @@ angular.module('caffeina.controllers', [])
             { id: 1 },
             { id: 2 },
             { id: 3 }
-
         ];
-
     }])
 
     .controller('taskdetails', ['$http', '$scope', '$state', '$stateParams', '$firebase', 'firebaseRefUser', 'ngProgressLite', 'userService', function ($http, $scope, $state, $stateParams, $firebase, firebaseRefUser, ngProgressLite, userService) {
@@ -139,7 +136,6 @@ angular.module('caffeina.controllers', [])
 
     }])
 
-
     .controller('isconnected', ['$scope', '$ionicBackdrop', function ($scope, $ionicBackdrop) {
         //variable to control overlay if not connected
 
@@ -150,7 +146,7 @@ angular.module('caffeina.controllers', [])
 
         });
 
-    }])
+    }]);
 
 
 
