@@ -585,7 +585,10 @@ a.item {
 }
 
 
-
+.icon::before {
+  min-width: 10px;
+  text-align: center;
+}
 
 .bar .title {
   font-weight: 300;

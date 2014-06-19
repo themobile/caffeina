@@ -71,12 +71,9 @@ Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
             var eventTypesInDay = _.map(scope.getEvents(date), function(event){
                 return event.jobObject.type;
             });
-            var templates = dmlservice.userTemplatess;
-            var bkColor = '';
             if (eventTypesInDay.AllValuesSame()) {
-                bkColor = _.findWhere(templates, {name: eventTypesInDay[0].name}).color;
                 scope.eventStyle = {
-                    'background-color': bkColor
+                    'background-color': eventTypesInDay[0].color
                 };
             } else {
                 scope.eventStyle = {'background-color':'#C2C1A1'};
