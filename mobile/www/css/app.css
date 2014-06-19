@@ -7641,6 +7641,15 @@ h4, .h4, h5, .h5, h6, .h6 {
     height: 10px;
     line-height: 10px; }
 
+span.aftericonLikeFirstLetters {
+  margin-left: 10px;
+  /* margin-top: 15px; */
+  /* float: left; */
+  /* clear: right; */
+  height: 25px;
+  width: 100%;
+  line-height: 25px; }
+
 .nopadding {
   padding: 0; }
 

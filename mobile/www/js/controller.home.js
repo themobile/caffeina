@@ -82,13 +82,7 @@ angular.module('caffeina.controllers')
 
             var loadBulkTasks = function (res) {
                 $scope.templates = dmlservice.userTemplates;
-                $scope.events = _.map(_.sortBy(res, 'date'), function (event) {
-                    var tmp = _.where($scope.templates, {'name': event.jobObject.type.name})[0];
-                    event.color = tmp.color;
-                    event.icon = tmp.icon;
-//                    event.date=new Date(event.date);
-                    return event;
-                });
+                $scope.events = _.sortBy(res, 'date');
                 CalendarEvents.setEvents($scope.events);
                 ngProgressLite.done();
 

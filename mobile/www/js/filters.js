@@ -14,8 +14,10 @@ angular.module('caffeina.filters', [])
     .filter('firstletters', function () {
 
         return function (inputName) {
-            var fl = inputName.match(/\b(\w)/g).join('');
-            return fl;
+            if (inputName){
+                var fl = inputName.match(/\b(\w)/g).join('');
+                return fl;
+            }
         }
 
     })

@@ -11,7 +11,8 @@ angular.module('caffeina.controllers')
         , '$stateParams'
         , 'dmlservice'
         , '$filter'
-        , function ($scope, $state, $stateParams, dmlservice, $filter) {
+        , '$ionicPopup'
+        , function ($scope, $state, $stateParams, dmlservice, $filter,$ionicPopup) {
 
 
 
@@ -37,12 +38,38 @@ angular.module('caffeina.controllers')
 
 
         $scope.$on('newJob:save', function () {
-//            $scope.newJob.date=moment($scope.newJob.date).format("YYYY-MM-DD HH:mm:ss.SSS");
             dmlservice.setJob($scope.newJob).then(function(jobId){
                 $state.go('home');
             });
-
         });
+
+
+
+        var myPopup = $ionicPopup.show({
+            template:'This is an error',
+            title: 'Error',
+            scope:$scope,
+            buttons:[
+                {
+                    text: 'Got it!',
+                    onTap: function(e) {
+
+                    }
+                }
+            ]
+        });
+
+        //functions:
+            //show
+//                 myPopup.then(function(res){
+//
+//                 });
+
+
+            //close
+//                myPopup.close()
+
+
 
 
     }]);

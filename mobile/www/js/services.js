@@ -500,6 +500,11 @@ angular.module('caffeina.services', ['firebase'])
             });
         };
 
+
+
+
+
+        //stores userTemplates
         dmlService.userTemplates = [];
 
         dmlService.getUserTemplates = function () {

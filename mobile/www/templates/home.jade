@@ -22,7 +22,7 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                         ion-item.listTasks(ng-repeat='event in events',ng-class='{isCurrent:event.isCurrent}',ng-click='viewTask(event.id)')
                             a.item.item-icon-left(href="")
                                 i.icon
-                                    p.iconLikeFirstLetters(ng-style="{'background':event.color, 'color':'white','border-color':event.color}") {{event.jobObject.type.name | firstletters}}
+                                    p.iconLikeFirstLetters(ng-style="{'background':event.jobObject.type.color, 'color':'white','border-color':event.jobObject.type.color}") {{event.jobObject.type.name | firstletters}}
 
                                 p.small {{event.date | date: 'd MMM yyyy, h:mm'}} | {{event.jobObject.type.name}}
                                 h4  <strong> {{event.name}} </strong> with {{event.jobObject.contactObject.name}}
@@ -33,27 +33,32 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
 
             ion-slide
                 ion-content(padding='false', scroll='true')
-                    div.row.screenHeader
+                    .row.screenHeader
                         //i.iconLikeFirstLetters(ng-style="{'color':selectedEvent.color, 'border-color':selectedEvent.color}") {{selectedEvent.jobObject.type | firstletters}}
-                        div.col.screenTitle(ng-if='selectedEvent.name') {{selectedEvent.date |date:"yyyy | MMMM dd" | lowercase }}
+                        .col.screenTitle(ng-if='selectedEvent.name') {{selectedEvent.date |date:"yyyy | MMMM dd" | lowercase }}
                             div.icon.ion-clock.height0 &nbsp{{selectedEvent.date | date: "HH:mm"}}
-                        div.col.screenTitle(ng-if='!selectedEvent.name') {{currentMonthYear |date:"yyyy | MMMM" | lowercase }}
-                    div.row.row_empty_for_balance
-                        div.col(ng-if='!selectedEvent.date') no event selected
-                        div.col(ng-if='selectedEvent.date') <strong>todo:</strong>&nbsp{{selectedEvent.name}}
+                        .col.screenTitle(ng-if='!selectedEvent.name') {{currentMonthYear |date:"yyyy | MMMM" | lowercase }}
+                    .row.row_empty_for_balance
+                        .col(ng-if='!selectedEvent.date') no event selected
+                        .col(ng-if='selectedEvent.date') <strong>todo:</strong>&nbsp{{selectedEvent.name}}
 
-                    div.padding-horizontal(ng-if='selectedEvent.type!="other"')
+                    div.padding-horizontal(ng-if='selectedEvent.date')
                         div.icon.ion-ios7-person &nbsp&nbsp{{selectedEvent.jobObject.contactObject.name}}
                         div.icon.ion-ios7-location(ng-if='selectedEvent.location') &nbsp&nbsp{{selectedEvent.location}}
                         div.icon.ion-ios7-information(ng-if='selectedEvent.notes') &nbsp&nbsp{{selectedEvent.notes}}
-
-                        div.row_empty_for_balance
-                        div.padding-vertical <strong>job type:</strong>&nbsp{{selectedEvent.jobObject.type.name}}
-                        div.icon.ion-ios7-location(ng-if='selectedEvent.jobObject.details.location') &nbsp&nbsp{{selectedEvent.jobObject.details.location}}
-                        div.icon.ion-ios7-information(ng-if='selectedEvent.jobObject.notes') &nbsp&nbsp{{selectedEvent.jobObject.notes}}
-                        div.icon.ion-ios7-pricetag(ng-if='selectedEvent.jobObject.details.price') &nbsp&nbsp{{selectedEvent.jobObject.details.price}}&nbspEUR
-                        div.padding-vertical.icon.ion-ios7-at &nbsp&nbsp<strong>all day?</strong>&nbsp{{selectedEvent.jobObject.allDay}}
-                        div.icon.ion-ios7-calendar &nbsp&nbsp<strong>is booked?</strong>&nbsp{{selectedEvent.jobObject.isBooked}}
+                        .row.row_empty_for_balance
+                        div.iconLikeFirstLetters(ng-style="{'float':'left','background':selectedEvent.jobObject.type.color, 'color':'white','border-color':selectedEvent.jobObject.type.color}"){{selectedEvent.jobObject.type.name | firstletters}}
+                        span.aftericonLikeFirstLetters <strong>job type:</strong>&nbsp{{selectedEvent.jobObject.type.name}}
+                        div.padding-top
+                        div.padding-top.icon.ion-ios7-calendar &nbsp&nbsp{{selectedEvent.jobObject.date | date:'yyyy | MMMM dd' | lowercase}}
+                        div.padding-top.icon.ion-ios7-location(ng-if='selectedEvent.jobObject.details.location') &nbsp&nbsp{{selectedEvent.jobObject.details.location}}
+                        div.padding-top.icon.ion-ios7-pricetag(ng-if='selectedEvent.jobObject.details.price') &nbsp&nbsp{{selectedEvent.jobObject.details.price}}&nbspEUR
+                        div.padding-top.icon.ion-ios7-information(ng-if='selectedEvent.jobObject.notes') &nbsp&nbsp{{selectedEvent.jobObject.notes}}
+                        div.padding-top.icon.ion-ios7-clock(ng-if='selectedEvent.jobObject.allDay') &nbsp&nbsp<strong>it takes all day</strong>
+                        div.padding-top.icon.ion-ios7-briefcase(ng-if='selectedEvent.jobObject.isBooked') &nbsp&nbsp<strong>job is booked. congrats!</strong>
+                        div.padding-top.icon.ion-ios7-briefcase(ng-if='!selectedEvent.jobObject.isBooked') &nbsp&nbsp<strong>job is not booked yet! Why?</strong>
+                        .button-bar(ng-if='!selectedEvent.jobObject.isBooked')
+                            a.button.button-clear Book this job
 
 
 
