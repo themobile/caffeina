@@ -25,7 +25,7 @@ head
                 // if state is ADD then navbar is custom, otherwise is standard
                 //ion-nav-bar(ng-controller='MenuController',ng-show='!isInAdd')
                 ion-nav-bar.ng-cloak(ng-controller='MenuController')
-                    span(ng-if='!isInAdd')
+                    span(ng-if='!isInAdd && !isInView')
                         ion-nav-buttons(side='left')
                             button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
                         ion-nav-buttons(side='right')
@@ -36,7 +36,11 @@ head
                             button.button.button-clear(ng-click="cancel()") cancel
                         ion-nav-buttons(side='right')
                             button.button.button-clear(ng-click="save()") save
-
+                    span(ng-if='isInView')
+                        ion-nav-buttons(side='left')
+                            button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
+                        ion-nav-buttons(side='right')
+                            button.button.button-clear(ng-click="save()") edit
 
                 // views
                 ion-nav-view
@@ -61,6 +65,10 @@ head
                     a.item.item-icon-left(href='#/sortable' ,nav-clear ,menu-close )
                         i.icon.ion-alert-circled
                         | Sortable
+
+                    //a.item.item-icon-left(href='#/map' ,nav-clear ,menu-close )
+                    //    i.icon.ion-alert-circled
+                    //    | Map
 
                     a.item.item-icon-left(href="#/login",ng-if="!user.id",menu-close,nav-clear)
                         i.icon.ion-email
@@ -94,7 +102,7 @@ head
         script(src='lib/js/angular/angularLocalStorage.js')
         //script(src='lib/js/angular-ui/angular-ui-router.min.js')
         script(src='lib/js/ngprogress/ngprogress-lite.min.js')
-        script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
+        //script(src='lib/js/ngAutocomplete/ngAutocomplete.js')
 
         //
                     calendar
@@ -102,6 +110,17 @@ head
         //script(src='lib/js/datepicker/input.js')
         script(src='lib/js/datepicker/calendar.js')
         //
+
+
+
+        //
+            google-maps
+        script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwYA_6LbdHODE-aKsZSAS3n9yWIByJZzc&libraries=places&sensor=false')
+        script(src='lib/js/ion-google-place/ion-google-place.js')
+        script(src='lib/js/lodash/lodash.min.js')
+        script(src='lib/js/google-maps/angular-google-maps.min.js')
+
+
 
         //ionic/angularjs scripts
         //script(src='lib/js/ionic.min.js')
@@ -120,8 +139,7 @@ head
         //
             utilities
         script(src='lib/js/moment/moment.min.js')
-        script(src='lib/js/underscore/underscore.js')
-        script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwYA_6LbdHODE-aKsZSAS3n9yWIByJZzc&libraries=places&sensor=false')
+        //script(src='lib/js/underscore/underscore.js')
         //
 
 
@@ -140,6 +158,7 @@ head
         script(src='js/controller.tests.js')
         script(src='js/controller.add.js')
         script(src='js/controller.home.js')
+        script(src='js/controller.map.js')
         script(src='js/filters.js')
         script(src='js/services.js')
         script(src='js/service.firebase.js')

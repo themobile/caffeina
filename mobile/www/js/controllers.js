@@ -37,12 +37,16 @@ angular.module('caffeina.controllers', [])
         };
 
 
+        $rootScope.$on('isInView',
+            function (event,value) {
+                $scope.isInView=value;
+            });
+
 //        set isInAdd if state is addlead
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
                 if (toState.name == 'addjob') {
                     $scope.isInAdd = true;
-                    console.log($scope.isInAdd);
 
                 } else {
                     $scope.isInAdd = false;

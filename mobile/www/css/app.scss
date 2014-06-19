@@ -4,7 +4,6 @@ $c2: #695757;
 $c3: #9C3B3F;
 $c5: #D7C0C0;
 
-
 $font-size-base: 14px;
 $dark: #695757;
 //$light: #f6f2f2;
@@ -42,6 +41,23 @@ $item-avatar-border-radius: 50%;
 body {
   font-weight: 300;
   color: $dark;
+}
+
+a {
+  text-decoration: none;
+  color: $c3;
+
+  :visited {
+    color: $c3;
+  }
+
+  :hover {
+    color: $c2;
+  }
+}
+
+.item-icon-left .icon, .item-icon-right .icon {
+  font-size: 16px;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
@@ -121,7 +137,7 @@ span.aftericonLikeFirstLetters {
 
   .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
     border: none;
-   background-color: rgba(255, 0, 0, 0.07);
+    background-color: rgba(255, 0, 0, 0.07);
   }
 }
 
@@ -325,7 +341,7 @@ form {
   .item-toggle {
     height: 46px;
     padding: 13px 0 0px 8px;
-    margin:3px 2px;
+    margin: 3px 2px;
 
   }
 
@@ -333,7 +349,8 @@ form {
     height: 46px;
     padding: 6px 0 5px 8px;
     select {
-      padding: 11px 0  13px 0;
+      padding: 11px 0 13px 0;
+      //      direction:ltr;
     }
 
   }
@@ -390,6 +407,40 @@ a.item {
   > a.item {
     padding-top: 8px;
     padding-bottom: 8px;
+  }
+}
+
+.list-smaller {
+  a.item {
+    padding: 8px 44px;
+    white-space: pre-wrap;
+  }
+
+  .item-icon-right .icon {
+    right: 0px;
+  }
+
+}
+
+.list {
+  a.item.afterarrow:after {
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    display: block;
+    margin-top: -8px;
+    color: #ccc;
+    content: "\f125";
+    text-transform: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-family: 'Ionicons';
+    line-height: 1;
+    speak: none;
   }
 }
 
@@ -567,7 +618,6 @@ a.item {
   @include animation-name(slideInFromTop);
 }
 
-
 .ngProgressLite {
   pointer-events: none;
 }
@@ -594,7 +644,6 @@ a.item {
   transform: rotate(3deg) translate(0px, -4px);
 }
 
-
 .icon::before {
   min-width: 10px;
   text-align: center;
@@ -611,7 +660,7 @@ a.item {
 
 .screenHeader {
   height: 15%;
-  color:$c3;
+  color: $c3;
 }
 
 .screenTitle {
@@ -634,7 +683,6 @@ a.item {
 
 }
 
-
 .item.active,
 .item.activated,
 .item-complex.active .item-content,
@@ -644,7 +692,6 @@ a.item {
   background-color: rgba(255, 0, 0, 0.07);
 }
 
-
 //for time display in job listing
 .height0 {
   height: 0;
@@ -653,4 +700,27 @@ a.item {
   right: 5px;
   margin-top: -20px;
   text-align: right;
+}
+
+.ion-google-place-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  display: none;
+}
+
+input.ion-google-place[readonly] {
+  background-color: transparent;
+  cursor: text;
+}
+
+form input[readonly]:not(.cloned-text-input) {
+  color: $dark;
+}
+
+.angular-google-map-container {
+  height: 100%;
 }

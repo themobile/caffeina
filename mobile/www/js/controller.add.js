@@ -36,6 +36,11 @@ angular.module('caffeina.controllers')
         };
 
         $scope.$on('newJob:save', function () {
+            //delete hashkey from location object otherwise firebase is complaining
+            delete $scope.newJob.details.location['$$hashKey'];
+
+
+
             dmlservice.setJob($scope.newJob).then(function (jobId) {
                 $state.go('home');
             }, function (error) {

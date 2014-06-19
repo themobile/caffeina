@@ -8,6 +8,8 @@
 angular.module('caffeina',
     [
         'ionic',
+        'ion-google-place',
+        'google-maps',
         'datePicker',
         'caffeina.services',
         'caffeina.controllers',
@@ -16,8 +18,9 @@ angular.module('caffeina',
         'ngCookies',
         'firebase',
         'calevents',
-        'ngProgressLite',
-        'ngAutocomplete'
+        'ngProgressLite'
+
+//        'ngAutocomplete'
     ])
 
 
@@ -48,9 +51,12 @@ angular.module('caffeina',
             .state('addjob', {
                 url: '/addjob/:date',
                 templateUrl: 'templates/addjob.html'
-//                ,
-//                controller:'addjob'
+            })
 
+            .state('map', {
+                url: '/map/:location',
+                templateUrl: 'templates/map.html',
+                controller:'map'
             })
 
             .state('tests', {
@@ -99,7 +105,7 @@ angular.module('caffeina',
 
             //if autologin
             $ionicLoading.show({
-                template: 'Be patient grasshopper!'
+                template: 'I\'m patient like a bee!'
             });
             userService.login(provider, {
                 access_token: token,
@@ -108,10 +114,11 @@ angular.module('caffeina',
                 $ionicLoading.hide();
                 $state.go('home');
             }, function (error) {
+                $ionicLoading.hide();
+
                 $ionicPopup.alert({
                     template: error,
-                    title: 'Error',
-                    scope: $rootScope,
+                    title: 'caffeina is in error',
                     buttons: [
                         {text: 'Got it!'}
                     ]

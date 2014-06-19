@@ -29,33 +29,27 @@ angular.module('caffeina.controllers')
         //drives the view current event
         $scope.selectedEvent = {};
 
-
-        //solution for two columns inside ng-repeat. LEAVE IT HERE FOR LATER
-        $scope.range = function () {
-            var range = [];
-            for (var i = 0; i < $scope.events.length; i = i + 2)
-                range.push(i);
-            return range;
-        };
-
-
         $scope.templates = [];
+
+
         $scope.init = function () {
 
         };
 
 
-        //TODO de pus buton
-        //slide to event description clicked in event list
-        $scope.viewTask = function (id) {
-            console.log(id);
-            ngProgressLite.start();
+        $scope.golocation=function(coords){
+            var newCoords=coords.A+','+coords.k;
+            $state.go('map',{location:newCoords});
+        }
 
+        $scope.viewTask = function (id) {
+            ngProgressLite.start();
 
             $scope.selectedEvent = _.find($scope.events, function (event) {
                 return event.id == id;
-
             });
+
+
 
             _.map($scope.events, function (num) {
                 //change selectedEvent if id or date
@@ -79,37 +73,23 @@ angular.module('caffeina.controllers')
             $scope.monthEvents = [];
             $scope.selectedEvent = {};
 
-
-            var loadBulkTasks = function (res) {
-                $scope.templates = dmlservice.userTemplates;
+            dmlservice.getTasks(year, month).then(function (res) {
                 $scope.events = _.sortBy(res, 'date');
                 CalendarEvents.setEvents($scope.events);
                 ngProgressLite.done();
-
-            };
-
-
-            dmlservice.getTasks(year, month).then(function (res) {
-                if (dmlservice.userTemplates.length) {
-                    loadBulkTasks(res);
-                } else {
-                    dmlservice.getUserTemplates().then(function () {
-                        loadBulkTasks(res);
-                    });
-                }
             })
         };
 
 
         $scope.$on('calendar:holddate', function (e, innerhtml) {
-            var selectedDay=parseInt(innerhtml);
+            var selectedDay = parseInt(innerhtml);
             var addDate;
             //if it's a possible month day
             if (selectedDay > 0 && selectedDay < 32) {
-                addDate=moment($scope.currentMonthYear).date(selectedDay).format('YYYY/MM/DD');
+                addDate = moment($scope.currentMonthYear).date(selectedDay).format('YYYY/MM/DD');
 
 //                $state.go('addjob/'+encodeURIComponent(addDate));
-                $state.go('addjob',{'date':encodeURIComponent(addDate)});
+                $state.go('addjob', {'date': encodeURIComponent(addDate)});
             }
         });
 
@@ -148,6 +128,16 @@ angular.module('caffeina.controllers')
         });
 
 
+        //emits on 3rd slide (task view) to signal menu change (kinda weird)
+        $scope.sliderchanged = function (index) {
+            if (index == 2 && $scope.selectedEvent.date) {
+                $scope.$emit('isInView', true);
+            } else {
+                $scope.$emit('isInView', false);
+            }
+        }
+
+
         // calendar loaded data
         $scope.$on('calendar:events', function (model, view) {
             $scope.isFirstLoaded = false;
@@ -167,14 +157,13 @@ angular.module('caffeina.controllers')
                 }
             });
 
-            if (i.length == 1) {
-                $scope.viewTask(i[0].id);
-            }
 
-            if (i.length >= 2) {
-                // push in local events for the selected day
-                $ionicSlideBoxDelegate.$getByHandle('calendar_slider').next();
-            }
+            // directly view the event
+            if (i.length == 1)  $scope.viewTask(i[0].id);
+
+            // push in local events for the selected day
+            if (i.length >= 2) $ionicSlideBoxDelegate.$getByHandle('calendar_slider').next();
+
 
         });
 
