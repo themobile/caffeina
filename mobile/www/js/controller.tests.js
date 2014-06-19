@@ -40,10 +40,10 @@ angular.module('caffeina.controllers')
 
         $scope.updJob = function () {
             var job = {
-                id: 1,
+                id: 2,
                 date: moment("2014-01-01 10:00").add('day', parseInt(Math.random() * 100)).format("YYYY-MM-DD HH:mm:ss.SSS"),
                 allDay: false,
-                tasks: "1",
+                tasks: 8,
                 type: {name: "wedding", id: 1},
                 isBooked: true,
                 isTasksGenerated: false,
@@ -160,6 +160,8 @@ angular.module('caffeina.controllers')
 
         $scope.getFiles = function () {
             dmlservice.getFiles().then(function (data) {
+                return dmlservice.getInventory();
+            }).then(function (data) {
                 console.log(data);
             });
         };
