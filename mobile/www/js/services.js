@@ -308,7 +308,7 @@ angular.module('caffeina.services', ['firebase'])
                                 } else {
                                     newTask.date = moment(jobDate).add('days', task.shift).format('YYYY-MM-DD HH:mm:ss.SSS');
                                 }
-                                newTask.alert = task.alert;
+                                newTask.alarm = task.alarm;
                                 tasks.push(newTask);
                             }
                         }
@@ -419,6 +419,7 @@ angular.module('caffeina.services', ['firebase'])
                         newTask.isMain = true;
                         newTask.date = job.date;
                         if (job.details) if (job.details.location) newTask.location = job.details.location;
+                        if (job.details) if (job.details.alarm) newTask.alarm = job.details.alarm;
 
                         if (job.tasks) {
                             // iau primul task; oricum ar tb sa fie exact unul
@@ -623,7 +624,7 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
-        dmlService.getInventory  = function () {
+        dmlService.getInventory = function () {
             var inventoryRef = dmlService._inventoryRef()
                 , deferred = $q.defer()
                 ;

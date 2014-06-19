@@ -1,12 +1,35 @@
 {
     "alerts": [
-            {"id": 1, "name": "1h"},
-            {"id": 2, "name": "2h"},
-            {"id": 3, "name": "4h"},
-            {"id": 4, "name": "12h"},
-            {"id": 5, "name": "24h"},
-            {"id": 6, "name": "1 day"},
-            {"id": 7, "name": "2 day"}
+        {
+            "id": 1,
+            "name": "1h",
+            "hours": 1
+        },
+        {
+            "id": 2,
+            "name": "2h",
+            "hours": 2
+        },
+        {
+            "id": 3,
+            "name": "4h",
+            "hours": 4
+        },
+        {
+            "id": 4,
+            "name": "12h",
+            "hours": 12
+        },
+        {
+            "id": 5,
+            "name": "1 day",
+            "hours": 24
+        },
+        {
+            "id": 6,
+            "name": "2 day",
+            "hours": 48
+        }
     ],
     "color": "#000000",
     "email": "yes",

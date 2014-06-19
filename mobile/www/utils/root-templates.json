@@ -7,37 +7,61 @@
                 "isMain": false,
                 "name": "engagement session",
                 "shift": -60,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "2": {
                 "isMain": false,
                 "name": "civil ceremony",
                 "shift": -1,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "3": {
                 "isMain": false,
                 "name": "preparations",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "4": {
                 "isMain": false,
                 "name": "ceremony",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "5": {
                 "isMain": true,
                 "name": "party",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "6": {
                 "isMain": false,
                 "name": "trash the dress",
                 "shift": 10,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             }
         }
     },
@@ -49,25 +73,41 @@
                 "isMain": false,
                 "name": "family session",
                 "shift": -1,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "2": {
                 "isMain": false,
                 "name": "preparations",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "3": {
                 "isMain": false,
                 "name": "ceremony",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             },
             "4": {
                 "isMain": true,
                 "name": "party",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             }
         }
     },
@@ -79,7 +119,11 @@
                 "isMain": true,
                 "name": "session",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             }
         }
     },
@@ -91,7 +135,11 @@
                 "isMain": true,
                 "name": "session",
                 "shift": 0,
-                "alert": -1
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
             }
         }
     }
