@@ -39,6 +39,8 @@ angular.module('caffeina.controllers')
 
         $scope.golocation=function(coords){
             var newCoords=coords.A+','+coords.k;
+            $scope.$emit('isInView', false);
+
             $state.go('map',{location:newCoords});
         }
 
