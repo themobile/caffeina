@@ -63,7 +63,7 @@ angular.module('caffeina',
 
     })
 
-    .run(function ($rootScope, $state, userService, storage, Firebase, $ionicLoading) {
+    .run(function ($rootScope, $state, userService, storage, Firebase, $ionicLoading, $ionicPopup) {
         var rememberMe , provider, token, caffeina_user, presenceRef;
 
         rememberMe = storage.get('rememberMe');
@@ -108,9 +108,14 @@ angular.module('caffeina',
                 $ionicLoading.hide();
                 $state.go('home');
             }, function (error) {
-                //fixme: de vazut ce sa faca in caz de eroare
-                console.log('EROARE LA APEL LOGIN');
-                console.log(JSON.stringify(error));
+                $ionicPopup.alert({
+                    template: error,
+                    title: 'Error',
+                    scope: $scope,
+                    buttons: [
+                        {text: 'Got it!'}
+                    ]
+                });
             });
 
 
