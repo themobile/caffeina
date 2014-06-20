@@ -129,7 +129,8 @@
     },
     "99": {
         "color": "#00bbff",
-        "name": "other",
+        "name": "simple task",
+        "autoBooked": true,
         "tasks": {
             "1": {
                 "isMain": true,
