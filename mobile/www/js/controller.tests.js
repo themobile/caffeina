@@ -176,4 +176,18 @@ angular.module('caffeina.controllers')
             });
         };
 
+        $scope.getJobTasks = function (jobId) {
+            dmlservice.getJobTasks(jobId).then(function (response) {
+//                console.log(JSON.stringify(response));
+                console.log(JSON.stringify(response));
+                console.log('****************');
+                _.each(response, function (resp) {
+                    console.log(JSON.stringify(resp));
+                })
+            }, function (error) {
+                console.log(error);
+            });
+        };
+
+
     }]);
