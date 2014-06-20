@@ -5,17 +5,30 @@ angular.module('caffeina.services')
             , userServiceObject = {}
             ;
 
-        userServiceObject.login = function (type, attr) {
-            var deferred = $q.defer();
+        userServiceObject._login = function (type, attr) {
+            var deferred = $q.defer()
+                ;
             user.$login(type, {
                 rememberMe: attr.rememberMe,
-//                rememberMe: false,
                 access_token: attr.access_token
-//                    email: attr.email,
-//                    password: attr.password
-            }).then(function (response) {
-                var userDetails = firebaseRef('/users/' + btoa(user.user.email));
-                return userDetails.update({details: user.user});
+            }).then(function (result) {
+                deferred.resolve(result);
+            }, function (error) {
+                return user.$login(type).then(function (result) {
+                    deferred.resolve(result);
+                }, function (error) {
+                    deferred.reject('login error: ' + JSON.stringify(error));
+                });
+            });
+            return deferred.promise;
+        };
+
+        userServiceObject.login = function (type, attr) {
+            var deferred = $q.defer();
+            userServiceObject._login(type, attr).then(function (response) {
+                var userRef = dmlservice._userRootFBRef()
+                    ;
+                return userRef.update({details: user.user});
             }).then(function () {
                 var ref = dmlservice._userRootFBRef()
                     ;
@@ -40,7 +53,6 @@ angular.module('caffeina.services')
 
         userServiceObject.logout = function () {
             user.$logout();
-
         };
 
         userServiceObject.getUser = function () {

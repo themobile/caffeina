@@ -56,7 +56,7 @@ angular.module('caffeina',
             .state('map', {
                 url: '/map/:location',
                 templateUrl: 'templates/map.html',
-                controller:'map'
+                controller: 'map'
             })
 
             .state('tests', {
@@ -75,7 +75,6 @@ angular.module('caffeina',
         rememberMe = storage.get('rememberMe');
         caffeina_user = storage.get('caffeina_user');
 
-
         presenceRef = new Firebase('https://caffeina.firebaseio.com/.info/connected');
         presenceRef.on('value', function (snap) {
             if (snap.val() === true) {
@@ -84,7 +83,6 @@ angular.module('caffeina',
                 $rootScope.$broadcast('isConnected', false);
             }
         });
-
 
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
@@ -97,12 +95,10 @@ angular.module('caffeina',
             token = caffeina_user.accessToken;
         }
 
-
         if (rememberMe != true) {
             userService.logout();
             $state.go('login');
         } else {
-
             //if autologin
             $ionicLoading.show({
                 template: 'I\'m patient like a bee!'
@@ -115,7 +111,6 @@ angular.module('caffeina',
                 $state.go('home');
             }, function (error) {
                 $ionicLoading.hide();
-
                 $ionicPopup.alert({
                     template: error,
                     title: 'caffeina is in error',
@@ -124,8 +119,6 @@ angular.module('caffeina',
                     ]
                 });
             });
-
-
         }
     })
 ;
