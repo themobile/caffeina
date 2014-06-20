@@ -225,7 +225,7 @@ angular.module('caffeina.services', ['firebase'])
             }).then(function () {
                 _.each(templates, function (template) {
                     promise = promise.then(function () {
-                        return dmlService._add(templFBRef, {name: template.name, color: template.color}, null).then(function (tmplId) {
+                        return dmlService._add(templFBRef, {name: template.name, color: template.color, autoBooked: (template.autoBooked || false)}, null).then(function (tmplId) {
                             var deferred2 = $q.defer()
                                 , promise2 = deferred2.promise
                                 ;
@@ -546,7 +546,8 @@ angular.module('caffeina.services', ['firebase'])
                         dmlService.userTemplates.push({
                             name: element[1].name,
                             id: element[0],
-                            color: element[1].color
+                            color: element[1].color,
+                            autoBooked: (element[1].autoBooked || false)
                         });
                     }
                 });
