@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 angular-google-maps
-https://github.com/nlaplante/angular-google-maps
+ google-map
 
 @authors
 Nicolas Laplante - https://plus.google.com/108189012221374960701
@@ -4052,8 +4052,10 @@ Nick Baugh - https://github.com/niftylettuce
 
 (function() {
   angular.module("google-maps").directive("googleMap", [
-    "Map", function(Map) {
-      return new Map();
+    "Map","$timeout", function(Map,$timeout) {
+
+              return new Map();
+
     }
   ]);
 

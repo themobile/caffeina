@@ -14,7 +14,7 @@ angular.module('ion-google-place', [])
                 replace: true,
                 link: function (scope, element, attrs, ngModel) {
                     scope.locations = [];
-                    var geocoder = new google.maps.Geocoder();
+//                    var geocoder = new google.maps.Geocoder();
                     var searchEventTimeout = undefined;
 
 
@@ -29,13 +29,13 @@ angular.module('ion-google-place', [])
                         'Cancel',
                         '</button>',
                         '</div>',
-//                        '<ion-content class="has-header has-header">',
-//                        '<ion-list>',
-//                        '<ion-item ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)">',
-//                        '{{location.formatted_address}}',
-//                        '</ion-item>',
-//                        '</ion-list>',
-//                        '</ion-content>',
+                        '<ion-content class="has-header has-header">',
+                        '<ion-list>',
+                        '<ion-item ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)">',
+                        '{{location.description}}',
+                        '</ion-item>',
+                        '</ion-list>',
+                        '</ion-content>',
                         '</div>'
                     ].join('');
 
@@ -46,15 +46,16 @@ angular.module('ion-google-place', [])
                     });
 
                     popupPromise.then(function (el) {
-                        var searchInputElement = angular.element(el.element.find('input'));
                         var options = {
                             types: [],
                             componentRestrictions: {}
                         };
+//                        var tt=new google.maps.places.AutocompleteService();
+                        var searchInputElement = angular.element(el.element.find('input'));
                         var mm = new google.maps.places.Autocomplete(searchInputElement[0]);
 
                         scope.selectLocation = function (location) {
-                            ngModel.$setViewValue(location);
+                            ngModel.$setViewValue({name:location.name,formatted_address:location.formatted_address,geometry:location.geometry});
                             ngModel.$render();
                             el.element.css('display', 'none');
                             $ionicBackdrop.release();
@@ -67,22 +68,22 @@ angular.module('ion-google-place', [])
                         });
 
 
-//                        scope.$watch('searchQuery', function (query) {
-//                            if (searchEventTimeout) $timeout.cancel(searchEventTimeout);
-//                            searchEventTimeout = $timeout(function () {
-//                                if (!query) return;
-//                                if (query.length < 3);
-//
-//
-//
-//
-////
-////                                geocoder.geocode({ address: query }, function (results, status) {
+                        scope.$watch('searchQuery', function (query) {
+                            if (searchEventTimeout) $timeout.cancel(searchEventTimeout);
+                            searchEventTimeout = $timeout(function () {
+                                if (!query) return;
+                                if (query.length<3);
+
+
+                                //
+//                                    with getplacepredictions
+
+//                                tt.getPlacePredictions({input:query}, function (results, status) {
 ////                                    if (status == google.maps.GeocoderStatus.OK) {
-////                                        scope.$apply(function () {
-////                                            results.push({formatted_address: scope.searchQuery});
-////                                            scope.locations = results;
-////                                        });
+//                                        scope.$apply(function () {
+////                                            results.push({description: scope.searchQuery});
+//                                            scope.locations = results;
+//                                        });
 ////                                    } else {
 ////                                        // push to list the query
 ////                                        scope.$apply(function () {
@@ -90,9 +91,26 @@ angular.module('ion-google-place', [])
 ////                                            scope.locations = results;
 ////                                        });
 ////                                    }
-////                                });
-//                            }, 350); // we're throttling the input by 350ms to be nice to google's API
-//                        });
+//                                });
+
+
+//
+//                                geocoder.geocode({ address: query }, function (results, status) {
+//                                    if (status == google.maps.GeocoderStatus.OK) {
+//                                        scope.$apply(function () {
+//                                            results.push({formatted_address: scope.searchQuery});
+//                                            scope.locations = results;
+//                                        });
+//                                    } else {
+//                                        // push to list the query
+//                                        scope.$apply(function () {
+//                                            results.push({formatted_address: scope.searchQuery, isgoogled: false, address_components: {0: {long_name: scope.searchQuery, short_name: scope.searchQuery}}});
+//                                            scope.locations = results;
+//                                        });
+//                                    }
+//                                });
+                            }, 350); // we're throttling the input by 350ms to be nice to google's API
+                        });
 
                         var onClick = function (e) {
                             e.preventDefault();
@@ -136,7 +154,7 @@ angular.module('ion-google-place', [])
                             element.val('');
                         } else {
 //                            element.val(ngModel.$viewValue.formatted_address || '');
-                            element.val(ngModel.$viewValue.name + ' | ' + ngModel.$viewValue.formatted_address || '');
+                            element.val(ngModel.$viewValue.name || '');
                         }
                     };
                 }

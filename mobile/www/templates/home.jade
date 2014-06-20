@@ -49,10 +49,10 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                 i.icon.ion-ios7-person
                                 | {{selectedEvent.jobObject.contactObject.name}}
                                 i.icon.ion-ios7-telephone
-                            a.item.item-icon-left.item-icon-right(href='#',ng-if='selectedEvent.location.address_components.0.short_name')
+                            a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.location.name',ng-click='golocation(selectedEvent.location.geometry.location)')
                                 i.icon.ion-map
-                                | {{selectedEvent.location.address_components.0.short_name}}
-                                i.icon.ion-ios7-location(ng-click='golocation(selectedEvent.location.geometry.location)')
+                                | {{selectedEvent.location.name}}
+                                i.icon.ion-ios7-location
                             a.item.item-icon-left(href='#',ng-if='selectedEvent.notes')
                                 i.icon.ion-ios7-information
                                 | {{selectedEvent.notes}}
@@ -65,10 +65,10 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                             a.item.item-icon-left(href='#')
                                 i.icon.ion-ios7-calendar
                                 | main event: {{selectedEvent.jobObject.date | date:'yyyy | MMMM dd' | lowercase}}
-                            a.item.item-icon-left.item-icon-right(href='#',ng-if='selectedEvent.jobObject.details.location.address_components.0.short_name')
+                            a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.jobObject.details.location.name',ng-click='golocation(selectedEvent.jobObject.details.location.geometry.location)')
                                 i.icon.ion-map
-                                | {{selectedEvent.jobObject.details.location.address_components.0.short_name}}
-                                i.icon.ion-ios7-location(ng-click='golocation(selectedEvent.jobObject.details.location.geometry.location)')
+                                | {{selectedEvent.jobObject.details.location.name}}
+                                i.icon.ion-ios7-location()
                             a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.details.price')
                                 i.icon.ion-ios7-pricetag
                                 | my price: {{selectedEvent.jobObject.details.price}}&nbspEUR

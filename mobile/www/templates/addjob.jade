@@ -58,11 +58,11 @@ ion-view(title='define new job',ng-controller="addjob",ng-init='init()')
             label.item.item-input
                 i.positive.icon.ion-ios7-location.placeholder-icon
                 //input#Autocomplete.ellip(name='newJob.details.location',type='text',placeholder='where',ng-model="newJob.details.location",ng-autocomplete="googleResults",details="googleResultsDetails",options="googleResultsOptions")
-                ion-google-place(placeholder='where',ng-model="newJob.details.location")
+                ion-google-place.ellip(placeholder='where',ng-model="newJob.details.location")
+                    div#map(style='display:hidden')
 
             label.item.item-input
                 textarea(name='newJob.notes',placeholder='notes',rows='3',ng-model='newJob.notes')
-
 
             div.row(ng-show='newJob.type.name!="other"')
                 div.item-divider
