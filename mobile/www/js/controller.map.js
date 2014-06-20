@@ -9,26 +9,25 @@ angular.module('caffeina.controllers')
         '$scope'
         , '$state'
         , '$stateParams'
-        , 'dmlservice'
-        , '$filter'
-        , '$ionicPopup'
-        , function ($scope, $state, $stateParams, dmlservice, $filter, $ionicPopup) {
+        , '$timeout'
+        , function ($scope, $state, $stateParams, $timeout) {
 
 
-        $scope.location={
-            longitude:$stateParams.location.split(',')[0],
-            latitude:$stateParams.location.split(',')[1]
-        };
-        $scope.map={
-            center:$scope.location,
-            zoom:17,
-            draggable:'true'
+        $scope.location = {
+            longitude: $stateParams.location.split(',')[0],
+            latitude: $stateParams.location.split(',')[1]
         };
 
-        $scope.marker={
-            coords:$scope.location,
-            icon:'img/map-marker.png'
-        }
+        $scope.map = {
+            center: $scope.location,
+            zoom: 17,
+            draggable: 'true'
+        };
+
+        $scope.marker = {
+            coords: $scope.location,
+            icon: 'img/map-marker.png'
+        };
 
 
     }]);
