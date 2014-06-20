@@ -491,8 +491,8 @@ angular.module('caffeina.services', ['firebase'])
 
                 //reads contacts
                 contactRef.child(task.jobObject.contactId).once('value', function (contactSnapshoot) {
-                    task.jobObject.contactObject = contactSnapshoot.val();
-                    task.jobObject.contactObject.id = task.jobObject.contactId;
+                    task.jobObject.contact = contactSnapshoot.val();
+                    task.jobObject.contact.id = task.jobObject.contactId;
                     deferred.resolve(task);
                 });
             });

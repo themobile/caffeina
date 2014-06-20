@@ -1,6 +1,6 @@
 angular.module('caffeina.services')
 
-    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', '$q', function ($firebaseSimpleLogin, firebaseRef, dmlservice, $q) {
+    .factory('userService', ['$firebaseSimpleLogin', 'firebaseRef', 'dmlservice', '$q', 'storage', function ($firebaseSimpleLogin, firebaseRef, dmlservice, $q, storage) {
         var user = $firebaseSimpleLogin(firebaseRef())
             , userServiceObject = {}
             ;
@@ -28,6 +28,11 @@ angular.module('caffeina.services')
             userServiceObject._login(type, attr).then(function (response) {
                 var userRef = dmlservice._userRootFBRef()
                     ;
+
+                if (attr.rememberMe) storage.set('rememberMe', attr.rememberMe);
+                storage.set('caffeina_user', user.user);
+                storage.set('provider', user.user.provider);
+
                 return userRef.update({details: user.user});
             }).then(function () {
                 var ref = dmlservice._userRootFBRef()
