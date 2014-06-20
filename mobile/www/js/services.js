@@ -499,7 +499,7 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
-        dmlService._doPromise = function (object) {
+        dmlService._simplePromise = function (object) {
             var deferred = $q.defer()
                 ;
             deferred.resolve(object);
@@ -518,25 +518,32 @@ angular.module('caffeina.services', ['firebase'])
 
         dmlService.getJobTasks = function (jobId) {
             var jobRef = dmlService._jobsFBRef()
-                , taskRef = dmlService._tasksFBRef()
                 , deferred = $q.defer()
+                , promise = deferred.promise
                 , promises = []
                 ;
-            jobRef.child(jobId).once('value', function (jobSnapshoot) {
-                if (jobSnapshoot.val()) {
-                    _.each(jobSnapshoot.val().tasks.toString().split(','), function (taskId) {
-                        promises.push(dmlService.getTask(taskId));
-                    });
-                    deferred.resolve(promises);
+            jobRef.child(jobId).once('value', function (jobSnapshot) {
+                var jobObject = jobSnapshot.val()
+                    , taskList
+                    ;
+                if (jobObject) {
+                    if (jobObject.isDeleted) {
+                        deferred.reject('dmlservice/getJobTasks: job was deleted');
+                    } else {
+                        taskList = jobObject.tasks.toString().split(',');
+                        _.each(taskList, function (taskId) {
+                            promises.push(dmlService.getTask(taskId));
+                        });
+                        deferred.resolve(promises);
+                    }
                 } else {
-                    deferred.reject("invalid job");
+                    deferred.reject('dmlservice/getJobTasks: invalid job');
                 }
             });
-//            return deferred.promise;
             return $q.all([deferred.promise]).then(function () {
                 return $q.all(promises);
             }, function (error) {
-                deferred.reject('dmlservice/getTasks: ' + error);
+                deferred.reject('dmlservice/getJobTasks: ' + error);
             });
         };
 
