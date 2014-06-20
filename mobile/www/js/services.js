@@ -543,7 +543,7 @@ angular.module('caffeina.services', ['firebase'])
             return $q.all([deferred.promise]).then(function () {
                 return $q.all(promises);
             }, function (error) {
-                deferred.reject('dmlservice/getJobTasks: ' + error);
+                return deferred.promise;
             });
         };
 
@@ -576,6 +576,7 @@ angular.module('caffeina.services', ['firebase'])
                 return $q.all(promises);
             }, function (error) {
                 deferred.reject('dmlservice/getTasks: ' + error);
+                return deferred.promise;
             });
         };
 
