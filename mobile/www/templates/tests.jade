@@ -1,15 +1,14 @@
 ion-view(title='tests')
     ion-content(padding='true', ng-controller='tests')
-        //button.button(ng-click="addLead()") Add lead
-        //input.input(ng-model="idLead")
-        //button.button(ng-click="updateLead()") Update lead
-        //button.button(ng-click="removeLead()") Remove lead
-        //br
+
         button.button(ng-click="setTemplate()") Add Main Templates
         br
+        input.input(ng-model="jobId")
         button.button(ng-click="addJob()") add a job
         button.button(ng-click="updJob()") upd a job
         button.button(ng-click="delJob()") del a job
+        br
+        button.button(ng-click="getJobTasks(jobId)") get job tasks
         br
         input.input(ng-model="year")
         input.input(ng-model="month")

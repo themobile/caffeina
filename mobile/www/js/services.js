@@ -499,6 +499,47 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
+        dmlService._doPromise = function (object) {
+            var deferred = $q.defer()
+                ;
+            deferred.resolve(object);
+            return deferred.promise;
+        };
+
+        dmlService.getTask = function (taskId) {
+            var taskRef = dmlService._tasksFBRef()
+                , deferred = $q.defer()
+                ;
+            taskRef.child(taskId).once('value', function (taskSnapshoot) {
+                deferred.resolve(taskSnapshoot.val());
+            });
+            return deferred.promise;
+        };
+
+        dmlService.getJobTasks = function (jobId) {
+            var jobRef = dmlService._jobsFBRef()
+                , taskRef = dmlService._tasksFBRef()
+                , deferred = $q.defer()
+                , promises = []
+                ;
+            jobRef.child(jobId).once('value', function (jobSnapshoot) {
+                if (jobSnapshoot.val()) {
+                    _.each(jobSnapshoot.val().tasks.toString().split(','), function (taskId) {
+                        promises.push(dmlService.getTask(taskId));
+                    });
+                    deferred.resolve(promises);
+                } else {
+                    deferred.reject("invalid job");
+                }
+            });
+//            return deferred.promise;
+            return $q.all([deferred.promise]).then(function () {
+                return $q.all(promises);
+            }, function (error) {
+                deferred.reject('dmlservice/getTasks: ' + error);
+            });
+        };
+
         dmlService.getTasks = function (year, month) {
             var startAt = moment(year + '-' + month + '-1', 'YYYY-MM-DD').format('YYYY-MM-DD')
                 , endAt = moment(year + '-' + month + '-1', 'YYYY-MM-DD').add('months', 1).add('days', -1).format('YYYY-MM-DD')
@@ -532,7 +573,6 @@ angular.module('caffeina.services', ['firebase'])
         };
 
 
-        //stores userTemplates
         dmlService.userTemplates = [];
 
         dmlService.getUserTemplates = function () {
