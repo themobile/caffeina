@@ -300,7 +300,7 @@ angular.module('caffeina.services', ['firebase'])
             return deferred.promise;
         };
 
-        dmlService.jobGenerateTasks = function (jobId, templateId, jobDate, jobLocation) {
+        dmlService.jobGenerateTasks = function (jobId, templateId, jobDate, jobLocation, initTaskId) {
             var typeRef = dmlService._templateFBRef()
                 , taskRef = dmlService._tasksFBRef()
                 , deferred = $q.defer()
@@ -325,6 +325,7 @@ angular.module('caffeina.services', ['firebase'])
                                 newTask.name = task.name;
                                 if (task.isMain) {
                                     newTask.date = jobDate;
+                                    newTask.initTaskId = initTaskId;
                                     if (jobLocation) newTask.location = jobLocation;
                                 } else {
                                     newTask.date = moment(jobDate).add('days', task.shift).format('YYYY-MM-DD HH:mm:ss.SSS');
@@ -436,7 +437,7 @@ angular.module('caffeina.services', ['firebase'])
                                 return dmlService._del(taskRef, taskId).then(function () {
                                     var jobLocation = "";
                                     if (job.details) if (job.details.location) jobLocation = job.details.location;
-                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, jobLocation);
+                                    return dmlService.jobGenerateTasks(jobId, job.type.id, job.date, jobLocation, taskId);
                                 });
                             } else {
                                 var jobLocation = "";
