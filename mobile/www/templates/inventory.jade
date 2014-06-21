@@ -12,5 +12,5 @@ ion-view(title='inventory',ng-controller="inventory",ng-init='init()')
                 h4 {{item.name}}
                 p.small <strong>serial:</strong>&nbsp{{item.serial}}
                 p.small <strong>date:</strong>&nbsp{{item.date | date: 'yyyy | MMM d' }}
-                ion-option-button.button-positive(ng-click='deleteItem(inventory[$index])') Delete
-                ion-option-button.button-assertive(ng-click='editItem(inventory[$index],$index)') Edit
+                ion-option-button.button-assertive(ng-click='deleteItem(inventory[$index])') Delete
+                ion-option-button.button-energized(ng-click='editItem(inventory[$index],$index)') Edit

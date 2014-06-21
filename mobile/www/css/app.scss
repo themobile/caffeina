@@ -1,14 +1,17 @@
 //colors
-$c1: #41272E;
-$c2: #695757;
-$c3: #9C3B3F;
-$c5: #D7C0C0;
+
+$stable: #f8f8f8;
+$positive: #D7C0C0;
+$calm: #41272E;
+$balanced: #5b2d8c;
+$energized: #bb9234;
+$assertive: #9C3B3F;
+$royal: #b86b7d;
+$dark: #695757;
+$light: #fff;
 
 $font-size-base: 14px;
-$dark: #695757;
 //$light: #f6f2f2;
-$light: #fff;
-$reddish: #9C3B3F;
 $base-color: $dark;
 $base-background-color: $light;
 $input-color: $dark;
@@ -22,8 +25,6 @@ $checkbox-off-bg-color: $light;
 $checkbox-check-color: $light;
 $item-font-size: 14px !default;
 $item-padding: 13px !default;
-$calm: $dark;
-$positive: $dark;
 $bar-default-border: #fff;
 $bar-default-active-border: none;
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, "Lucida Grande", sans-serif !default;
@@ -45,14 +46,14 @@ body {
 
 a {
   text-decoration: none;
-  color: $c3;
+  color: $assertive;
 
   :visited {
-    color: $c3;
+    color: $assertive;
   }
 
   :hover {
-    color: $c2;
+    color: $dark;
   }
 }
 
@@ -142,9 +143,9 @@ span.aftericonLikeFirstLetters {
 }
 
 .item-divider {
-  background-color: darken($light,5%);
+  background-color: darken($light, 5%);
   min-height: 20px;
-  border:none;
+  border: none;
 }
 
 legend {
@@ -169,6 +170,10 @@ legend {
   bottom: 0;
   width: 100%;
   padding: 0 10% 10%;
+
+  .item {
+    border: none;
+  }
 }
 
 .autologin {
@@ -394,7 +399,7 @@ form {
   font-weight: 700;
 
   h4, p {
-    color: $reddish;
+    color: $assertive;
   }
 }
 
@@ -624,7 +629,7 @@ a.item {
 }
 
 .ngProgressLiteBar {
-  background: $c3;
+  background: $assertive;
   position: fixed;
   z-index: 100;
   top: 0;
@@ -638,7 +643,7 @@ a.item {
   right: 0px;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 5px $c1, 0 0 5px $c1;
+  box-shadow: 0 0 5px $calm, 0 0 5px $calm;
   opacity: 0.5;
   -webkit-transform: rotate(3deg) translate(0px, -4px);
   -ms-transform: rotate(3deg) translate(0px, -4px);
@@ -661,7 +666,7 @@ a.item {
 
 .screenHeader {
   height: 15%;
-  color: $c3;
+  color: $assertive;
 }
 
 .screenTitle {
@@ -749,26 +754,23 @@ form input[readonly]:not(.cloned-text-input) {
     background: white !important;
   }
 
-
-    a h6.image-author {
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      max-width: 70%;
-      background-color: rgba(255, 255,255, 0.21);
-      color: lighten($c3, 20%);
-      padding: 10px;
-    }
-
-
+  a h6.image-author {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    max-width: 70%;
+    background-color: rgba(255, 255, 255, 0.21);
+    color: lighten($assertive, 20%);
+    padding: 10px;
+  }
 
   .numberOf {
     position: absolute;
     bottom: 10px;
     left: 20px;
     max-width: 70%;
-    background-color: rgba(255, 255,255, 0.21);
-    color: lighten($c3, 20%);
+    background-color: rgba(255, 255, 255, 0.21);
+    color: lighten($assertive, 20%);
     padding: 10px;
   }
 
@@ -776,10 +778,10 @@ form input[readonly]:not(.cloned-text-input) {
     position: absolute;
     top: 5px;
     right: 20px;
-    background-color: rgba(255, 255,255, 0.21);
+    background-color: rgba(255, 255, 255, 0.21);
     font-size: 40px;
     padding: 10px;
-    color: lighten($c3, 20%);
+    color: lighten($assertive, 20%);
   }
   .nextbutton, .prevbutton {
     position: absolute;
@@ -800,19 +802,20 @@ form input[readonly]:not(.cloned-text-input) {
 .inventory {
   .item-content p {
     white-space: normal;
-    margin:0;
+    margin: 0;
   }
 }
 
 .inspiration-item {
   .item-thumbnail-left, .item-thumbnail-left .item-content {
     min-height: 0px;
+    padding-right: 30px;
   }
 }
 
 .item.inventory {
-  border-right:none;
-  border-left:none;
+  border-right: none;
+  border-left: none;
 }
 
 .platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {

@@ -182,7 +182,7 @@
 }
 
 .button-clear {
-  @include button-clear($c3,$button-default-border);
+  @include button-clear($dark,$button-default-border);
   @include transition(opacity .1s);
   padding: 0 $button-clear-padding;
   max-height: $button-height;

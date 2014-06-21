@@ -17,7 +17,7 @@ calendar-event {
 
   span {
     display: block;
-    background-color: $reddish;
+    background-color: $assertive;
     height: 4px;
     width: 50%;
     border-radius: 4px;
@@ -94,7 +94,7 @@ calendar-event {
 
   .calendarHeader {
     height: 15%;
-    color:$c3;
+    color:$assertive;
 
 
   }
@@ -205,7 +205,7 @@ calendar-event {
 
   button.button-full {
     height: 100%;
-    color:$c3;
+    color:$assertive;
   }
 
 }

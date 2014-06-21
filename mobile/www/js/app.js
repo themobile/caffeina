@@ -101,6 +101,8 @@ angular.module('caffeina',
             function (event, toState, toParams, fromState, fromParams) {
                 //store previous state
                 $rootScope.previousState = fromState;
+
+
             });
 
         if (caffeina_user) {

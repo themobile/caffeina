@@ -27,7 +27,7 @@ angular.module('caffeina.controllers')
         }
         $scope.login = function (provider) {
             $ionicLoading.show({
-                template: 'Be patient grasshopper!'
+                template: 'I\'m patient like a bee!'
             });
             userService.login(provider, $scope.attr).then(function () {
                 $ionicLoading.hide();

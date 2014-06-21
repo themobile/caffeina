@@ -69,6 +69,21 @@ angular.module('caffeina.services')
         };
 
         return userServiceObject;
-    }]);
+    }])
+
+    .factory('authorization', ['$rootScope', '$state', 'userService',
+        function ($rootScope, $state, userService) {
+            return {
+                authorize: function () {
+                    var isAuthenticated = userService.getUser();
+                    if (isAuthenticated) $state.go($rootScope.toState); // user is signed in but not authorized for desired state
+                    else {
+                        $state.go('login');
+                    }
+                }
+            };
+        }
+    ])
+;
 
 

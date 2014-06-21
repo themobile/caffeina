@@ -76,7 +76,7 @@ Module.directive('calendarEvent', ['dmlservice', function (dmlservice) {
                     'background-color': eventTypesInDay[0].color
                 };
             } else {
-                scope.eventStyle = {'background-color':'#C2C1A1'};
+                scope.eventStyle = {'background-color':'#D7359D'};
             }
 
         }
