@@ -7530,7 +7530,8 @@ calendar-event {
     justify-content: center; }
   [ng-switch-when="date"] .calendarHeader, [ng-switch-when="year"] .calendarHeader, [ng-switch-when="month"] .calendarHeader {
     height: 15%;
-    color: #9c3b3f; }
+    color: #9c3b3f;
+    cursor: pointer; }
   [ng-switch-when="date"] .calendarDays, [ng-switch-when="year"] .calendarDays, [ng-switch-when="month"] .calendarDays {
     height: 5%;
     min-height: 30px; }

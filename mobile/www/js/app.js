@@ -98,7 +98,7 @@ angular.module('caffeina',
         });
 
         $rootScope.$on('$stateChangeStart',
-            function (event, toState, toParams, fromState, fromParams) {
+            function (event, toState, toParams, fromState, toStateParams,fromParams) {
                 //store previous state
                 $rootScope.previousState = fromState;
 

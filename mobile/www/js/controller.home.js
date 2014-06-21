@@ -74,23 +74,20 @@ angular.module('caffeina.controllers')
         //mark job as booked and reloads calendar
         $scope.bookjob = function () {
             var currentTask = $scope.selectedEvent;
-            var deferred = $q.defer();
             currentTask.jobObject.isBooked = true;
 
 
             // FIXME: ceva nu merge in lantul de promisiuni, imi intoarce la load data fara evenimentul bookuit
 
             dmlservice.setJob(currentTask.jobObject)
-                .then(function (jobId) {
-                    deferred.resolve();
-                }, function (error) {
-                    console.log('error booking job');
-                    deferred.reject();
-                });
-
-            deferred.promise.then(function(){
-                $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'));
-            });
+                .then(function () {
+                    $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'));
+                })
+                .then(function(){
+                    $scope.selectedEvent= _.find($scope.events, function(event){
+                        currentTask.id==event.id;
+                    })
+                })
         };
 
 
@@ -130,7 +127,8 @@ angular.module('caffeina.controllers')
             //FIXME not working (when bad connection changing months don't trigger right away empty)
             $scope.monthEvents = [];
             $scope.selectedEvent = {};
-            dmlservice.getTasks(year, month).then(function (res) {
+            dmlservice.getTasks(year, month)
+                .then(function (res) {
                 $scope.events = _.sortBy(res, 'date');
                 console.log('res:'+res.length);
                 CalendarEvents.setEvents($scope.events);
@@ -138,6 +136,7 @@ angular.module('caffeina.controllers')
             }, function (error) {
                 ngProgressLite.done();
             });
+
         };
 
 

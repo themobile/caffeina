@@ -1,5 +1,9 @@
 ion-view(title='inspiration',ng-controller="inspiration",ng-init='init()')
     ion-content(padding='false',scroll='true')
+        .row.screenHeader
+            .col.screenTitle Photos for your inspiration
+        .row
+            .col {{inspirations.length}} photos > tap to see large
         ion-list
             ion-item.inspiration-item(ng-repeat='inspiration in inspirations')
                 a.item.item-thumbnail-left.afterarrow(ng-click="showImage(inspiration,$index)")
