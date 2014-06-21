@@ -43,18 +43,17 @@ angular.module('caffeina.controllers')
             //delete hashkey from location object otherwise firebase is complaining
             if ($scope.newJob.details) if ($scope.newJob.details.location) delete $scope.newJob.details.location['$$hashKey'];
 
-
-//            if (!$scope.newJob.details.location) $scope.newJob.details.location={
-//                "geometry" : {
-//                    "location" : {},
-//                    "viewport" : {}
-//                },
-//                "formatted_address" : ""
-//            }
-
             //set this to be considered
             if ($scope.newJob.type.autoBooked) $scope.newJob.isBooked=true;
 
+
+            //read time
+            var time=$scope.newJob.time.split(':');
+            var hours=time[0];
+            var minutes=time[1];
+
+            delete $scope.newJob['time'];
+            $scope.newJob.date=moment($scope.newJob.date).add(parseInt(hours),'hour').add(parseInt(minutes),'minutes').toISOString();
 
 
             dmlservice.setJob($scope.newJob).then(function (jobId) {

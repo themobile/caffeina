@@ -1,7 +1,6 @@
 <?php
 
- include 'scripts/firebaseLib.php';
-
+require_once 'scripts/firebaseLib.php';
 
 
 if(isset($_POST['email'])) {
@@ -88,11 +87,65 @@ if(isset($_POST['email'])) {
  
      
  
-     
 
- $path='https://caffeina.firebaseio.com/inspiration/noroc';
+//pus pe userul daniel
+    $fb = new Firebase('https://caffeina.firebaseio.com/Y2hpbmRlYS5kYW5pZWxAZ21haWwuY29t','If7Vp2KfhXZl5kgtCaEcgrdET0vX6Ap4XQE2OgQK');
+//    $response=$fb->get('/noroc');
 
-$firebase->set($path,'aaa');
+    class objToAdd
+        {
+            public $createdAt;
+            public updatedAt;
+            public version=1;
+            public isDeleted=false;
+
+        }
+
+
+    $fb->set(''
+
+
+//                        return dmlService._add(jobRef, job, job.type.name);
+//return dmlService._add(taskRef, newTask, newTask.date).then(function (taskId) {
+//                                  jobRef.child(jobId).update({tasks: taskId});
+//            return firebaseRef('/users/' + btoa(user.user.email) + '/jobs/');
+//            return firebaseRef('/users/' + btoa(user.user.email) + '/tasks/');
+
+
+
+dmlService._add = function (fbRef, objToAdd, objPriority) {
+            var now = dmlService._now()
+                , newId = 0
+                , deferred = $q.defer()
+                ;
+
+            objToAdd.createdAt = now;
+            objToAdd.updatedAt = now;
+            objToAdd.version = 1;
+            objToAdd.isDeleted = false;
+
+            fbRef.child('counter').transaction(function (currValue) {
+                return (currValue || 0) + 1;
+            }, function (error, commited, identity) {
+                if (error) {
+                    deferred.reject('dmlservice/_add: ' + error);
+                } else {
+                    if (commited) {
+                        newId = identity.val();
+                        fbRef.child(newId).setWithPriority(objToAdd, objPriority, function (error) {
+                            if (error) {
+                                deferred.reject('dmlservice/_add: ' + error);
+                            } else {
+                                deferred.resolve(newId);
+                            }
+                        });
+                    } else {
+                        deferred.reject('dmlservice/_add: not commited');
+                    }
+                }
+            });
+            return deferred.promise;
+
 
 
 // create email headers

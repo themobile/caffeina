@@ -1,6 +1,6 @@
 {
     "1": {
-        "color": "#ff00ee",
+        "color": "#A9A751",
         "name": "wedding",
         "tasks": {
             "1": {
@@ -35,7 +35,7 @@
             },
             "4": {
                 "isMain": false,
-                "name": "ceremony",
+                "name": "religious ceremony",
                 "shift": 0,
                 "alarm": {
                     "id": 5,
@@ -66,7 +66,7 @@
         }
     },
     "2": {
-        "color": "#eeccdd",
+        "color": "#4CB0E8",
         "name": "baptizing",
         "tasks": {
             "1": {
@@ -112,7 +112,7 @@
         }
     },
     "3": {
-        "color": "#00bbff",
+        "color": "#3B9C54",
         "name": "family session",
         "tasks": {
             "1": {
@@ -127,8 +127,72 @@
             }
         }
     },
+    "4": {
+        "color": "#E86F74",
+        "name": "couple session",
+        "tasks": {
+            "1": {
+                "isMain": true,
+                "name": "session",
+                "shift": 0,
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
+            }
+        }
+    },
+    "5": {
+        "color": "#CF633A",
+        "name": "individual session",
+        "tasks": {
+            "1": {
+                "isMain": true,
+                "name": "session",
+                "shift": 0,
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
+            }
+        }
+    },
+    "6": {
+        "color": "#6CA86A",
+        "name": "product session",
+        "tasks": {
+            "1": {
+                "isMain": true,
+                "name": "session",
+                "shift": 0,
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
+            }
+        }
+    },
+    "7": {
+        "color": "#362D2A",
+        "name": "corporate event",
+        "tasks": {
+            "1": {
+                "isMain": true,
+                "name": "event",
+                "shift": 0,
+                "alarm": {
+                    "id": 5,
+                    "name": "1 day",
+                    "hours": 24
+                }
+            }
+        }
+    },
     "99": {
-        "color": "#00bbff",
+        "color": "#4F1618",
         "name": "simple task",
         "autoBooked": true,
         "tasks": {

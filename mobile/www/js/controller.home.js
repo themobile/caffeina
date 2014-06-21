@@ -78,7 +78,8 @@ angular.module('caffeina.controllers')
             currentTask.jobObject.isBooked = true;
 
 
-            // FIXME: not working deloc
+            // FIXME: ceva nu merge in lantul de promisiuni, imi intoarce la load data fara evenimentul bookuit
+
             dmlservice.setJob(currentTask.jobObject)
                 .then(function (jobId) {
                     deferred.resolve();
