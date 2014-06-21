@@ -76,7 +76,6 @@ angular.module('caffeina.controllers')
             var currentTask = $scope.selectedEvent;
             currentTask.jobObject.isBooked = true;
 
-
             // FIXME: ceva nu merge in lantul de promisiuni, imi intoarce la load data fara evenimentul bookuit
 
             dmlservice.setJob(currentTask.jobObject)
@@ -84,7 +83,8 @@ angular.module('caffeina.controllers')
                     $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'), function () {
                         $scope.selectedEvent = _.find($scope.events, function (event) {
                             currentTask.id == event.id;
-                        })
+                        });
+                        console.log('aaa');
                     });
                 });
 
