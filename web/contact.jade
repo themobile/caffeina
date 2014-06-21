@@ -1,0 +1,46 @@
+doctype html5
+html(lang='en')
+head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title CAFFEINA | sexy mobile photographer assistant
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Caffeina - mobile application to assist photographers')
+    meta(name='keywords', content='caffeina, photographer mobile application')
+    meta(name='author', content='themobile')
+    link(rel='shortcut icon', type='image/x-icon', href='images/favicon.ico')
+    link(rel='stylesheet', type='text/css', href='css/style.css')
+    body
+
+
+
+            form(name='contactform', method='post', action='contact.php')
+                table(width='450px')
+                    tr
+                        td(valign='top')
+                            label(for='first_name') First Name *
+                        td(valign='top')
+                            input(type='text', name='first_name', maxlength='50', size='30')
+                    tr
+                        td(valign='top')
+                            label(for='last_name') Last Name *
+                        td(valign='top')
+                            input(type='text', name='last_name', maxlength='50', size='30')
+                    tr
+                        td(valign='top')
+                            label(for='email') Email Address *
+                        td(valign='top')
+                            input(type='text', name='email', maxlength='80', size='30')
+                    tr
+                        td(valign='top')
+                            label(for='telephone') Mobile number
+                        td(valign='top')
+                            input(type='text', name='telephone', maxlength='30', size='30')
+                    tr
+                        td(valign='top')
+                            label(for='comments') Comments *
+                        td(valign='top')
+                            textarea(name='comments', maxlength='1000', cols='25', rows='6')
+                    tr
+                        td(colspan='2', style='text-align: center;')
+                            input(type='submit', value='Submit')

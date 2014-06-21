@@ -43,7 +43,7 @@ head
                             button.button.button-clear(ng-click="save()") edit
                     span(ng-if='isInInventory')
                         ion-nav-buttons(side='left')
-                            button.button.button-clear(ng-click="back()") back
+                            button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
                         ion-nav-buttons(side='right')
                             button.button.button-clear(ng-click="addInventory()") add
 

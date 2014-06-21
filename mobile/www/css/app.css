@@ -7690,8 +7690,9 @@ span.aftericonLikeFirstLetters {
     background-color: rgba(255, 0, 0, 0.07); }
 
 .item-divider {
-  background-color: white;
-  min-height: 20px; }
+  background-color: #f2f2f2;
+  min-height: 20px;
+  border: none; }
 
 legend {
   border: none;
@@ -8197,13 +8198,13 @@ form input[readonly]:not(.cloned-text-input) {
     right: 0;
     top: 0; }
   .image-modal .blackbackground {
-    background: black !important; }
+    background: white !important; }
   .image-modal a h6.image-author {
     position: absolute;
     top: 10px;
     left: 20px;
     max-width: 70%;
-    background-color: rgba(0, 0, 0, 0.21);
+    background-color: rgba(255, 255, 255, 0.21);
     color: #ca7377;
     padding: 10px; }
   .image-modal .numberOf {
@@ -8211,14 +8212,14 @@ form input[readonly]:not(.cloned-text-input) {
     bottom: 10px;
     left: 20px;
     max-width: 70%;
-    background-color: rgba(0, 0, 0, 0.21);
+    background-color: rgba(255, 255, 255, 0.21);
     color: #ca7377;
     padding: 10px; }
   .image-modal .closeButton {
     position: absolute;
     top: 5px;
     right: 20px;
-    background-color: rgba(0, 0, 0, 0.21);
+    background-color: rgba(255, 255, 255, 0.21);
     font-size: 40px;
     padding: 10px;
     color: #ca7377; }
@@ -8242,3 +8243,7 @@ form input[readonly]:not(.cloned-text-input) {
 .item.inventory {
   border-right: none;
   border-left: none; }
+
+.platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
+  adding-right: 0 !important;
+  line-height: 34px; }

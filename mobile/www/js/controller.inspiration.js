@@ -12,8 +12,9 @@ angular.module('caffeina.controllers')
         , 'dmlservice'
         , '$ionicModal'
         , '$sce'
+        , '$timeout'
 
-        , function ($scope, $state, $stateParams, dmlservice, $ionicModal, $sce) {
+        , function ($scope, $state, $stateParams, dmlservice, $ionicModal, $sce,$timeout) {
 
 
         $scope.init = function () {
@@ -66,6 +67,7 @@ angular.module('caffeina.controllers')
 
         $scope.openModal = function () {
             $scope.modal.show();
+
         };
 
         $scope.closemdl = function (ev) {

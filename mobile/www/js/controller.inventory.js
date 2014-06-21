@@ -28,9 +28,6 @@ angular.module('caffeina.controllers')
         $scope.init = function () {
 
             $scope.getData();
-            $scope.newItem = {
-                date: $filter("date")(new Date(), 'yyyy-MM-dd')
-            };
         };
 
 
@@ -44,6 +41,8 @@ angular.module('caffeina.controllers')
         };
 
         $scope.editItem = function (item) {
+            //same ADD template for editing.
+            //populate newItem with item swiped data
             $scope.newItem = item;
             delete $scope.newItem['$$hashKey'];
             $scope.inAdd=false;
@@ -86,6 +85,9 @@ angular.module('caffeina.controllers')
 
         $scope.$on('inventory:add', function () {
             $scope.inAdd=true;
+            $scope.newItem={
+                date:$filter("date")(new Date(), 'yyyy-MM-dd')
+            };
             $scope.showAdd();
         });
 

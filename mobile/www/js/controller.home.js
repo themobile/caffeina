@@ -52,7 +52,9 @@ angular.module('caffeina.controllers')
             var responseConfirm = false;
             var confirmPopup = $ionicPopup.confirm({
                 template: 'are you sure to delete the whole job?',
-                title: 'remove the job'
+                title: 'remove the job',
+                okType:'button-clear',
+                cancelType:'button-clear'
             });
             confirmPopup.then(function (res) {
                 if (res) {
@@ -95,8 +97,16 @@ angular.module('caffeina.controllers')
         $scope.viewTask = function (id) {
             ngProgressLite.start();
             $scope.selectedEvent = _.find($scope.events, function (event) {
+
+
                 return event.id == id;
             });
+
+            dmlservice.getJobTasks($scope.selectedEvent.jobObject.id)
+                .then(function(resp){
+                    $scope.selectedEvent.tasks=resp;
+                });
+
 
             //color events in list based on current clicked day / event
             _.map($scope.events, function (num) {
