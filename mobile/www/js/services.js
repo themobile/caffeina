@@ -539,7 +539,7 @@ angular.module('caffeina.services', ['firebase'])
                     deferred.reject('dmlservice/getJobTasks: invalid job');
                 }
             });
-            return $q.all([deferred.promise]).then(function () {
+            return deferred.promise.then(function () {
                 return $q.all(promises);
             }, function (error) {
                 return deferred.promise;
@@ -600,7 +600,8 @@ angular.module('caffeina.services', ['firebase'])
                 });
                 deferred.resolve();
             });
-            return $q.all([deferred.promise]);
+//            return $q.all([deferred.promise]);
+            return deferred.promise;
         };
 
         dmlService.setKey = function (key, value) {
@@ -748,38 +749,54 @@ angular.module('caffeina.services', ['firebase'])
                     ;
                 if (theInventory) {
                     inventoryId = _.pairs(theInventory)[0][0];
-                    return dmlService._upd(inventoryRef, inventory, inventoryId, inventory.name).then(function (inventoryId) {
-                        deferred.resolve(inventoryId);
-                    }, function (error) {
-                        deferred.reject('dmlservice/setInventory: ' + error);
-                    });
+                    if (inventoryId != inventory.id && !(_.pairs(theInventory)[0][1].isDeleted) || !(inventory.id)) {
+                        deferred.reject('dmlservice/setInventory: the name already used');
+                    } else {
+                        if (inventory.id) {
+                            inventoryId = inventory.id;
+                            delete inventory.id;
+                        }
+                        return dmlService._upd(inventoryRef, inventory, inventoryId, inventory.name).then(function (inventoryId) {
+                            deferred.resolve(inventoryId);
+                        }, function (error) {
+                            deferred.reject('dmlservice/setInventory: ' + error);
+                        });
+                    }
                 } else {
-                    return dmlService._add(inventoryRef, inventory, inventory.name).then(function (inventoryId) {
-                        deferred.resolve(inventoryId);
-                    }, function (error) {
-                        deferred.reject('dmlservice/setInventory: ' + error);
-                    });
+                    if (inventory.id) {
+                        inventoryId = inventory.id;
+                        delete inventory.id;
+                        return dmlService._upd(inventoryRef, inventory, inventoryId, inventory.name).then(function (inventoryId) {
+                            deferred.resolve(inventoryId);
+                        }, function (error) {
+                            deferred.reject('dmlservice/setInventory: ' + error);
+                        });
+                    } else {
+                        return dmlService._add(inventoryRef, inventory, inventory.name).then(function (inventoryId) {
+                            deferred.resolve(inventoryId);
+                        }, function (error) {
+                            deferred.reject('dmlservice/setInventory: ' + error);
+                        });
+                    }
                 }
             });
             return deferred.promise;
         };
 
-        dmlService.delInventory = function (key) {
+        dmlService.delInventory = function (key, name) {
             var inventoryRef = dmlService._inventoryRef()
                 , deferred = $q.defer()
+                , reName = name + " #deletedAt:" + moment().format()
                 ;
-
-            dmlService._del(inventoryRef, key)
-                .then(function (success) {
+            inventoryRef.child(key).update({name: reName}, function () {
+                dmlService._del(inventoryRef, key).then(function (success) {
                     deferred.resolve('da')
                 }, function (error) {
-                    deferred.reject('dmlservice/delInventory: '+error);
+                    deferred.reject('dmlservice/delInventory: ' + error);
                 });
+            });
+
             return deferred.promise;
-
         };
-
-
-
         return dmlService;
     }]);
