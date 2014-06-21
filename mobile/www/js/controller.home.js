@@ -53,8 +53,8 @@ angular.module('caffeina.controllers')
             var confirmPopup = $ionicPopup.confirm({
                 template: 'are you sure to delete the whole job?',
                 title: 'remove the job',
-                okType:'button-clear',
-                cancelType:'button-clear'
+                okType: 'button-clear',
+                cancelType: 'button-clear'
             });
             confirmPopup.then(function (res) {
                 if (res) {
@@ -81,13 +81,13 @@ angular.module('caffeina.controllers')
 
             dmlservice.setJob(currentTask.jobObject)
                 .then(function () {
-                    $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'));
-                })
-                .then(function(){
-                    $scope.selectedEvent= _.find($scope.events, function(event){
-                        currentTask.id==event.id;
-                    })
-                })
+                    $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'), function () {
+                        $scope.selectedEvent = _.find($scope.events, function (event) {
+                            currentTask.id == event.id;
+                        })
+                    });
+                });
+
         };
 
 
@@ -101,8 +101,8 @@ angular.module('caffeina.controllers')
             });
 
             dmlservice.getJobTasks($scope.selectedEvent.jobObject.id)
-                .then(function(resp){
-                    $scope.selectedEvent.tasks=resp;
+                .then(function (resp) {
+                    $scope.selectedEvent.tasks = resp;
                 });
 
 
@@ -121,7 +121,7 @@ angular.module('caffeina.controllers')
         };
 
         //load monthly data based on date
-        $scope.loadData = function (year, month) {
+        $scope.loadData = function (year, month, callback) {
             ngProgressLite.start();
             //empty list of events
             //FIXME not working (when bad connection changing months don't trigger right away empty)
@@ -129,13 +129,17 @@ angular.module('caffeina.controllers')
             $scope.selectedEvent = {};
             dmlservice.getTasks(year, month)
                 .then(function (res) {
-                $scope.events = _.sortBy(res, 'date');
-                console.log('res:'+res.length);
-                CalendarEvents.setEvents($scope.events);
-                ngProgressLite.done();
-            }, function (error) {
-                ngProgressLite.done();
-            });
+                    $scope.events = _.sortBy(res, 'date');
+                    console.log('res:' + res.length);
+                    CalendarEvents.setEvents($scope.events);
+                    ngProgressLite.done();
+                }, function (error) {
+                    ngProgressLite.done();
+                }).then(function () {
+                    if (callback) {
+                        callback();
+                    }
+                });
 
         };
 
