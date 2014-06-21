@@ -1,0 +1,10 @@
+div.modal.image-modal(ng-click="closeModal()")
+    ion-pane.blackbackground(detect-gestures, gesture-type="swipe")
+        img.fullscreen-image(ng-src="{{imageSrc}}")
+        .nextbutton(ng-click='next()')
+        .prevbutton(ng-click='prev()')
+        .icon.ion-ios7-close-empty.closebutton(ng-click='closemdl()')
+        a(target="_blank",ng-href="{{link}}")
+            h6.image-author {{author}}
+                h6(ng-click='prev()')
+        h6.numberOf {{imageIndex}} | {{inspirations.length}}

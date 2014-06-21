@@ -35,14 +35,30 @@ angular.module('caffeina.controllers')
 
         };
 
+
+
+
+
         $scope.$on('newJob:save', function () {
             //delete hashkey from location object otherwise firebase is complaining
-            delete $scope.newJob.details.location['$$hashKey'];
+            if ($scope.newJob.details) if ($scope.newJob.details.location) delete $scope.newJob.details.location['$$hashKey'];
+
+
+//            if (!$scope.newJob.details.location) $scope.newJob.details.location={
+//                "geometry" : {
+//                    "location" : {},
+//                    "viewport" : {}
+//                },
+//                "formatted_address" : ""
+//            }
+
+            //set this to be considered
+            if ($scope.newJob.type.autoBooked) $scope.newJob.isBooked=true;
 
 
 
             dmlservice.setJob($scope.newJob).then(function (jobId) {
-                $state.go('home');
+                $state.transitionTo('home');
             }, function (error) {
                 $scope.myPopupShow(error);
             });

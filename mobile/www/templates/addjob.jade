@@ -64,7 +64,7 @@ ion-view(title='define new job',ng-controller="addjob",ng-init='init()')
             label.item.item-input
                 textarea(name='newJob.notes',placeholder='notes',rows='3',ng-model='newJob.notes')
 
-            div.row(ng-show='newJob.type.name!="other"')
+            div.row(ng-show='!newJob.type.autoBooked')
                 div.item-divider
                 .col
                     ion-toggle(name='newJob.isBooked',ng-model='newJob.isBooked', toggle-class='toggle-calm') Job is booked?

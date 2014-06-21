@@ -121,7 +121,7 @@ angular.module('caffeina.services', ['firebase'])
         };
 
         dmlService._fileRef = function () {
-            return firebaseRef('/files/');
+            return firebaseRef('/inspiration/');
         };
 
         dmlService._rootSettingsFBRef = function () {
@@ -379,6 +379,7 @@ angular.module('caffeina.services', ['firebase'])
 
         dmlService.delJob = function (jobId) {
             var jobRef = dmlService._jobsFBRef()
+//                , deferred=$q.defer();
                 ;
             jobRef.child(jobId).once('value', function (jobSnapshoot) {
                 var job = jobSnapshoot.val()
@@ -405,6 +406,7 @@ angular.module('caffeina.services', ['firebase'])
                 if (!((job.contact || {}))) {
                     job.contact = {name: 'unknown'};
                 }
+
                 dmlService.getContact(job.contact).then(function (contactId) {
                     jobId = job.id;
                     delete job["contact"];
@@ -467,9 +469,6 @@ angular.module('caffeina.services', ['firebase'])
                     deferred.resolve(jobId);
                 }, function (error) {
                     deferred.reject('dmlservice/setJob: ' + error);
-                }).then(function () {
-                    console.log('end');
-                    console.log(moment().format('mm:ss.sss'));
                 });
             }
             else {
@@ -572,7 +571,7 @@ angular.module('caffeina.services', ['firebase'])
                 });
                 deferred.resolve(promises);
             });
-            return $q.all([deferred.promise]).then(function () {
+            return deferred.promise.then(function () {
                 return $q.all(promises);
             }, function (error) {
                 deferred.reject('dmlservice/getTasks: ' + error);
@@ -723,7 +722,7 @@ angular.module('caffeina.services', ['firebase'])
                     , itemsRet = []
                     ;
                 _.each(items, function (item) {
-                    if (item[0] != 'counter') {
+                    if (item[0] != 'counter' && !item[1].isDeleted) {
                         item[1].id = item[0];
                         itemsRet.push(item[1]);
                     }
@@ -739,7 +738,7 @@ angular.module('caffeina.services', ['firebase'])
                 , startAt, endAt
                 ;
             inventory = (inventory || {});
-            if (!(inventory.name)) inventory.name = "obiect de inventar";
+            if (!(inventory.name)) inventory.name = "inventory item";
             startAt = inventory.name;
             endAt = inventory.name;
 
@@ -764,5 +763,23 @@ angular.module('caffeina.services', ['firebase'])
             });
             return deferred.promise;
         };
+
+        dmlService.delInventory = function (key) {
+            var inventoryRef = dmlService._inventoryRef()
+                , deferred = $q.defer()
+                ;
+
+            dmlService._del(inventoryRef, key)
+                .then(function (success) {
+                    deferred.resolve('da')
+                }, function (error) {
+                    deferred.reject('dmlservice/delInventory: '+error);
+                });
+            return deferred.promise;
+
+        };
+
+
+
         return dmlService;
     }]);

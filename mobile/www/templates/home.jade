@@ -25,7 +25,8 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                     p.iconLikeFirstLetters(ng-style="{'background':event.jobObject.type.color, 'color':'white','border-color':event.jobObject.type.color}") {{event.jobObject.type.name | firstletters}}
 
                                 p.small {{event.date | date: 'd MMM yyyy, h:mm'}} | {{event.jobObject.type.name}}
-                                h4  <strong> {{event.name}} </strong> with {{event.jobObject.contactObject.name}}
+                                h4(ng-if='!event.jobObject.type.autoBooked')  <strong> {{event.name}} </strong> with {{event.jobObject.contact.name}}
+                                h4(ng-if='event.jobObject.type.autoBooked')  <strong> with </strong> {{event.jobObject.contact.name}}
 
 
 
@@ -40,51 +41,126 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                         .col.screenTitle(ng-if='!selectedEvent.name') {{currentMonthYear |date:"yyyy | MMMM" | lowercase }}
                     .row.row_empty_for_balance
                         .col(ng-if='!selectedEvent.date') no event selected
-                        .col(ng-if='selectedEvent.date') <strong>todo:</strong>&nbsp{{selectedEvent.name}}
+                        .col(ng-if='selectedEvent.date && !selectedEvent.jobObject.type.autoBooked') <strong>todo:</strong>&nbsp{{selectedEvent.name}}
 
                     div(ng-if='selectedEvent.date')
                         .list.list-smaller
-                            //task details
-                            a.item.item-icon-left.item-icon-right(href='#')
-                                i.icon.ion-ios7-person
-                                | {{selectedEvent.jobObject.contactObject.name}}
-                                i.icon.ion-ios7-telephone
-                            a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.location.name',ng-click='golocation(selectedEvent.location.geometry.location)')
-                                i.icon.ion-map
-                                | {{selectedEvent.location.name}}
-                                i.icon.ion-ios7-location
-                            a.item.item-icon-left(href='#',ng-if='selectedEvent.notes')
-                                i.icon.ion-ios7-information
-                                | {{selectedEvent.notes}}
 
-                            .item.item-divider
-                            // job details
-                            a.item.item-icon-left(href='#',ng-style="{'color':selectedEvent.jobObject.type.color}")
-                                i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
-                                | <strong>job type:</strong>&nbsp{{selectedEvent.jobObject.type.name}}
-                            a.item.item-icon-left(href='#')
-                                i.icon.ion-ios7-calendar
-                                | main event: {{selectedEvent.jobObject.date | date:'yyyy | MMMM dd' | lowercase}}
-                            a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.jobObject.details.location.name',ng-click='golocation(selectedEvent.jobObject.details.location.geometry.location)')
-                                i.icon.ion-map
-                                | {{selectedEvent.jobObject.details.location.name}}
-                                i.icon.ion-ios7-location()
-                            a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.details.price')
-                                i.icon.ion-ios7-pricetag
-                                | my price: {{selectedEvent.jobObject.details.price}}&nbspEUR
 
-                            a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.allDay')
-                                i.icon.ion-ios7-clock
-                                | <strong>it takes all day</strong>
-                            a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.isBooked')
-                                i.icon.ion-ios7-briefcase
-                                | <strong>job is booked. yupiii!</strong>
-                            a.item.item-icon-left.afterarrow(href='#',ng-if='!selectedEvent.jobObject.isBooked')
-                                i.icon.ion-ios7-briefcase
-                                | <strong>job not booked</strong>
-                                span.item-note Book it!
-                            a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.notes')
-                                i.icon.ion-ios7-information
-                                | my notes: {{selectedEvent.jobObject.notes}}
+                            //if job is actually a simple task
 
-                            //.item.item-divider
+                            div(ng-if='selectedEvent.jobObject.type.autoBooked')
+                                a.item.item-icon-left(href='#')
+                                    i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
+                                    | <strong>notes:</strong>&nbsp{{selectedEvent.jobObject.notes}}
+                                a.item.item-icon-left.item-icon-right(href='#')
+                                    i.icon.ion-ios7-person
+                                    | <strong>with:</strong>&nbsp{{selectedEvent.jobObject.contact.name}}
+                                    i.icon.ion-ios7-telephone
+                                a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.jobObject.details.location.name',ng-click='golocation(selectedEvent.jobObject.details.location.geometry.location)')
+                                    i.icon.ion-map
+                                    | {{selectedEvent.jobObject.details.location.name}}
+                                    i.icon.ion-ios7-location()
+                                a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.details.price')
+                                    i.icon.ion-ios7-pricetag
+                                    | my price: {{selectedEvent.jobObject.details.price}}&nbspEUR
+
+                                a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.allDay')
+                                    i.icon.ion-ios7-clock
+                                    | <strong>it takes all day</strong>
+
+
+
+                            //if job is other than simple job
+                            div(ng-if='!selectedEvent.jobObject.type.autoBooked')
+
+
+
+                                //if job has one task
+                                div(ng-if='countEvents(selectedEvent.jobObject.tasks)==0')
+                                    //task details
+                                    a.item.item-icon-left.item-icon-right(href='#')
+                                        i.icon.ion-ios7-person
+                                        | {{selectedEvent.jobObject.contact.name}}
+                                        i.icon.ion-ios7-telephone
+                                    a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.location.name',ng-click='golocation(selectedEvent.location.geometry.location)')
+                                        i.icon.ion-map
+                                        | {{selectedEvent.location.name}}
+                                        i.icon.ion-ios7-location
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.notes')
+                                        i.icon.ion-ios7-information
+                                        | {{selectedEvent.notes}}
+
+
+                                    .item.item-divider
+                                    // job details
+                                    a.item.item-icon-left(href='#',ng-style="{'color':selectedEvent.jobObject.type.color}")
+                                        i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
+                                        | <strong>job type:</strong>&nbsp{{selectedEvent.jobObject.type.name}}
+
+
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.details.price')
+                                        i.icon.ion-ios7-pricetag
+                                        | my price: {{selectedEvent.jobObject.details.price}}&nbspEUR
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.allDay')
+                                        i.icon.ion-ios7-clock
+                                        | <strong>it takes all day</strong>
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.isBooked')
+                                        i.icon.ion-ios7-briefcase
+                                        | <strong>job is booked. yupiii!</strong>
+                                    a.item.item-icon-left.afterarrow(href='#',ng-if='!selectedEvent.jobObject.isBooked')
+                                        i.icon.ion-ios7-briefcase
+                                        | <strong>job not booked</strong>
+                                        span(ng-click='bookjob()').item-note Book it!
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.notes')
+                                        i.icon.ion-ios7-information
+                                        | my notes: {{selectedEvent.jobObject.notes}}
+
+
+
+
+                                //if job has more than one task (i.e. it is booked and has more than one job)
+                                div(ng-if='countEvents(selectedEvent.jobObject.tasks)>0')
+
+                                    //task details
+                                    a.item.item-icon-left.item-icon-right(href='#')
+                                        i.icon.ion-ios7-person
+                                        | {{selectedEvent.jobObject.contact.name}}
+                                        i.icon.ion-ios7-telephone
+                                    a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.location.name',ng-click='golocation(selectedEvent.location.geometry.location)')
+                                        i.icon.ion-map
+                                        | {{selectedEvent.location.name}}
+                                        i.icon.ion-ios7-location
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.notes')
+                                        i.icon.ion-ios7-information
+                                        | {{selectedEvent.notes}}
+
+                                    .item.item-divider
+                                    // job details
+                                    a.item.item-icon-left(href='#',ng-style="{'color':selectedEvent.jobObject.type.color}")
+                                        i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
+                                        | <strong>job type:</strong>&nbsp{{selectedEvent.jobObject.type.name}}
+                                    a.item.item-icon-left(href='#')
+                                        i.icon.ion-ios7-calendar
+                                        | main event: {{selectedEvent.jobObject.date | date:'yyyy | MMMM dd' | lowercase}}
+                                    a.item.item-icon-left.item-icon-right(ng-if='selectedEvent.jobObject.details.location.name',ng-click='golocation(selectedEvent.jobObject.details.location.geometry.location)')
+                                        i.icon.ion-map
+                                        | {{selectedEvent.jobObject.details.location.name}}
+                                        i.icon.ion-ios7-location()
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.details.price')
+                                        i.icon.ion-ios7-pricetag
+                                        | my price: {{selectedEvent.jobObject.details.price}}&nbspEUR
+
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.allDay')
+                                        i.icon.ion-ios7-clock
+                                        | <strong>it takes all day</strong>
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.isBooked')
+                                        i.icon.ion-ios7-briefcase
+                                        | <strong>job is booked. yupiii!</strong>
+                                    a.item.item-icon-left.afterarrow(href='#',ng-if='!selectedEvent.jobObject.isBooked')
+                                        i.icon.ion-ios7-briefcase
+                                        | <strong>job not booked</strong>
+                                        span.item-note Book it!
+                                    a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.notes')
+                                        i.icon.ion-ios7-information
+                                        | my notes: {{selectedEvent.jobObject.notes}}

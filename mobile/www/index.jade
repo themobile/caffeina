@@ -25,7 +25,7 @@ head
                 // if state is ADD then navbar is custom, otherwise is standard
                 //ion-nav-bar(ng-controller='MenuController',ng-show='!isInAdd')
                 ion-nav-bar.ng-cloak(ng-controller='MenuController')
-                    span(ng-if='!isInAdd && !isInView')
+                    span(ng-if='!isInAdd && !isInView && !isInInventory')
                         ion-nav-buttons(side='left')
                             button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
                         ion-nav-buttons(side='right')
@@ -38,9 +38,14 @@ head
                             button.button.button-clear(ng-click="save()") save
                     span(ng-if='isInView')
                         ion-nav-buttons(side='left')
-                            button.button.icon.ion-navicon.button-clear(ng-click="toggleLeft()")
+                            button.button.button-clear(ng-click="delete()") delete
                         ion-nav-buttons(side='right')
                             button.button.button-clear(ng-click="save()") edit
+                    span(ng-if='isInInventory')
+                        ion-nav-buttons(side='left')
+                            button.button.button-clear(ng-click="back()") back
+                        ion-nav-buttons(side='right')
+                            button.button.button-clear(ng-click="addInventory()") add
 
                 // views
                 ion-nav-view
@@ -54,17 +59,32 @@ head
                         i.icon.ion-home
                         | Home
 
+
+
+
+                    a.item.item-icon-left(href='#/inspiration' ,nav-clear ,menu-close )
+                        i.icon.ion-ios7-photos
+                        | Inspiration
+
+                    a.item.item-icon-left(href='#/inventory' ,nav-clear ,menu-close )
+                        i.icon.ion-ios7-gear
+                        | Inventory
+
+                    a.item.item-icon-left(href='#/settings' ,nav-clear ,menu-close )
+                        i.icon.ion-settings
+                        | Settings
+
                     a.item.item-icon-left(href='#/tests' ,nav-clear ,menu-close )
                         i.icon.ion-chatbubble-working
                         | Tests
 
-                    a.item.item-icon-left(href='#/chat' ,nav-clear ,menu-close )
-                        i.icon.ion-chatbubble-working
-                        | Chat
-
-                    a.item.item-icon-left(href='#/sortable' ,nav-clear ,menu-close )
-                        i.icon.ion-alert-circled
-                        | Sortable
+                    //a.item.item-icon-left(href='#/chat' ,nav-clear ,menu-close )
+                    //    i.icon.ion-chatbubble-working
+                    //    | Chat
+                    //
+                    //a.item.item-icon-left(href='#/sortable' ,nav-clear ,menu-close )
+                    //    i.icon.ion-alert-circled
+                    //    | Sortable
 
                     //a.item.item-icon-left(href='#/map' ,nav-clear ,menu-close )
                     //    i.icon.ion-alert-circled
@@ -159,7 +179,10 @@ head
         script(src='js/controller.add.js')
         script(src='js/controller.home.js')
         script(src='js/controller.map.js')
+        script(src='js/controller.inspiration.js')
+        script(src='js/controller.inventory.js')
         script(src='js/filters.js')
+        script(src='js/directives.js')
         script(src='js/services.js')
         script(src='js/service.firebase.js')
         script(src='js/service.auth.js')

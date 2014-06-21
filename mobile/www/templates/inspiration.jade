@@ -1,0 +1,8 @@
+ion-view(title='inspiration',ng-controller="inspiration",ng-init='init()')
+    ion-content(padding='false',scroll='true')
+        ion-list
+            ion-item.inspiration-item(ng-repeat='inspiration in inspirations')
+                a.item.item-thumbnail-left.afterarrow(ng-click="showImage(inspiration,$index)")
+                    img.inspiration-image(ng-src="{{inspiration.fileUrl}}")
+                    h6 {{inspiration.link}}
+                    p {{inspiration.name}}

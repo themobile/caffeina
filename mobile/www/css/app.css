@@ -8180,3 +8180,65 @@ form input[readonly]:not(.cloned-text-input) {
 
 .angular-google-map-container {
   height: 100%; }
+
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important; }
+  .image-modal .fullscreen-image {
+    max-width: 100%;
+    max-height: 100%;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0; }
+  .image-modal .blackbackground {
+    background: black !important; }
+  .image-modal a h6.image-author {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    max-width: 70%;
+    background-color: rgba(0, 0, 0, 0.21);
+    color: #ca7377;
+    padding: 10px; }
+  .image-modal .numberOf {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    max-width: 70%;
+    background-color: rgba(0, 0, 0, 0.21);
+    color: #ca7377;
+    padding: 10px; }
+  .image-modal .closeButton {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.21);
+    font-size: 40px;
+    padding: 10px;
+    color: #ca7377; }
+  .image-modal .nextbutton, .image-modal .prevbutton {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    bottom: 0; }
+  .image-modal .prevbutton {
+    left: 0; }
+  .image-modal .nextbutton {
+    right: 0; }
+
+.inventory .item-content p {
+  white-space: normal;
+  margin: 0; }
+
+.inspiration-item .item-thumbnail-left, .inspiration-item .item-thumbnail-left .item-content {
+  min-height: 0px; }
+
+.item.inventory {
+  border-right: none;
+  border-left: none; }

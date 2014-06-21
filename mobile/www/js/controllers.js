@@ -15,6 +15,7 @@ angular.module('caffeina.controllers', [])
         , function ($rootScope, $scope, $ionicSideMenuDelegate, userService, storage, $state, dmlservice, $ionicActionSheet) {
 
         $scope.isInAdd = false;
+        $scope.isInInventory = false;
 
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
@@ -42,6 +43,9 @@ angular.module('caffeina.controllers', [])
                 $scope.isInView=value;
             });
 
+
+
+
 //        set isInAdd if state is addlead
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
@@ -51,15 +55,33 @@ angular.module('caffeina.controllers', [])
                 } else {
                     $scope.isInAdd = false;
                 }
+
+                if (toState.name=='inventory') {
+                    $scope.isInInventory=true;
+                } else {
+                    $scope.isInInventory=false;
+                }
+
             });
 
 
         $scope.save = function () {
             $rootScope.$broadcast('newJob:save');
         };
+        $scope.delete= function () {
+            $rootScope.$broadcast('job:delete');
+        };
 
         $scope.cancel = function () {
             $state.transitionTo('home');
+        };
+
+        $scope.addInventory=function(){
+            $rootScope.$broadcast('inventory:add');
+        };
+
+        $scope.back=function(){
+            $state.go($rootScope.previousState);
         };
 
         $scope.add = function () {

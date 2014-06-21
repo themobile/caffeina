@@ -15,7 +15,9 @@ angular.module('caffeina.controllers')
         , '$state'
         , '$timeout'
         , '$ionicSlideBoxDelegate'
-        , function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, dmlservice, $state, $timeout, $ionicSlideBoxDelegate) {
+        , '$ionicPopup'
+        , '$q'
+        , function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, dmlservice, $state, $timeout, $ionicSlideBoxDelegate, $ionicPopup, $q) {
 
 
         // data for calendar
@@ -23,36 +25,80 @@ angular.module('caffeina.controllers')
 
         $scope.datePickerControl = {};
         $scope.isFirstLoaded = true;
-
         $scope.currentMonthYear = '';
 
         //drives the view current event
         $scope.selectedEvent = {};
-
         $scope.templates = [];
-
 
         $scope.init = function () {
 
         };
 
-
-        $scope.golocation=function(coords){
-            var newCoords=coords.A+','+coords.k;
+        //go to map state with current coordinates
+        $scope.golocation = function (coords) {
+            var newCoords = coords.A + ',' + coords.k;
             $scope.$emit('isInView', false);
+            $state.go('map', {location: newCoords});
+        };
 
-            $state.go('map',{location:newCoords});
-        }
+        //count the events for the job
+        $scope.countEvents = function (taskString) {
+            return (taskString.toString().match(/,/g) || []).length;
+        };
 
+        // delete event provided by menu controller
+        $scope.$on('job:delete', function () {
+            var responseConfirm = false;
+            var confirmPopup = $ionicPopup.confirm({
+                template: 'are you sure to delete the whole job?',
+                title: 'remove the job'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    var objectId = $scope.selectedEvent.jobObject.id;
+                    dmlservice.delJob(objectId);
+                    //FIXME trebuie promise pe deljob
+                    $scope.events = _.filter($scope.events, function (event) {
+                        return event.jobObject.id !== objectId;
+                    });
+                    CalendarEvents.setEvents($scope.events);
+                    $ionicSlideBoxDelegate.$getByHandle('calendar_slider').slide(0);
+                }
+            })
+        });
+
+
+        //mark job as booked and reloads calendar
+        $scope.bookjob = function () {
+            var currentTask = $scope.selectedEvent;
+            var deferred = $q.defer();
+            currentTask.jobObject.isBooked = true;
+
+
+            // FIXME: not working deloc
+            dmlservice.setJob(currentTask.jobObject)
+                .then(function (jobId) {
+                    deferred.resolve();
+                }, function (error) {
+                    console.log('error booking job');
+                    deferred.reject();
+                });
+
+            deferred.promise.then(function(){
+                $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'));
+            });
+        };
+
+
+        //view task (on slide 2)
         $scope.viewTask = function (id) {
             ngProgressLite.start();
-
             $scope.selectedEvent = _.find($scope.events, function (event) {
                 return event.id == id;
             });
 
-
-
+            //color events in list based on current clicked day / event
             _.map($scope.events, function (num) {
                 //change selectedEvent if id or date
                 if (num.id == $scope.selectedEvent.id || moment(num.date).isSame($scope.selectedEvent.date)) {
@@ -64,33 +110,33 @@ angular.module('caffeina.controllers')
 
             ngProgressLite.done();
             $ionicSlideBoxDelegate.$getByHandle('calendar_slider').slide(2);
-        }
+        };
 
         //load monthly data based on date
         $scope.loadData = function (year, month) {
             ngProgressLite.start();
-
             //empty list of events
             //FIXME not working (when bad connection changing months don't trigger right away empty)
             $scope.monthEvents = [];
             $scope.selectedEvent = {};
-
             dmlservice.getTasks(year, month).then(function (res) {
                 $scope.events = _.sortBy(res, 'date');
+                console.log('res:'+res.length);
                 CalendarEvents.setEvents($scope.events);
                 ngProgressLite.done();
-            })
+            }, function (error) {
+                ngProgressLite.done();
+            });
         };
 
 
+        //on hold selects the day and add event with the selected day
         $scope.$on('calendar:holddate', function (e, innerhtml) {
             var selectedDay = parseInt(innerhtml);
             var addDate;
             //if it's a possible month day
             if (selectedDay > 0 && selectedDay < 32) {
                 addDate = moment($scope.currentMonthYear).date(selectedDay).format('YYYY/MM/DD');
-
-//                $state.go('addjob/'+encodeURIComponent(addDate));
                 $state.go('addjob', {'date': encodeURIComponent(addDate)});
             }
         });
@@ -132,12 +178,12 @@ angular.module('caffeina.controllers')
 
         //emits on 3rd slide (task view) to signal menu change (kinda weird)
         $scope.sliderchanged = function (index) {
-            if (index == 2 && $scope.selectedEvent.date) {
+            if (index == 2 && $scope.selectedEvent) {
                 $scope.$emit('isInView', true);
             } else {
                 $scope.$emit('isInView', false);
             }
-        }
+        };
 
 
         // calendar loaded data
@@ -159,13 +205,11 @@ angular.module('caffeina.controllers')
                 }
             });
 
-
             // directly view the event
             if (i.length == 1)  $scope.viewTask(i[0].id);
 
             // push in local events for the selected day
             if (i.length >= 2) $ionicSlideBoxDelegate.$getByHandle('calendar_slider').next();
-
 
         });
 

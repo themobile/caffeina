@@ -1,0 +1,11 @@
+.list
+    label.item.item-input
+        i.icon.ion-ios7-gear
+        input(name='newItem.name',type='text',ng-model='newItem.name', placeholder='item name',ng-disabled='!inAdd')
+    label.item.item-input
+        i.icon.ion-ios7-information
+        input(name='newItem.serial',type='text',ng-model='newItem.serial', placeholder='serial number')
+    label.item.item-input
+        i.icon.ion-ios7-calendar
+        input(name='newItem.date',type='date',ng-model='newItem.date', value='{{newItem.date}}',placeholder='dd/MM/yy')
+

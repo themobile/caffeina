@@ -149,13 +149,23 @@ angular.module('caffeina.controllers')
         };
 
         $scope.setFile = function () {
-            dmlservice.setFile({
-                name: "tanganika",
-                link: "www.google.ro",
-                fileUrl: "www.google.ro"
-            }).then(function (fileId) {
-                console.log("file id: " + fileId.toString());
-            })
+
+
+
+            dmlservice.setFile(
+                {
+                    name: "Autor nr 2",
+                    link: "http://www.weddingstaff.ro",
+                    fileUrl: "http://weddingstaff.ro/wp-content/uploads/gravity_forms/33-0b7eda3fad8f88ea83da0f000f4dbc0f/2014/03/barcelona-3c-7.jpg"
+                }
+            );
+
+
+
+
+//                .then(function (fileId) {
+//                    console.log("file id: " + fileId.toString());
+//                })
         };
 
         $scope.getFiles = function () {

@@ -1,0 +1,16 @@
+ion-view(title='inventory',ng-controller="inventory",ng-init='init()')
+    ion-content(padding='true',scroll='true')
+
+        row.screenHeader
+            .col.screenTitle My inventory
+        .row.row_empty_for_balance
+            | {{inventory.length}} items | swipe item left to edit / delete
+
+        ion-list.inventoryList
+            ion-item.inventory.item-icon-left(ng-repeat='item in inventory', item='item')
+                i.icon.ion-ios7-gear
+                h2 {{item.name}}
+                p <strong>serial:</strong>&nbsp{{item.serial}}
+                p <strong>date:</strong>&nbsp{{item.date | date: 'yyyy | MMM d' }}
+                ion-option-button.button-positive(ng-click='deleteItem(inventory[$index])') Delete
+                ion-option-button.button-assertive(ng-click='editItem(inventory[$index],$index)') Edit

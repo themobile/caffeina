@@ -11,6 +11,7 @@ angular.module('caffeina',
         'ion-google-place',
         'google-maps',
         'datePicker',
+
         'caffeina.services',
         'caffeina.controllers',
         'caffeina.filters',
@@ -18,7 +19,9 @@ angular.module('caffeina',
         'ngCookies',
         'firebase',
         'calevents',
-        'ngProgressLite'
+        'ngProgressLite',
+
+        'caffeina.directives'
 
 //        'ngAutocomplete'
     ])
@@ -59,6 +62,16 @@ angular.module('caffeina',
                 controller: 'map'
             })
 
+            .state('inspiration', {
+                url: '/inspiration',
+                templateUrl: 'templates/inspiration.html'
+            })
+
+            .state('inventory', {
+                url: '/inventory',
+                templateUrl: 'templates/inventory.html'
+            })
+
             .state('tests', {
                 url: '/tests',
                 templateUrl: 'templates/tests.html'
@@ -87,7 +100,7 @@ angular.module('caffeina',
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
                 //store previous state
-                $rootScope.$previousState = fromState;
+                $rootScope.previousState = fromState;
             });
 
         if (caffeina_user) {
