@@ -53,7 +53,7 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                 a.item.item-icon-left(href='#')
                                     i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
                                     | <strong>notes:</strong>&nbsp{{selectedEvent.jobObject.notes}}
-                                a.item.item-icon-left.item-icon-right(ng-href='"tel:"selectedEvent.jobObject.contact.phone')
+                                a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
                                     i.icon.ion-ios7-person
                                     | <strong>with:</strong>&nbsp{{selectedEvent.jobObject.contact.name}}
                                     i.icon.ion-ios7-telephone
@@ -79,7 +79,7 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                 //if job has one task
                                 div(ng-if='countEvents(selectedEvent.jobObject.tasks)==0')
                                     //task details
-                                    a.item.item-icon-left.item-icon-right(ng-href='"tel:"selectedEvent.jobObject.contact.phone')
+                                    a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
                                         i.icon.ion-ios7-person
                                         | {{selectedEvent.jobObject.contact.name}}
                                         i.icon.ion-ios7-telephone
@@ -124,7 +124,7 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                 div(ng-if='countEvents(selectedEvent.jobObject.tasks)>0')
 
                                     //task details
-                                    a.item.item-icon-left.item-icon-right(ng-href='"tel:"selectedEvent.jobObject.contact.phone')
+                                    a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
                                         i.icon.ion-ios7-person
                                         | {{selectedEvent.jobObject.contact.name}}
                                         i.icon.ion-ios7-telephone
@@ -170,4 +170,4 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
 
                                     a.item.item-icon-left(ng-repeat='task in selectedEvent.tasks')
                                         i.icon.ion-ios7-circle-filled
-                                        | {{task.name}}
+                                        p {{task.name}}

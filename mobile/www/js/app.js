@@ -20,7 +20,6 @@ angular.module('caffeina',
         'firebase',
         'calevents',
         'ngProgressLite',
-
         'caffeina.directives'
 
 //        'ngAutocomplete'
@@ -79,6 +78,10 @@ angular.module('caffeina',
 
         // if none of the above states are matched, use this as the fallback
 //        $urlRouterProvider.otherwise('login');
+
+        //pentru a seta ca safe url-urile
+//        $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+
 
     })
 

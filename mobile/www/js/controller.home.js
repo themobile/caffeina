@@ -82,9 +82,8 @@ angular.module('caffeina.controllers')
                 .then(function () {
                     $scope.loadData(moment(currentTask.date).format('YYYY'), moment(currentTask.date).format('MM'), function () {
                         $scope.selectedEvent = _.find($scope.events, function (event) {
-                            currentTask.id == event.id;
+                            return currentTask.id == event.initTaskId;
                         });
-                        console.log('aaa');
                     });
                 });
 
@@ -93,11 +92,13 @@ angular.module('caffeina.controllers')
 
         //view task (on slide 2)
         $scope.viewTask = function (id) {
+
+            var idToBeSearched=id;
+
+            console.log(id);
             ngProgressLite.start();
             $scope.selectedEvent = _.find($scope.events, function (event) {
-
-
-                return event.id == id;
+                return event.id == idToBeSearched;
             });
 
             dmlservice.getJobTasks($scope.selectedEvent.jobObject.id)
