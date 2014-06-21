@@ -355,7 +355,9 @@ angular.module('caffeina.services', ['firebase'])
                     deferred.reject('dmlservice/jobGenerateTasks: Inexistent type');
                 }
             });
-            return deferred.promise;
+            return deferred.promise.then(function () {
+                return promise;
+            });
         };
 
         dmlService.delJobTasks = function (tasks) {
