@@ -1,71 +1,114 @@
-html, body, .container{ height: 100%; margin: 0; padding: 0; }
-body{
-	min-width: 320px;
-	overflow: hidden;
-	background:#262522;
-}
-body{
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	font-weight: 200;
-	letter-spacing: 2px;
-	line-height: 14px;
-	color: #fff;
+html, body, .container {
+    margin: 0;
+    padding: 0;
+    display: table;
+    position:absolute;
+    height:100%;
+    width:100%;
 }
 
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    line-height: 14px;
+    color: #4d2917;
+}
 
 .log {
-	position: absolute;
-	width: 600px;
-	height: 450px;
-	top: 50%;
-	left: 50%;
-	margin: -225px 0 0 -300px;
+    display:table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 80%;
+    margin: 30px auto 0;
+    /*margin: -225px 0 0 -300px;*/
 
-		
-	}
-	
+}
+
 .info {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	text-align: center;
-	font-size: 1em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
 }
-	
-		
-		
+
+#mc_embed_signup {
+    width: 400px;
+    margin: 20px auto 0;
+}
+
+#mc_embed_signup label {
+    display: block;
+    font-size: 14px;
+    padding-bottom: 10px;
+    font-weight: normal;
+    text-align: center;
+}
+
+#mc_embed_signup input.email {
+    display: block;
+    padding: 8px 0;
+    margin: 0 4% 10px 0;
+    text-indent: 5px;
+    width: 58%;
+    min-width: 130px;
+    margin: 0 auto;
+}
+
+
+#mc_embed_signup input.button {
+    display: block;
+    width: 35%;
+    margin: 0 0 10px 0;
+    min-width: 90px;
+    margin: 10px auto 0;
+    font-weight: normal;
+    background-color: #4d2917;
+    color:white;
+    border:none;
+    font-size:14px;
+    padding:10px;
+}
+
 /*---- Media Queries to make design responsive ----*/
-    
-@media only screen and (max-width: 640px) and (min-width: 320px){
-	body, .container {
-		overflow-x:hidden;}
-.log {
-	position: absolute;
-	width: 300px;
-	height: 225px;
-	top: 50%;
-	left: 50%;
-	margin: -112px 0 0 -150px;	
-	}
-		.info {
-	font-size: 0.8em;
-}
+
+@media only screen and (max-width: 640px) and (min-width: 320px) {
+    body, .container {
+        overflow-x: hidden;
+    }
+
+    .log {
+        position: relative;
+        width: 400px;
+        height: auto;
+        margin: 20px auto;
+    }
+
+    .info {
+        font-size: 0.8em;
+    }
 }
 
-@media only screen and (max-width: 319px) and (min-width: 110px){
-		body, .container {
-		overflow-x:hidden;}
-	.log {
-	position: absolute;
-	width: 240px;
-	height: 180px;
-	top: 50%;
-	left: 50%;
-	margin: -90px 0 0 -120px;	
-	}
-			.info {
-	font-size: 0.8em;
-}
+@media only screen and (max-width: 319px) and (min-width: 110px) {
+    body, .container {
+        overflow-x: hidden;
+    }
+
+    .log {
+        position: relative;
+        width: 240px;
+        height: auto;
+        margin: 20px auto;
+    }
+
+    .info {
+        font-size: 0.8em;
+    }
 
 }
+
+
+

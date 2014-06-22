@@ -70,14 +70,18 @@ angular.module('caffeina',
                 url: '/inventory',
                 templateUrl: 'templates/inventory.html'
             })
+            .state('loading', {
+                url: '/loading',
+                templateUrl: 'templates/loading.html'
+            })
 
             .state('tests', {
                 url: '/tests',
                 templateUrl: 'templates/tests.html'
             });
 
-        // if none of the above states are matched, use this as the fallback
-//        $urlRouterProvider.otherwise('login');
+//        if none of the above states are matched, use this as the fallback
+        $urlRouterProvider.otherwise('loading');
 
         //pentru a seta ca safe url-urile
 //        $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -126,7 +130,7 @@ angular.module('caffeina',
                 rememberMe: rememberMe
             }).then(function () {
                 $ionicLoading.hide();
-                $state.go('home');
+                $state.go('loading');
             }, function (error) {
                 $ionicLoading.hide();
                 $ionicPopup.alert({

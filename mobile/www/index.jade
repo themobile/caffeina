@@ -14,9 +14,9 @@ head
     //
           'starter' is the name of this angular module (js/app.js)
     //body(ng-app='caffeina', animation='slide-left-right-ios7')
-    body(animation='slide-left-right-ios7')
-
-        ion-side-menus(style="height='960px', width='480px'")
+    body(animation='slide-left-right-ios7',ng-controller='loading')
+        div.splashscreen(ng-show='showsplash')
+        ion-side-menus
             //
                  Center content
             ion-side-menu-content
@@ -181,6 +181,7 @@ head
         script(src='js/controller.map.js')
         script(src='js/controller.inspiration.js')
         script(src='js/controller.inventory.js')
+        script(src='js/controller.loading.js')
         script(src='js/filters.js')
         script(src='js/directives.js')
         script(src='js/services.js')
