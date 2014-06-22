@@ -325,7 +325,7 @@ angular.module('caffeina.services', ['firebase'])
                                 newTask.name = task.name;
                                 if (task.isMain) {
                                     newTask.date = jobDate;
-                                    newTask.initTaskId = initTaskId;
+                                    if (initTaskId) newTask.initTaskId = initTaskId;
                                     if (jobLocation) newTask.location = jobLocation;
                                 } else {
                                     newTask.date = moment(jobDate).add('days', task.shift).format('YYYY-MM-DD HH:mm:ss.SSS');
