@@ -44,22 +44,6 @@ angular.module('caffeina.controllers')
 
 
         $scope.init = function () {
-            $scope.showsplash=true;
-
-//
-            $timeout(function () {
-                $scope.modal.show();
-
-            }, 100)
-                .then(function () {
-                    $timeout(function () {
-                        $scope.closeModal();
-                        $state.go('home');
-
-                    }, 4000)
-                })
-
-
 
         };
 

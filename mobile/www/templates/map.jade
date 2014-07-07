@@ -1,4 +1,12 @@
-ion-view(title='location on map',ng-controller="map")
+ion-view(title='',ng-controller='map', ng-init='init()')
     ion-content(padding='false',scroll='false',data-tap-disabled="true")
-        google-map(center='map.center',zoom='map.zoom',draggable='true')
-            //marker(coords='marker.coords',icon='marker.icon')
+        google-map(center='map.center',
+            zoom='map.zoom',
+            draggable='true',
+            refresh="map.control",
+            dragging="map.dragging",
+            options="map.options",
+            pan="true",
+            control="map.control"
+            )
+            marker(coords="'self'", options='marker.options')

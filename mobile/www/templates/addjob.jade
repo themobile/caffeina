@@ -1,14 +1,10 @@
-////ion-nav-bar(ng-controller='addjob',ng-init='init()')
-//ion-nav-bar(ng-controller='addjob')
-//    ion-nav-buttons(side='left')
-//        button.button.button-clear.pull-left(ng-click='cancel()') cancel
-//    ion-nav-buttons(side='right')
-//        button.button.button-clear.pull-right save
 
-ion-view(title='define new job',ng-controller="addjob",ng-init='init()')
-    ion-content(padding='true',has-bouncing='false',scroll="true")
+ion-view(title='',ng-controller="addjob",ng-init='init()')
+    ion-content(padding='false',has-bouncing='false',scroll="true")
+        .row.screenHeader
+            .col.screenTitle add something to do
         form.list(name="addjob")
-            legend details
+            //legend add something to do
             div.row
                 .col
                     label.item.item-input

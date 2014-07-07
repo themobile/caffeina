@@ -10,8 +10,6 @@ angular.module('caffeina',
         'ionic',
         'ion-google-place',
         'google-maps',
-        'datePicker',
-
         'caffeina.services',
         'caffeina.controllers',
         'caffeina.filters',
@@ -19,6 +17,7 @@ angular.module('caffeina',
         'ngCookies',
         'firebase',
         'calevents',
+        'datePicker',
         'ngProgressLite',
         'caffeina.directives'
 
@@ -81,7 +80,7 @@ angular.module('caffeina',
             });
 
 //        if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('loading');
+//        $urlRouterProvider.otherwise('loading');
 
         //pentru a seta ca safe url-urile
 //        $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -89,11 +88,22 @@ angular.module('caffeina',
 
     })
 
-    .run(function ($rootScope, $state, userService, storage, Firebase, $ionicLoading, $ionicPopup) {
+    .run(function ($rootScope, $state, userService, storage, Firebase, $ionicLoading, $ionicPopup,$timeout) {
         var rememberMe , provider, token, caffeina_user, presenceRef;
 
         rememberMe = storage.get('rememberMe');
         caffeina_user = storage.get('caffeina_user');
+        $rootScope.showsplash=true;
+
+
+        $timeout(function(){
+            $rootScope.showsplash=false;
+        },1500);
+
+
+
+
+
 
         presenceRef = new Firebase('https://caffeina.firebaseio.com/.info/connected');
         presenceRef.on('value', function (snap) {
@@ -130,7 +140,7 @@ angular.module('caffeina',
                 rememberMe: rememberMe
             }).then(function () {
                 $ionicLoading.hide();
-                $state.go('loading');
+                $state.go('home');
             }, function (error) {
                 $ionicLoading.hide();
                 $ionicPopup.alert({

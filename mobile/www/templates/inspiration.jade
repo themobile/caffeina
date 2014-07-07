@@ -1,7 +1,7 @@
-ion-view(title='inspiration',ng-controller="inspiration",ng-init='init()')
-    ion-content(padding='false',scroll='true')
+ion-view(title='',ng-controller="inspiration",ng-init='init()')
+    ion-content(padding='false',has-bouncing='false',scroll="true")
         .row.screenHeader
-            .col.screenTitle Photos for your inspiration
+            .col.screenTitle take a look
         .row
             .col {{inspirations.length}} photos > tap to see large
         ion-list

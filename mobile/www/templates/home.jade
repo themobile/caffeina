@@ -1,4 +1,4 @@
-ion-view(title='agenda',ng-init='init()',ng-controller='home')
+ion-view(title='',ng-init='init()',ng-controller='home')
     ion-pane(padding='true',scroll='false')
         ion-slide-box(show-pager="false", delegate-handle='calendar_slider', on-slide-changed='sliderchanged($index)')
 
@@ -41,7 +41,14 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                         .col.screenTitle(ng-if='!selectedEvent.name') {{currentMonthYear |date:"yyyy | MMMM" | lowercase }}
                     .row.row_empty_for_balance
                         .col(ng-if='!selectedEvent.date') no event selected
-                        .col(ng-if='selectedEvent.date && !selectedEvent.jobObject.type.autoBooked') <strong>todo:</strong>&nbsp{{selectedEvent.name}}
+                        .col(ng-if='selectedEvent.date && !selectedEvent.jobObject.type.autoBooked && countEvents(selectedEvent.jobObject.tasks)>0', style='line-height:26px; height: 26px; padding: 0 5px 10px 5px;float: left;')
+                            | <span class="iconLikeFirstLetters" style="float:left;margin-right:6px;" ng-style="{'background':selectedEvent.jobObject.type.color, 'color':'white','border-color':selectedEvent.jobObject.type.color}">{{selectedEvent.jobObject.type.name | firstletters}}</span>
+                            | <strong ng-style="{'color':selectedEvent.jobObject.type.color}">{{selectedEvent.name}}</strong>
+                            | <button ng-style="{'color':selectedEvent.jobObject.type.color}" class="button button-clear btn-edit-task">edit task</button>
+
+                        .col(ng-if='selectedEvent.date && !selectedEvent.jobObject.type.autoBooked && countEvents(selectedEvent.jobObject.tasks)==0', style='line-height:26px; height: 26px; padding: 0 5px 10px 5px;float: left;')
+                            | <span class="iconLikeFirstLetters" style="float:left;margin-right:6px;" ng-style="{'background':selectedEvent.jobObject.type.color, 'color':'white','border-color':selectedEvent.jobObject.type.color}">{{selectedEvent.jobObject.type.name | firstletters}}</span>
+                            | <strong ng-style="{'color':selectedEvent.jobObject.type.color}">{{selectedEvent.name}}</strong>
 
                     div(ng-if='selectedEvent.date')
                         .list.list-smaller
@@ -53,7 +60,8 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                 a.item.item-icon-left(href='#')
                                     i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
                                     | <strong>notes:</strong>&nbsp{{selectedEvent.jobObject.notes}}
-                                a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
+                                //a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
+                                a.item.item-icon-left.item-icon-right(ng-click='showContactOptions()')
                                     i.icon.ion-ios7-person
                                     | <strong>with:</strong>&nbsp{{selectedEvent.jobObject.contact.name}}
                                     i.icon.ion-ios7-telephone
@@ -71,15 +79,14 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
 
 
 
-                            //if job is other than simple job
+                            //if job is other than simple task
                             div(ng-if='!selectedEvent.jobObject.type.autoBooked')
-
-
 
                                 //if job has one task
                                 div(ng-if='countEvents(selectedEvent.jobObject.tasks)==0')
                                     //task details
-                                    a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
+                                    //a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
+                                    a.item.item-icon-left.item-icon-right(ng-click='showContactOptions()')
                                         i.icon.ion-ios7-person
                                         | {{selectedEvent.jobObject.contact.name}}
                                         i.icon.ion-ios7-telephone
@@ -91,14 +98,11 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                         i.icon.ion-ios7-information
                                         | {{selectedEvent.notes}}
 
-
                                     .item.item-divider(ng-style="{'color':selectedEvent.jobObject.type.color}")
                                         // job details
                                         //a.item.item-icon-left(href='#',ng-style="{'color':selectedEvent.jobObject.type.color}")
                                             i.icon.ion-ios7-circle-filled(ng-style="{'color':selectedEvent.jobObject.type.color}")
                                         | job type:&nbsp{{selectedEvent.jobObject.type.name}} <span ng-show='selectedEvent.jobObject.isBooked'> *** booked </span>
-
-
 
                                     a.item.item-icon-left(href='#',ng-if='selectedEvent.jobObject.details.price')
                                         i.icon.ion-ios7-pricetag
@@ -117,14 +121,15 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                         i.icon.ion-ios7-information
                                         | notes: {{selectedEvent.jobObject.notes}}
 
-
+                                    button.button-icon.icon.button-full.button-large.ion-ios7-plus-empty
 
 
                                 //if job has more than one task (i.e. it is booked and has more than one job)
                                 div(ng-if='countEvents(selectedEvent.jobObject.tasks)>0')
 
                                     //task details
-                                    a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
+                                    //a.item.item-icon-left.item-icon-right(href='tel:{{selectedEvent.jobObject.contact.phone}}')
+                                    a.item.item-icon-left.item-icon-right(ng-click='showContactOptions()')
                                         i.icon.ion-ios7-person
                                         | {{selectedEvent.jobObject.contact.name}}
                                         i.icon.ion-ios7-telephone
@@ -171,3 +176,5 @@ ion-view(title='agenda',ng-init='init()',ng-controller='home')
                                     a.item.item-icon-left(ng-repeat='task in selectedEvent.tasks')
                                         i.icon.ion-ios7-circle-filled
                                         p {{task.name}}
+
+                                    button.button-icon.icon.button-full.button-large.ion-ios7-plus-empty

@@ -15,9 +15,10 @@ angular.module('caffeina.controllers')
         , '$state'
         , '$timeout'
         , '$ionicSlideBoxDelegate'
+        , '$ionicActionSheet'
         , '$ionicPopup'
         , '$q'
-        , function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, dmlservice, $state, $timeout, $ionicSlideBoxDelegate, $ionicPopup, $q) {
+        , function ($rootScope, $scope, CalendarEvents, $ionicSideMenuDelegate, $firebase, userService, firebaseRef, firebaseRefUser, ngProgressLite, dmlservice, $state, $timeout, $ionicSlideBoxDelegate, $ionicActionSheet,$ionicPopup, $q) {
 
 
         // data for calendar
@@ -69,6 +70,21 @@ angular.module('caffeina.controllers')
                 }
             })
         });
+
+
+        $scope.showContactOptions=function(){
+            var hideSheet=$ionicActionSheet.show({
+                buttons:[
+                    {text:'phone <strong>call</strong>'},
+                    {text:'<strong>email</strong> message'}
+                ],
+                cancelText:'cancel',
+                buttonClicked:function(index){
+                    return true;
+                }
+            });
+
+        };
 
 
         //mark job as booked and reloads calendar

@@ -14,8 +14,8 @@ head
     //
           'starter' is the name of this angular module (js/app.js)
     //body(ng-app='caffeina', animation='slide-left-right-ios7')
-    body(animation='slide-left-right-ios7',ng-controller='loading')
-        div.splashscreen(ng-show='showsplash')
+    body(animation='slide-left-right-ios7')
+        div.splashscreen.fade-in-not-out(ng-show='showsplash')
         ion-side-menus
             //
                  Center content
@@ -56,27 +56,27 @@ head
             ion-side-menu.ng-cloak(side='left',ng-controller='MenuController')
                 .list
                     a.item.item-icon-left(href='#/home' ,nav-clear ,menu-close )
-                        i.icon.ion-home
-                        | Home
+                        i.icon.ion-ios7-calendar
+                        | agenda
 
 
 
 
                     a.item.item-icon-left(href='#/inspiration' ,nav-clear ,menu-close )
                         i.icon.ion-ios7-photos
-                        | Inspiration
+                        | inspiration
 
                     a.item.item-icon-left(href='#/inventory' ,nav-clear ,menu-close )
                         i.icon.ion-ios7-gear
-                        | Inventory
+                        | inventory
 
                     a.item.item-icon-left(href='#/settings' ,nav-clear ,menu-close )
                         i.icon.ion-settings
-                        | Settings
+                        | settings
 
                     a.item.item-icon-left(href='#/tests' ,nav-clear ,menu-close )
                         i.icon.ion-chatbubble-working
-                        | Tests
+                        | tests
 
                     //a.item.item-icon-left(href='#/chat' ,nav-clear ,menu-close )
                     //    i.icon.ion-chatbubble-working
@@ -92,12 +92,12 @@ head
 
                     a.item.item-icon-left(href="#/login",ng-if="!user.id",menu-close,nav-clear)
                         i.icon.ion-email
-                        | Login
+                        | login
                     a.item.item-icon-left(href='#/',ng-click='logout()', ng-if="user.id",nav-clear ,menu-close )
                         i.icon.ion-log-out
-                        | Logout
+                        | logout
 
-                    p.item(ng-show="user.id") Welcome {{user.displayName}}
+                    p.item(ng-show="user.id") Hi {{user.displayName}}
 
 
         //div#isconnected(ng-show='!isConnected',ng-controller='isconnected')
@@ -126,7 +126,7 @@ head
 
         //
                     calendar
-        script(src='lib/js/datepicker/datepicker.js')
+        script(src='lib/js/datepicker/datePicker.js')
         //script(src='lib/js/datepicker/input.js')
         script(src='lib/js/datepicker/calendar.js')
         //
@@ -138,7 +138,7 @@ head
         script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwYA_6LbdHODE-aKsZSAS3n9yWIByJZzc&libraries=places&sensor=false')
         script(src='lib/js/ion-google-place/ion-google-place.js')
         script(src='lib/js/lodash/lodash.min.js')
-        script(src='lib/js/google-maps/angular-google-maps.min.js')
+        script(src='lib/js/google-maps/angular-google-maps.js')
 
 
 
@@ -187,6 +187,7 @@ head
         script(src='js/services.js')
         script(src='js/service.firebase.js')
         script(src='js/service.auth.js')
+        //script(src='build/js/main.min.js')
 
 
 

@@ -78,6 +78,7 @@ h4, .h4, h5, .h5, h6, .h6 {
 .splashscreen {
   background-image:url('../img/background_loading.jpg');
   position:absolute;
+  z-index:9999;
   top:0;
   bottom:0;
   left:0;
@@ -834,4 +835,25 @@ form input[readonly]:not(.cloned-text-input) {
 .platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
   adding-right: 0 !important;
   line-height: 34px;
+}
+
+
+.btn-edit-task {
+  height: 26px;
+  line-height: 26px;
+  padding: 0;
+  min-height: 26px;
+  margin: 0;
+  border: 0;
+  float: right;
+  text-align: right;
+  font-size:14px;
+  font-weight:700;
+
+}
+
+.action-sheet {
+  .button {
+    color:$dark;
+  }
 }
